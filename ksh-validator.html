@@ -170,13 +170,13 @@
                     <div class="stats" id="bulkStats" style="display:none;">
                         <div class="row">
                             <div class="col-md-3">
-                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom">0</span>
+                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" style="cursor:pointer;" onclick="filterResults('all')" title="Kattints a szűréshez">0</span>
                             </div>
                             <div class="col-md-3">
-                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom">0</span>
+                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" style="cursor:pointer;" onclick="filterResults('valid')" title="Kattints a szűréshez">0</span>
                             </div>
                             <div class="col-md-3">
-                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom">0</span>
+                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" style="cursor:pointer;" onclick="filterResults('invalid')" title="Kattints a szűréshez">0</span>
                             </div>
                             <div class="col-md-3">
                                 <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom">0%</span>
@@ -3941,8 +3941,72 @@
             statsDiv.style.display = 'block';
             exportBtn.style.display = 'inline-block';
 
-            // Store results for export
+            // Store results for export and filtering
             window.lastBulkResults = results;
+            window.currentFilter = 'all'; // Reset filter when new results are displayed
+        }
+
+        function filterResults(filter) {
+            if (!window.lastBulkResults || window.lastBulkResults.length === 0) {
+                return;
+            }
+
+            window.currentFilter = filter;
+
+            // Filter results based on selected filter
+            let filteredResults = window.lastBulkResults;
+            if (filter === 'valid') {
+                filteredResults = window.lastBulkResults.filter(r => r.status === 'valid');
+            } else if (filter === 'invalid') {
+                filteredResults = window.lastBulkResults.filter(r => r.status === 'invalid' || r.status === 'error');
+            } else if (filter === 'warning') {
+                filteredResults = window.lastBulkResults.filter(r => r.status === 'warning');
+            }
+
+            // Display filtered results
+            const resultsBody = document.getElementById('bulkResults');
+            const fragment = document.createDocumentFragment();
+
+            filteredResults.forEach(item => {
+                const tr = document.createElement('tr');
+
+                // Set row class based on status
+                tr.className = item.status === 'valid' ? 'valid-row' :
+                               item.status === 'warning' ? 'warning-row' : 'invalid-row';
+
+                // Get badge HTML
+                const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
+                              item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
+                              '<span class="badge bg-danger">✗ Hibás</span>';
+
+                // Build row content
+                tr.innerHTML = `
+                    <td>${item.index}</td>
+                    <td>${item.ksh}</td>
+                    <td>${item.onev}</td>
+                    <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
+                    <td class="text-center">${badge}</td>
+                `;
+
+                fragment.appendChild(tr);
+            });
+
+            // Clear and append in one operation
+            resultsBody.innerHTML = '';
+            resultsBody.appendChild(fragment);
+
+            // Update visual feedback for active filter
+            ['totalCount', 'validCount', 'invalidCount'].forEach(id => {
+                const element = document.getElementById(id);
+                element.style.fontWeight = 'normal';
+                element.style.textDecoration = 'none';
+            });
+
+            const activeElement = filter === 'all' ? 'totalCount' :
+                                 filter === 'valid' ? 'validCount' : 'invalidCount';
+            const element = document.getElementById(activeElement);
+            element.style.fontWeight = 'bold';
+            element.style.textDecoration = 'underline';
         }
 
         function handleExport() {
