@@ -28,6 +28,9 @@
         .valid-row {
             background-color: #d4edda;
         }
+        .warning-row {
+            background-color: #fff3cd;
+        }
         .invalid-row {
             background-color: #f8d7da;
         }
@@ -3411,7 +3414,7 @@
 
         // Adatstruktúra
         let dataMap = new Map(); // ksh -> onev (lowercase values pre-computed)
-        let allData = [];
+        // Removed allData variable - using dataMap directly for better memory efficiency
 
         // LocalStorage kulcsok
         const STORAGE_KEY = 'onkormany_data';
@@ -3471,13 +3474,11 @@
 
                         // Check if cached data is in new format (Map entries)
                         if (Array.isArray(parsed) && parsed.length > 0 && Array.isArray(parsed[0])) {
-                            // New format: array of [key, value] entries
+                            // New format: array of [key, value] entries - load directly into Map
                             dataMap = new Map(parsed);
-                            allData = Array.from(dataMap, ([ksh, data]) => ({ ksh, onev: data.original }));
                         } else {
                             // Old format: fallback for compatibility
-                            allData = parsed;
-                            processData(allData);
+                            processData(parsed);
                         }
 
                         updateStatus(`Cached adatok betöltve (${dataMap.size} rekord)`, 'success');
@@ -3491,7 +3492,7 @@
             return false;
         }
 
-        function saveToCache(data) {
+        function saveToCache() {
             try {
                 // Save Map entries directly for faster loading (no need to reprocess)
                 const mapEntries = Array.from(dataMap.entries());
@@ -3512,10 +3513,9 @@
                 delimiter: ';',
                 skipEmptyLines: true,
                 complete: function(results) {
-                    allData = results.data;
-                    processData(allData);
-                    saveToCache(allData);
-                    updateStatus(`Sikeresen betöltve ${allData.length} rekord`, 'success');
+                    processData(results.data);
+                    saveToCache();
+                    updateStatus(`Sikeresen betöltve ${dataMap.size} rekord`, 'success');
                     showLoading(false);
                     showMainContent();
                 },
@@ -3538,10 +3538,9 @@
                 delimiter: ';',
                 skipEmptyLines: true,
                 complete: function(results) {
-                    allData = results.data;
-                    processData(allData);
-                    saveToCache(allData);
-                    updateStatus(`Sikeresen betöltve ${allData.length} rekord`, 'success');
+                    processData(results.data);
+                    saveToCache();
+                    updateStatus(`Sikeresen betöltve ${dataMap.size} rekord`, 'success');
                     showLoading(false);
                     showMainContent();
                 },
@@ -3552,6 +3551,152 @@
             });
         }
 
+        // List of administrative/common words to ignore in comparisons
+        const IGNORED_WORDS = [
+            'onkormanyzat', 'onkormanyzata', 'nagykozseg', 'nagykozsegi', 'kozseg', 'kozsegi',
+            'telepules', 'varos', 'varosi', 'fovaros', 'fovarosi','kerulet', 'ker', 'megye', 'megyei',
+            'varmegye', 'varmegyei'
+        ];
+
+        // Pre-compiled regex for ignored words (optimize performance)
+        const IGNORED_WORDS_REGEX = new RegExp(
+            '\\b(' + IGNORED_WORDS.join('|') + ')\\b',
+            'gi'
+        );
+
+        // Pre-compiled regex map for Roman numerals (optimize performance)
+        const ROMAN_REGEX_MAP = [
+            [/\bXX\b/gi, '20'],
+            [/\bXIX\b/gi, '19'],
+            [/\bXVIII\b/gi, '18'],
+            [/\bXVII\b/gi, '17'],
+            [/\bXVI\b/gi, '16'],
+            [/\bXV\b/gi, '15'],
+            [/\bXIV\b/gi, '14'],
+            [/\bXIII\b/gi, '13'],
+            [/\bXII\b/gi, '12'],
+            [/\bXI\b/gi, '11'],
+            [/\bX\b/gi, '10'],
+            [/\bIX\b/gi, '9'],
+            [/\bVIII\b/gi, '8'],
+            [/\bVII\b/gi, '7'],
+            [/\bVI\b/gi, '6'],
+            [/\bV\b/gi, '5'],
+            [/\bIV\b/gi, '4'],
+            [/\bIII\b/gi, '3'],
+            [/\bII\b/gi, '2'],
+            [/\bI\b/gi, '1']
+        ];
+
+        // Normalize text for fuzzy matching
+        function normalizeText(text) {
+            return text
+                .toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                .replace(/\s+/g, ' ') // Normalize whitespace
+                .trim();
+        }
+
+        // Remove administrative words for core name extraction
+        function extractCoreName(text) {
+            let normalized = normalizeText(text);
+
+            // Remove all ignored words using pre-compiled regex
+            normalized = normalized.replace(IGNORED_WORDS_REGEX, '');
+
+            // Clean up extra whitespace
+            return normalized.replace(/\s+/g, ' ').trim();
+        }
+
+        // Expand common abbreviations
+        function expandAbbreviations(text) {
+            return text
+                .replace(/\bker\./gi, 'Kerület')
+                .replace(/\bfőv\./gi, 'főváros');
+        }
+
+        // Convert Roman numerals to Arabic (I-XX range)
+        function romanToArabic(text) {
+            let result = text;
+            // Use pre-compiled regex map for better performance
+            for (const [regex, arabic] of ROMAN_REGEX_MAP) {
+                result = result.replace(regex, arabic);
+            }
+            return result;
+        }
+
+        // Fuzzy match two names with various normalization strategies
+        // referenceData should be the pre-computed object from dataMap
+        function fuzzyMatchNames(input, referenceData) {
+            const reference = referenceData.original;
+
+            // Exact match (case insensitive)
+            if (input.toLowerCase() === reference.toLowerCase()) {
+                return 'exact';
+            }
+
+            // Normalize input string
+            const normalizedInput = normalizeText(expandAbbreviations(input));
+            // Use pre-computed normalized reference
+            const normalizedRef = referenceData.normalized;
+
+            // Exact match after normalization
+            if (normalizedInput === normalizedRef) {
+                return 'exact';
+            }
+
+            // Try with Roman/Arabic conversion
+            const convertedInput = romanToArabic(normalizedInput);
+            const convertedRef = romanToArabic(normalizedRef);
+
+            if (convertedInput === convertedRef) {
+                return 'fuzzy';
+            }
+
+            // Extract core name from input and use pre-computed core reference
+            const coreInput = romanToArabic(extractCoreName(input));
+            const coreRef = referenceData.core;
+
+            // Check if core names match exactly (allow 2+ char names for short settlements like Ág, Őr, Bő, Sé)
+            if (coreInput === coreRef && coreInput.length >= 2) {
+                return 'exact';
+            }
+
+            // If reference core name is found in input, it's valid (min 2 chars for short settlements)
+            if (coreRef.length >= 2 && coreInput.includes(coreRef)) {
+                return 'exact';
+            }
+
+            // If input core name is found in reference, it's valid (min 2 chars for short settlements)
+            if (coreInput.length >= 2 && coreRef.includes(coreInput)) {
+                return 'exact';
+            }
+
+            // Partial match: check if one contains the other (min 5 chars to avoid false positives)
+            if (normalizedInput.length >= 5 && normalizedRef.length >= 5) {
+                if (normalizedRef.includes(normalizedInput) || normalizedInput.includes(normalizedRef)) {
+                    return 'fuzzy';
+                }
+            }
+
+            // Check for significant word overlap (at least 70% of words match)
+            const inputWords = normalizedInput.split(' ').filter(w => w.length > 2);
+            const refWords = normalizedRef.split(' ').filter(w => w.length > 2);
+
+            if (inputWords.length > 0 && refWords.length > 0) {
+                const matchCount = inputWords.filter(word =>
+                    refWords.some(refWord => refWord.includes(word) || word.includes(refWord))
+                ).length;
+
+                const matchRatio = matchCount / Math.max(inputWords.length, refWords.length);
+                if (matchRatio >= 0.7) {
+                    return 'fuzzy';
+                }
+            }
+
+            return 'nomatch';
+        }
+
         function processData(data) {
             dataMap.clear();
 
@@ -3560,16 +3705,23 @@
                 const onev = row.onev ? row.onev.trim() : '';
 
                 if (ksh && onev) {
-                    // Store object with pre-computed lowercase values for fast searching
+                    // Pre-compute expensive normalizations for better validation performance
+                    const expanded = expandAbbreviations(onev);
+                    const normalized = normalizeText(expanded);
+                    const core = romanToArabic(extractCoreName(onev));
+
+                    // Store object with pre-computed values for fast searching and validation
                     dataMap.set(ksh, {
                         original: onev,
                         lower: onev.toLowerCase(),
-                        kshLower: ksh.toLowerCase()
+                        kshLower: ksh.toLowerCase(),
+                        normalized: normalized,
+                        core: core
                     });
                 }
             });
 
-            console.log(`Feldolgozva ${dataMap.size} rekord`);
+            // Debug: Feldolgozva ${dataMap.size} rekord
         }
 
         function handleSearch(event) {
@@ -3671,18 +3823,39 @@
                 const parts = line.split('\t');
                 if (parts.length < 2) return;
 
-                const ksh = parts[0].trim().replace(/"/g, '');
+                // Normalize KSH code: pad with leading zeros to 7 digits
+                let ksh = parts[0].trim().replace(/"/g, '');
+                ksh = ksh.padStart(7, '0');
+
                 const onev = parts[1].trim().replace(/"/g, '');
                 const data = dataMap.get(ksh);
-                const correctName = data ? data.original : '';
-                const isValid = data ? data.lower === onev.toLowerCase() : false;
+
+                let status = 'error'; // default: invalid KSH code
+                let correctName = '';
+
+                if (data) {
+                    correctName = data.original;
+                    // KSH code exists, now check name matching (pass pre-computed data object)
+                    const matchResult = fuzzyMatchNames(onev, data);
+
+                    if (matchResult === 'exact') {
+                        status = 'valid';
+                    } else if (matchResult === 'fuzzy') {
+                        status = 'warning';
+                    } else {
+                        status = 'error'; // KSH code valid but name doesn't match
+                    }
+                } else {
+                    // KSH code doesn't exist
+                    status = 'error';
+                }
 
                 results.push({
                     index: index + 1,
                     ksh,
                     onev,
                     correctName,
-                    isValid
+                    status
                 });
             });
 
@@ -3694,27 +3867,75 @@
             const statsDiv = document.getElementById('bulkStats');
             const exportBtn = document.getElementById('exportBtn');
 
-            const validCount = results.filter(r => r.isValid).length;
-            const invalidCount = results.length - validCount;
+            // Calculate statistics in a single pass for better performance
+            const stats = results.reduce((acc, r) => {
+                if (r.status === 'valid') acc.valid++;
+                else if (r.status === 'warning') acc.warning++;
+                else acc.invalid++;
+                return acc;
+            }, { valid: 0, warning: 0, invalid: 0 });
+
+            const validCount = stats.valid;
+            const warningCount = stats.warning;
+            const invalidCount = stats.invalid;
             const accuracy = results.length > 0 ? ((validCount / results.length) * 100).toFixed(1) : 0;
 
-            resultsBody.innerHTML = results.map(item => `
-                <tr class="${item.isValid ? 'valid-row' : 'invalid-row'}">
+            // Use DocumentFragment for better DOM performance
+            const fragment = document.createDocumentFragment();
+
+            results.forEach(item => {
+                const tr = document.createElement('tr');
+
+                // Set row class based on status
+                tr.className = item.status === 'valid' ? 'valid-row' :
+                               item.status === 'warning' ? 'warning-row' : 'invalid-row';
+
+                // Get badge HTML
+                const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
+                              item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
+                              '<span class="badge bg-danger">✗ Hibás</span>';
+
+                // Build row content
+                tr.innerHTML = `
                     <td>${item.index}</td>
                     <td>${item.ksh}</td>
                     <td>${item.onev}</td>
                     <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
-                    <td class="text-center">
-                        ${item.isValid ?
-                            '<span class="badge bg-success">✓ Helyes</span>' :
-                            '<span class="badge bg-danger">✗ Hibás</span>'}
-                    </td>
-                </tr>
-            `).join('');
+                    <td class="text-center">${badge}</td>
+                `;
 
+                fragment.appendChild(tr);
+            });
+
+            // Clear and append in one operation
+            resultsBody.innerHTML = '';
+            resultsBody.appendChild(fragment);
+
+            // Update statistics
             document.getElementById('totalCount').textContent = results.length;
             document.getElementById('validCount').textContent = validCount;
-            document.getElementById('invalidCount').textContent = invalidCount;
+
+            // Add warning count display
+            const invalidCountElement = document.getElementById('invalidCount');
+            invalidCountElement.textContent = invalidCount;
+
+            // Insert warning count after valid count if it doesn't exist yet
+            const validCountElement = document.getElementById('validCount');
+            let warningElement = document.getElementById('warningCount');
+            if (!warningElement) {
+                warningElement = document.createElement('span');
+                warningElement.id = 'warningCount';
+                warningElement.className = 'text-warning fw-bold';
+
+                const warningLabel = document.createElement('span');
+                warningLabel.textContent = ' | Figyelmeztető: ';
+                warningLabel.className = 'text-muted';
+
+                validCountElement.parentNode.appendChild(warningLabel);
+                validCountElement.parentNode.appendChild(warningElement);
+            }
+            warningElement.textContent = warningCount;
+
             document.getElementById('accuracy').textContent = accuracy + '%';
 
             statsDiv.style.display = 'block';
@@ -3732,13 +3953,22 @@
 
             const csvContent = [
                 ['Sorszám', 'Megadott KSH', 'Megadott Név', 'Helyes Név', 'Státusz'],
-                ...window.lastBulkResults.map(r => [
-                    r.index,
-                    r.ksh,
-                    r.onev,
-                    r.correctName,
-                    r.isValid ? 'Helyes' : 'Hibás'
-                ])
+                ...window.lastBulkResults.map(r => {
+                    let statusText = 'Hibás';
+                    if (r.status === 'valid') {
+                        statusText = 'Helyes';
+                    } else if (r.status === 'warning') {
+                        statusText = 'Figyelmeztető';
+                    }
+
+                    return [
+                        r.index,
+                        r.ksh,
+                        r.onev,
+                        r.correctName,
+                        statusText
+                    ];
+                })
             ].map(row => row.join(';')).join('\n');
 
             const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
