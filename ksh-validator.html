@@ -1,0 +1,3740 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Önkormányzat KSH Kód Ellenőrző</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .result-table {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .valid-row {
+            background-color: #d4edda;
+        }
+        .invalid-row {
+            background-color: #f8d7da;
+        }
+        .stats {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 5px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        #bulkInput {
+            min-height: 200px;
+            font-family: monospace;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+        .badge-custom {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>
+            </svg>
+            KSH kód ellenőrző
+        </h1>
+
+        <div class="alert alert-info" id="loadStatus">
+            <strong>Állapot:</strong> <span id="statusText">CSV fájl betöltésére vár...</span>
+        </div>
+
+        <div class="mb-4" id="customCsvSection" style="display:none;">
+            <label for="csvFile" class="form-label">CSV fájl betöltése:</label>
+            <input type="file" class="form-control" id="csvFile" accept=".csv">
+            <small class="text-muted">Formátum: ksh;onev (pl: "0102112";Budapest XVII. Kerület)</small>
+        </div>
+
+        <button class="btn btn-outline-secondary btn-sm mb-3" id="toggleCsvBtn" style="display:none;">
+            📂 Egyéni CSV betöltése
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Betöltés...</span>
+            </div>
+            <p class="mt-2">CSV feldolgozása folyamatban...</p>
+        </div>
+
+        <div id="mainContent" style="display:none;">
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab">
+                        🔍 Gyors Keresés
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="bulk-tab" data-bs-toggle="tab" data-bs-target="#bulk" type="button" role="tab">
+                        📋 Tömeges Ellenőrzés
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <!-- Gyors Keresés Tab -->
+                <div class="tab-pane fade show active" id="search" role="tabpanel">
+                    <div class="search-box">
+                        <label for="searchInput" class="form-label">Keresés kód vagy név alapján:</label>
+                        <input type="text" class="form-control form-control-lg" id="searchInput"
+                               placeholder="pl: 0102112 vagy Budapest XVII">
+                        <small class="text-muted">Kezdjen el gépelni a szűréshez...</small>
+                    </div>
+
+                    <div class="stats" id="searchStats">
+                        Találatok száma: <strong>0</strong>
+                    </div>
+
+                    <div class="result-table">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 20%">KSH Kód</th>
+                                    <th style="width: 80%">Önkormányzat Név</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchResults">
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted">
+                                        Töltsön be egy CSV fájlt a kereséshez
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tömeges Ellenőrzés Tab -->
+                <div class="tab-pane fade" id="bulk" role="tabpanel">
+                    <div class="mb-3">
+                        <label for="bulkInput" class="form-label">
+                            Illesszen be Excel-ből másolt adatokat (kód + TAB + név formátumban):
+                        </label>
+                        <textarea class="form-control" id="bulkInput" rows="10"
+                                  placeholder="Példa:&#10;0102112&#9;Budapest XVII. Kerület&#10;0103179&#9;Budapest II. Kerület&#10;&#10;Másoljon Excel-ből, majd nyomja meg az 'Ellenőrzés' gombot!"></textarea>
+                        <small class="text-muted">
+                            Ctrl+C az Excelben, majd Ctrl+V ide. Minden sor egy kód-név párt tartalmaz, TAB-bal elválasztva.
+                        </small>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg mb-3" id="validateBtn">
+                        ✓ Ellenőrzés
+                    </button>
+                    <button class="btn btn-success btn-lg mb-3 ms-2" id="exportBtn" style="display:none;">
+                        📥 Eredmény Exportálása
+                    </button>
+                    <button class="btn btn-secondary btn-lg mb-3 ms-2" id="clearBtn">
+                        🗑️ Törlés
+                    </button>
+
+                    <div class="stats" id="bulkStats" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-table">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th style="width: 15%">Megadott Kód</th>
+                                    <th style="width: 35%">Megadott Név</th>
+                                    <th style="width: 35%">Helyes Név</th>
+                                    <th style="width: 10%">Státusz</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bulkResults">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Az eredmények itt jelennek meg
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Beágyazott CSV adat (Base64 kódolva a fájlméret csökkentésére)
+        const EMBEDDED_CSV_DATA = `"ksh";"onev"
+"0102112";Budapest XVII. Kerület
+"0103179";Budapest II. Kerület
+"0104011";Budapest XIX. Kerület
+"0105467";Budapest IV. Kerület
+"0106026";Budapest XX. Kerület
+"0108208";Budapest XVI. Kerület
+"0109566";Budapest I. Kerület
+"0110214";Budapest XXII. Kerület
+"0110700";Budapest X. Kerület
+"0111314";Budapest XV. Kerület
+"0113189";Budapest XXI. Kerület
+"0113392";Budapest V. Kerület
+"0113578";Budapest Főváros
+"0114216";Budapest XI. Kerület
+"0116337";Budapest XIV. Kerület
+"0116586";Budapest VI. Kerület
+"0118069";Budapest III. Kerület
+"0124299";Budapest XIII. Kerület
+"0124697";Budapest XII. Kerület
+"0125405";Budapest VIII. Kerület
+"0129285";Budapest XVIII. Kerület
+"0129586";Budapest IX. Kerület
+"0129744";Budapest VII. Kerület
+"0134139";Budapest XXIII. Kerület
+"0200000";Baranya Vármegyei Önkormányzat
+"0202228";Martonfa
+"0202264";Vásárosdombó
+"0202547";Sumony
+"0202653";Nagyharsány
+"0202857";Geresdlak
+"0203018";Szebény
+"0203151";Kistapolca
+"0203285";Hirics
+"0203337";Ivánbattyán
+"0203346";Ivándárda
+"0203470";Meződ
+"0203540";Kökény
+"0203780";Ócsárd
+"0203832";Keszü
+"0203896";Cserkút
+"0203975";Baksa
+"0203984";Nagybudmér
+"0204048";Tófű
+"0204136";Töttös
+"0204297";Kacsóta
+"0204385";Magyartelek
+"0204437";Udvar
+"0204482";Oroszló
+"0204516";Rózsafa
+"0204543";Feked
+"0204899";Bikal
+"0205139";Birján
+"0205209";Villánykövesd
+"0205403";Babarc
+"0205412";Magyarmecske
+"0205430";Magyarhertelend
+"0205485";Baranyaszentgyörgy
+"0205519";Siklós
+"0205528";Szörény
+"0205607";Szederkény
+"0205722";Kisbeszterce
+"0205892";Vokány
+"0205999";Kárász
+"0206062";Újpetre
+"0206099";Ellend
+"0206336";Kozármisleny
+"0206415";Kákics
+"0206479";Lapáncsa
+"0206725";Borjád
+"0206789";Kemse
+"0206798";Hidas
+"0206813";Mágocs
+"0206831";Kishajmás
+"0206868";Adorjás
+"0206886";Aranyosgadány
+"0206965";Katádfa
+"0206992";Kővágótöttös
+"0207010";Páprád
+"0207074";Vázsnok
+"0207126";Hetvehely
+"0207153";Palkonya
+"0207366";Szárász
+"0207533";Bürüs
+"0207560";Garé
+"0207603";Bánfa
+"0207694";Szőkéd
+"0207737";Merenye
+"0207773";Dencsháza
+"0208110";Kórós
+"0208138";Várad
+"0208299";Bakonya
+"0208341";Okorvölgy
+"0208475";Szajk
+"0208572";Kétújfalu
+"0208651";Kisszentmárton
+"0208800";Siklósnagyfalu
+"0208819";Felsőszentmárton
+"0209007";Szalatnak
+"0209159";Drávakeresztúr
+"0209186";Dunaszekcső
+"0209308";Szemely
+"0209450";Márfa
+"0209548";Kisvaszar
+"0209636";Görcsönydoboka
+"0209663";Babarcszőlős
+"0209803";Szentkatalin
+"0210038";Liptód
+"0210135";Palotabozsok
+"0210542";Kémes
+"0210694";Bogdása
+"0210746";Kistótfalu
+"0210825";Pécsvárad
+"0210940";Nagykozár
+"0211086";Cún
+"0211183";Kisdér
+"0211217";Szűr
+"0211402";Mecsekpölöske
+"0211518";Rádfalva
+"0211730";Orfű
+"0211952";Dinnyeberki
+"0212201";Zók
+"0212353";Kistamási
+"0212380";Drávapiski
+"0212548";Abaliget
+"0212645";Óbánya
+"0212751";Gerde
+"0212849";Kisjakabfalva
+"0212858";Nagyhajmás
+"0212867";Pereked
+"0213116";Boldogasszonyfa
+"0213286";Felsőegerszeg
+"0213310";Bicsérd
+"0213329";Almamellék
+"0213347";Gerényes
+"0213365";Botykapeterd
+"0213444";Mecseknádasd
+"0213499";Erzsébet
+"0213675";Tengeri
+"0213851";Csertő
+"0214119";Bezedek
+"0214191";Nagyváty
+"0214368";Bosta
+"0214483";Máriakéménd
+"0214517";Kovácsszénája
+"0214650";Nagynyárád
+"0215051";Matty
+"0215079";Szabadszentkirály
+"0215219";Marócsa
+"0215389";Pécsdevecser
+"0215404";Szulimán
+"0215495";Basal
+"0215538";Kővágószőlős
+"0215635";Tarrós
+"0215848";Zengővárkony
+"0215866";Szentlőrinc
+"0216027";Monyoród
+"0216115";Pellérd
+"0216285";Mindszentgodisa
+"0216355";Szentlászló
+"0216443";Markóc
+"0216461";Berkesd
+"0216498";Egyházasharaszti
+"0216771";Székelyszabar
+"0216805";Kékesd
+"0216975";Kisherend
+"0216984";Szellő
+"0217190";Helesfa
+"0217242";Pogány
+"0217385";Alsómocsolád
+"0217419";Drávafok
+"0217464";Kásád
+"0217604";Liget
+"0217747";Zádor
+"0217792";Patapoklosi
+"0217835";Fazekasboda
+"0217899";Kölked
+"0218050";Sámod
+"0218111";Nagycsány
+"0218236";Nemeske
+"0218315";Gyód
+"0218333";Gilvánfa
+"0218519";Vejti
+"0218555";Olasz
+"0218582";Túrony
+"0218661";Ózdfalu
+"0218704";Erdősmecske
+"0218865";Lúzsok
+"0218908";Kisasszonyfa
+"0219008";Belvárdgyula
+"0219132";Kátoly
+"0219415";Pécs
+"0219646";Ófalu
+"0219725";Versend
+"0219831";Szilágy
+"0219877";Nagypall
+"0219901";Csányoszró
+"0219910";Kiskassa
+"0220279";Véménd
+"0220376";Almáskeresztúr
+"0220464";Baranyahídvég
+"0220552";Királyegyháza
+"0220659";Márok
+"0220686";Okorág
+"0220862";Sárok
+"0220899";Boda
+"0220978";Téseny
+"0221023";Hegyszentmárton
+"0221096";Pécsudvard
+"0221281";Somogyviszló
+"0221519";Pécsbagota
+"0221528";Harkány
+"0221591";Csebény
+"0221616";Kislippó
+"0221698";Drávasztára
+"0221704";Old
+"0221892";Bogádmindszent
+"0222071";Velény
+"0222211";Szőke
+"0222257";Szalánta
+"0222266";Pócsa
+"0222275";Bakóca
+"0222424";Tormás
+"0222576";Csonkamindszent
+"0222600";Magyarszék
+"0222664";Gyöngyösmellék
+"0222734";Drávapalkonya
+"0222868";Kisbudmér
+"0222974";Lippó
+"0223074";Horváthertelend
+"0223162";Bükkösd
+"0223205";Siklósbodony
+"0223472";Somberek
+"0223506";Piskó
+"0223542";Magyarlukafa
+"0223764";Palé
+"0223807";Somogyapáti
+"0223959";Mohács
+"0224226";Kovácshida
+"0224378";Bár
+"0224402";Vékény
+"0224624";Lovászhetény
+"0224712";Szilvás
+"0224749";Baranyajenő
+"0224855";Romonya
+"0224925";Bisse
+"0224952";Vásárosbéc
+"0225070";Somogyhatvan
+"0225122";Zaláta
+"0225177";Magyarbóly
+"0225247";Köblény
+"0225292";Regenye
+"0225812";Ág
+"0225821";Erdősmárok
+"0226082";Cserdi
+"0226329";Nyugotszenterzsébet
+"0226408";Komló
+"0226578";Szigetvár
+"0226994";Tótszentgyörgy
+"0227021";Kisharsány
+"0227067";Magyarsarlós
+"0227164";Nagypeterd
+"0227298";Apátvarasd
+"0227401";Egyházaskozár
+"0227508";Szágy
+"0227702";Tékes
+"0227863";Majs
+"0227881";Hásságy
+"0227933";Himesháza
+"0228024";Villány
+"0228121";Drávacsepely
+"0228273";Endrőc
+"0228404";Gyöngyfa
+"0228529";Varga
+"0228538";Vajszló
+"0228583";Áta
+"0228608";Drávaszabolcs
+"0228617";Drávacsehi
+"0228741";Sellye
+"0228918";Egerág
+"0228927";Nagytótfalu
+"0229142";Somogyhárságy
+"0229522";Molvány
+"0229540";Mozsgó
+"0229753";Magyaregregy
+"0229762";Pettend
+"0229920";Maráza
+"0229948";Ipacsfa
+"0229966";Homorúd
+"0230030";Drávaszerdahely
+"0230049";Besence
+"0230438";Görcsöny
+"0230492";Mekényes
+"0230614";Csarnóta
+"0230836";Hosszúhetény
+"0230951";Hegyhátmaróc
+"0231060";Szava
+"0231389";Lothárd
+"0231431";Husztót
+"0231714";Sósvertike
+"0231927";Beremend
+"0231936";Illocska
+"0232009";Szentdénes
+"0232072";Teklafalu
+"0232151";Bogád
+"0232160";Sásd
+"0232373";Diósviszló
+"0232391";Drávaiványi
+"0232425";Peterd
+"0232744";Tésenfa
+"0233002";Bodolyabér
+"0233066";Ibafa
+"0233084";Gordisa
+"0233154";Bóly
+"0233215";Kisnyárád
+"0233233";Gödre
+"0233279";Alsószentmárton
+"0233330";Lánycsók
+"0233482";Sátorhely
+"0233613";Szentegát
+"0233756";Máza
+"0233765";Szászvár
+"0233899";Nagydobsza
+"0233905";Kisdobsza
+"0233923";Mánfa
+"0233932";Hobol
+"0234032";Szaporca
+"0300000";Bács-Kiskun Vármegyei Önkormányzat
+"0302149";Foktő
+"0302705";Pálmonostora
+"0302954";Felsőszentiván
+"0303230";Fajsz
+"0303522";Baja
+"0303577";Géderlak
+"0303656";Bátmonostor
+"0304093";Helvécia
+"0304109";Dusnok
+"0305786";Ladánybene
+"0305856";Kunadacs
+"0306044";Kunbaja
+"0306202";Lakitelek
+"0306442";Kalocsa
+"0307524";Drágszél
+"0307612";Dunavecse
+"0307728";Kunbaracs
+"0307861";Dunapataj
+"0308095";Imrehegy
+"0308305";Bócsa
+"0308350";Harkakötöny
+"0308378";Jászszentlászló
+"0308679";Öregcsertő
+"0308697";Bácsszentgyörgy
+"0308785";Újsolt
+"0309344";Kiskőrös
+"0309469";Jánoshalma
+"0310180";Bácsbokod
+"0310472";Császártöltés
+"0310533";Dávod
+"0310667";Városföld
+"0310719";Bácsalmás
+"0311280";Katymár
+"0311606";Dunaszentbenedek
+"0311794";Szank
+"0311864";Érsekcsanád
+"0311961";Bátya
+"0312025";Csólyospálos
+"0312344";Csengőd
+"0312566";Dunafalva
+"0312937";Hercegszántó
+"0313408";Ballószög
+"0313806";Kömpöc
+"0314058";Fülöpszállás
+"0314094";Tiszaug
+"0314544";Tataháza
+"0314766";Dunatetétlen
+"0315158";Zsana
+"0315398";Pirtó
+"0315431";Petőfiszállás
+"0315699";Csikéria
+"0316018";Mélykút
+"0316276";Ordas
+"0316294";Uszód
+"0316373";Csávoly
+"0316939";Orgovány
+"0317677";Lajosmizse
+"0317686";Ágasegyháza
+"0317923";Jakabszállás
+"0318166";Kéleshalom
+"0318218";Soltszentimre
+"0318458";Harta
+"0318670";Páhi
+"0318759";Hajós
+"0319327";Borota
+"0319530";Szakmár
+"0319789";Kecel
+"0319947";Szalkszentmárton
+"0319983";Soltvadkert
+"0320297";Kiskunfélegyháza
+"0320525";Tass
+"0321069";Dunaegyháza
+"0321120";Szentkirály
+"0321148";Apostag
+"0321245";Sükösd
+"0321944";Akasztó
+"0321999";Izsák
+"0322530";Kerekegyháza
+"0323056";Nyárlőrinc
+"0323357";Madaras
+"0324396";Kiskunmajsa
+"0324545";Tiszaalpár
+"0324998";Tázlár
+"0325061";Szabadszállás
+"0325432";Tabdi
+"0325937";Balotaszállás
+"0325955";Nagybaracska
+"0326310";Rém
+"0326383";Gátér
+"0326471";Csátalja
+"0326684";Kecskemét
+"0327234";Bácsborsód
+"0327571";Kelebia
+"0327809";Mátételke
+"0327845";Homokmégy
+"0328130";Kunszentmiklós
+"0328158";Kisszállás
+"0328343";Vaskút
+"0328486";Tompa
+"0328820";Szeremle
+"0329027";Kunfehértó
+"0329115";Solt
+"0330155";Bácsszőlős
+"0330605";Kaskantyú
+"0330623";Tiszakécske
+"0330632";Miske
+"0331468";Fülöpháza
+"0331848";Gara
+"0331893";Kunszállás
+"0331918";Kunpeszér
+"0332434";Kiskunhalas
+"0332540";Nemesnádudvar
+"0332823";Bugac
+"0333589";Érsekhalma
+"0333598";Felsőlajos
+"0333604";Újtelek
+"0333622";Fülöpjakab
+"0333631";Bugacpusztaháza
+"0334096";Móricgát
+"0400000";Békés Vármegyei Önkormányzat
+"0402352";Újkígyós
+"0402680";Békésszentandrás
+"0403106";Kétsoprony
+"0403461";Kétegyháza
+"0404206";Mezőgyán
+"0404242";Nagykamarás
+"0404279";Kamut
+"0405032";Gyula
+"0405397";Pusztaföldvár
+"0406257";Zsadány
+"0406804";Kötegyán
+"0407393";Gerendás
+"0408244";Nagyszénás
+"0409432";Ecsegfalva
+"0409511";Gádoros
+"0409760";Békés
+"0410287";Kondoros
+"0410764";Körösnagyharsány
+"0411536";Magyardombegyház
+"0411615";Körösladány
+"0411873";Mezőhegyes
+"0411989";Murony
+"0412177";Kardoskút
+"0412256";Füzesgyarmat
+"0412618";Kertészsziget
+"0412681";Telekgerendás
+"0412900";Köröstarcsa
+"0413471";Bucsa
+"0415200";Békéscsaba
+"0416045";Kunágota
+"0416434";Tótkomlós
+"0417394";Geszt
+"0418102";Battonya
+"0418838";Kisdombegyház
+"0419257";Okány
+"0419390";Bélmegyer
+"0419594";Pusztaottlaka
+"0419628";Mezőberény
+"0420455";Csanádapáca
+"0420765";Medgyesbodzás
+"0421209";Lőkösháza
+"0421883";Szeghalom
+"0422132";Dombiratos
+"0422752";Kaszaper
+"0423065";Orosháza
+"0423870";Szarvas
+"0423931";Méhkerék
+"0424031";Dombegyház
+"0424350";Újszalonta
+"0424794";Kardos
+"0424819";Dévaványa
+"0425168";Sarkadkeresztúr
+"0425502";Csárdaszállás
+"0426028";Nagybánhegyes
+"0426189";Békéssámson
+"0426709";Csorvás
+"0427438";Örménykút
+"0427906";Magyarbánhegyes
+"0428565";Sarkad
+"0429531";Vésztő
+"0429595";Almáskamarás
+"0429610";Biharugra
+"0430128";Medgyesegyháza
+"0430164";Körösújfalu
+"0430322";Mezőkovácsháza
+"0431228";Végegyháza
+"0431325";Szabadkígyós
+"0431334";Csabacsűd
+"0431574";Kevermes
+"0432957";Elek
+"0433075";Tarhos
+"0433190";Doboz
+"0433297";Hunya
+"0433455";Gyomaendrőd
+"0434078";Csabaszabadi
+"0500000";Borsod-Abaúj-Zemplén Vármegyei Önkormányzat
+"0502024";Martonyi
+"0502158";Muhi
+"0502273";Abaújvár
+"0502282";Hejőkürt
+"0502291";Tiszabábolna
+"0502468";Hegymeg
+"0502741";Fáj
+"0502820";Abaújlak
+"0502848";Felsőzsolca
+"0502866";Oszlár
+"0502875";Sáta
+"0503063";Zádorfalva
+"0503081";Sajóhídvég
+"0503133";Taktaszada
+"0503160";Szuhafő
+"0503212";Sajóivánka
+"0503443";Mezőzombor
+"0503504";Sajóbábony
+"0503531";Léh
+"0503595";Abaújszántó
+"0503708";Taktabáj
+"0503717";Tiszadorogma
+"0503744";Gagyvendégi
+"0503762";Kiskinizs
+"0503771";Arnót
+"0503805";Szakáld
+"0503823";Ároktő
+"0503902";Mád
+"0503939";Cigánd
+"0503957";Viszló
+"0504215";Nyomár
+"0504233";Aszaló
+"0504419";Nyésta
+"0504604";Hejőkeresztúr
+"0504677";Emőd
+"0504686";Dédestapolcsány
+"0504729";Sály
+"0504914";Trizs
+"0505005";Irota
+"0505069";Györgytarló
+"0505096";Viss
+"0505120";Sátoraljaújhely
+"0505245";Nemesbikk
+"0505306";Bőcs
+"0505315";Borsodnádasd
+"0505333";Csobád
+"0505458";Kenézlő
+"0505494";Gadna
+"0505582";Nagycsécs
+"0505591";Izsófalva
+"0505847";Harsány
+"0505865";Egerlövő
+"0505926";Bódvaszilas
+"0506053";Ragály
+"0506123";Dövény
+"0506460";Füzérkajata
+"0506655";Hejőbába
+"0506691";Kazincbarcika
+"0506707";Borsodivánka
+"0506929";Bekecs
+"0506974";Cserépfalu
+"0507038";Lénárddaróc
+"0507223";Vadna
+"0507588";Felsőregmec
+"0507719";Dámóc
+"0507764";Kánó
+"0507825";Monok
+"0507889";Szőlősardó
+"0508004";Hét
+"0508022";Bükkszentkereszt
+"0508077";Szendrő
+"0508086";Ináncs
+"0508129";Sajóörös
+"0508147";Szászfa
+"0508165";Tard
+"0508174";Felsőberecki
+"0508217";Alsótelekes
+"0508396";Boldva
+"0508402";Regéc
+"0508484";Szentistvánbaksa
+"0508493";Csenyéte
+"0508633";Tiszapalkonya
+"0508846";Baskó
+"0508970";Sajósenye
+"0509016";Monaj
+"0509317";Révleányvár
+"0509362";Aggtelek
+"0509399";Hernádcéce
+"0509496";Szirmabesenyő
+"0509706";Gömörszőlős
+"0509742";Felsődobsza
+"0509830";Szemere
+"0510144";Varbóc
+"0510171";Sajógalgóc
+"0510357";Abod
+"0510366";Füzérradvány
+"0510375";Tornakápolna
+"0510524";Detek
+"0510612";Komjáti
+"0510728";Edelény
+"0510904";Garadna
+"0510968";Mogyoróska
+"0510977";Tiszavalk
+"0511022";Zsujta
+"0511110";Szuhakálló
+"0511226";Hangács
+"0511323";Mezőkeresztes
+"0511332";Sajónémeti
+"0511350";Damak
+"0511378";Füzérkomlós
+"0511448";Kisrozvágy
+"0511493";Szinpetri
+"0511581";Vilmány
+"0511660";Legyesbénye
+"0511697";Hidasnémeti
+"0511749";Mezőnyárád
+"0511758";Meszes
+"0511819";Kurityán
+"0512034";Kelemér
+"0512159";Hejőszalonta
+"0512210";Tállya
+"0512362";Pálháza
+"0512371";Pamlény
+"0512399";Kistokaj
+"0512469";Rátka
+"0512487";Újcsanálos
+"0512557";Fancsal
+"0512706";Háromhuta
+"0512885";Nyékládháza
+"0512982";Vilyvitány
+"0513134";Golop
+"0513268";Sóstófalva
+"0513356";Égerszög
+"0513374";Kázsmárk
+"0513596";Bükkábrány
+"0513763";Telkibánya
+"0513833";Mezőcsát
+"0513888";Tiszakeszi
+"0513976";Tiszakarád
+"0514289";Csokvaomány
+"0514313";Sajókaza
+"0514331";Arló
+"0514401";Bodrogolaszi
+"0514429";Alsógagy
+"0514474";Boldogkőváralja
+"0514492";Ózd
+"0514702";Kissikátor
+"0514784";Tardona
+"0514890";Tomor
+"0514915";Mályinka
+"0515149";Vámosújfalu
+"0515264";Kéked
+"0515413";Pusztaradvány
+"0515468";Nagyhuta
+"0515608";Gesztely
+"0515617";Zalkod
+"0515662";Abaújalpár
+"0515680";Jósvafő
+"0515839";Hernádbűd
+"0515857";Lak
+"0515893";Pácin
+"0515936";Gönc
+"0515945";Sajómercse
+"0516054";Sajószentpéter
+"0516124";Borsodgeszt
+"0516133";Rakacaszend
+"0516179";Szögliget
+"0516559";Komlóska
+"0516577";Imola
+"0516638";Sajópetri
+"0516753";Szalonna
+"0516780";Hejőpapi
+"0516799";Borsodszirák
+"0516902";Tornabarakony
+"0517048";Pusztafalu
+"0517066";Keresztéte
+"0517109";Füzér
+"0517136";Hernádszentandrás
+"0517349";Kiscsécs
+"0517932";Fony
+"0518184";Baktakék
+"0518245";Taktaharkány
+"0518306";Tokaj
+"0518351";Uppony
+"0518379";Mezőnagymihály
+"0518537";Sajópálfala
+"0518643";Göncruszka
+"0518722";Kupa
+"0518801";Tornanádaska
+"0518892";Szomolya
+"0518944";Boldogkőújfalu
+"0519105";Zubogy
+"0519220";Ricse
+"0519275";Ziliz
+"0519293";Galvács
+"0519381";Tiszaladány
+"0519406";Bükkmogyorósd
+"0519433";Mezőkövesd
+"0519576";Krasznokvajda
+"0519600";Makkoshotyka
+"0519664";Alsódobsza
+"0519840";Hernádvécse
+"0520233";Jákfalva
+"0520482";Alsóberecki
+"0520516";Sárazsadány
+"0520738";Sajóvámos
+"0520774";Csobaj
+"0520844";Lácacséke
+"0520871";Szin
+"0520969";Gibárt
+"0521032";Alsózsolca
+"0521087";Vizsoly
+"0521193";Radostyán
+"0521218";Karcsa
+"0521236";Homrogd
+"0521272";Prügy
+"0521351";Szikszó
+"0521546";Múcsony
+"0521564";Girincs
+"0521670";Sajókápolna
+"0521740";Tarcal
+"0521768";Megyaszó
+"0521810";Varbó
+"0521829";Hernádkércs
+"0521953";Bánréve
+"0522123";Fulókércs
+"0522169";Szentistván
+"0522187";Hejce
+"0522479";Sajólászlófalva
+"0522503";Erdőhorváti
+"0522521";Balajt
+"0522558";Onga
+"0522628";Ónod
+"0522840";Kisgyőr
+"0522956";Korlát
+"0523029";Rudabánya
+"0523223";Alsóregmec
+"0523418";Sima
+"0523533";Felsővadász
+"0523719";Gelej
+"0523737";Bodroghalom
+"0523755";Semjén
+"0523782";Sajópüspöki
+"0523977";Büttös
+"0524156";Négyes
+"0524165";Hernádkak
+"0524253";Mikóháza
+"0524420";Pere
+"0524606";Szuhogy
+"0524730";Pányok
+"0524882";Hernádpetri
+"0524970";Hernádszurdok
+"0525104";Hangony
+"0525159";Bánhorváti
+"0525195";Bogács
+"0525238";Filkeháza
+"0525326";Erdőbénye
+"0525380";Selyeb
+"0525399";Igrici
+"0525575";Cserépváralja
+"0525618";Méra
+"0525672";Hidvégardó
+"0525690";Domaháza
+"0525742";Kány
+"0526198";Arka
+"0526231";Ládbesenyő
+"0526338";Abaújszolnok
+"0526356";Berzék
+"0526435";Nyíri
+"0526505";Nagykinizs
+"0526602";Köröm
+"0526657";Járdánháza
+"0526718";Abaújkér
+"0526745";Parasznya
+"0526949";Sajókeresztúr
+"0527049";Becskeháza
+"0527173";Sajólád
+"0527191";Novajidrány
+"0527331";Sajóecseg
+"0527395";Mályi
+"0527410";Putnok
+"0527429";Bódvalenke
+"0527456";Szendrőlád
+"0527474";Sárospatak
+"0527669";Dubicsány
+"0527757";Sajóvelezd
+"0527836";Tornaszentandrás
+"0527890";Bükkaranyos
+"0527942";Halmaj
+"0528033";Nekézseny
+"0528051";Tolcsva
+"0528219";Litka
+"0528307";Gagybátor
+"0528352";Tiszaújváros
+"0528398";Tiszalúc
+"0528459";Csernely
+"0528547";Kovácsvágás
+"0528635";Teresztenye
+"0528732";Gagyapáti
+"0528787";Taktakenéz
+"0528839";Alsószuha
+"0528875";Kishuta
+"0529054";Tornyosnémeti
+"0529133";Tiszacsermely
+"0529151";Vágáshuta
+"0529188";Nagybarca
+"0529249";Kesznyéten
+"0529674";Beret
+"0529708";Felsőgagy
+"0529717";Rakaca
+"0529814";Alsóvadász
+"0530003";Vajdácska
+"0530076";Vatta
+"0530137";Hercegkút
+"0530207";Borsodszentgyörgy
+"0530298";Tiszatardos
+"0530340";Sajószöged
+"0530377";Tiszatarján
+"0530447";Tibolddaróc
+"0530456";Miskolc
+"0530483";Forró
+"0530508";Karos
+"0530517";Tornaszentjakab
+"0530669";Borsodbóta
+"0530739";Szerencs
+"0530784";Bodrogkeresztúr
+"0531006";Bózsva
+"0531015";Szalaszend
+"0531167";Hollóháza
+"0531200";Hernádnémeti
+"0531510";Szegilong
+"0531608";Zemplénagárd
+"0531671";Felsőtelekes
+"0531723";Felsőkelecsény
+"0531778";Olaszliszka
+"0531884";Répáshuta
+"0531909";Rásonysápberencs
+"0531954";Debréte
+"0532090";Királd
+"0532258";Szakácsi
+"0532498";Kondó
+"0532531";Serényfalva
+"0532683";Perecse
+"0532762";Felsőnyárád
+"0532887";Bükkzsérc
+"0532993";Kács
+"0533048";Encs
+"0533093";Alacska
+"0533181";Nagyrozvágy
+"0533303";Bódvarákó
+"0533419";Perkupa
+"0533808";Bodrogkisfalud
+"0533817";Szegi
+"0534069";Ormosbánya
+"0534111";Csincse
+"0534120";Rudolftelep
+"0534272";Farkaslyuk
+"0534290";Berente
+"0600000";Csongrád-Csanád Vármegyei Önkormányzat
+"0602121";Csanádalberti
+"0603966";Ruzsa
+"0604349";Mórahalom
+"0605111";Csongrád
+"0605379";Csanádpalota
+"0605546";Zákányszék
+"0605962";Magyarcsanád
+"0606284";Pitvaros
+"0606354";Pusztamérges
+"0607357";Makó
+"0607755";Óföldeák
+"0607834";Derekegyház
+"0608192";Bordány
+"0608253";Klárafalva
+"0608314";Hódmezővásárhely
+"0609210";Földeák
+"0609955";Kövegy
+"0610339";Ásotthalom
+"0610515";Maroslele
+"0612007";Szatymaz
+"0612265";Székkutas
+"0612779";Nagylak
+"0612797";Ópusztaszer
+"0613161";Röszke
+"0613383";Domaszék
+"0613666";Királyhegyes
+"0614252";Apátfalva
+"0614410";Kübekháza
+"0614456";Szentes
+"0614924";Újszentiván
+"0616197";Ambrózfalva
+"0616966";Tiszasziget
+"0617233";Nagymágocs
+"0617765";Zsombó
+"0618999";Ferencszállás
+"0619062";Árpádhalom
+"0619974";Fábiánsebestyén
+"0620914";Nagyér
+"0621412";Üllés
+"0621555";Mindszent
+"0622293";Csanytelek
+"0622646";Felgyő
+"0622992";Eperjes
+"0623676";Balástya
+"0624077";Deszk
+"0625733";Mártély
+"0625900";Tömörkény
+"0626666";Kiszombor
+"0628592";Pusztaszer
+"0629106";Baks
+"0629179";Nagytőke
+"0630535";Dóc
+"0631024";Kistelek
+"0631079";Öttömös
+"0631705";Sándorfalva
+"0632285";Csengele
+"0632489";Szegvár
+"0633020";Forráskút
+"0633367";Szeged
+"0634245";Algyő
+"0700000";Fejér Vármegyei Önkormányzat
+"0702015";Ráckeresztúr
+"0702200";Isztimér
+"0702316";Etyek
+"0702343";Kincsesbánya
+"0702459";Vajta
+"0702699";Sárkeszi
+"0702723";Sáregres
+"0702750";Vértesacsa
+"0702802";Enying
+"0702893";Söréd
+"0703115";Dunaújváros
+"0703498";Vereb
+"0704659";Martonvásár
+"0705360";Csákberény
+"0705689";Mezőkomárom
+"0705829";Vál
+"0706114";Füle
+"0706576";Mezőszentgyörgy
+"0706734";Csősz
+"0707001";Nagykarácsony
+"0707047";Baracs
+"0707269";Lepsény
+"0707506";Lajoskomárom
+"0708466";Beloiannisz
+"0708581";Baracska
+"0708730";Bakonycsernye
+"0708925";Adony
+"0709779";Csór
+"0709900";Rácalmás
+"0710296";Gárdony
+"0710481";Bicske
+"0711624";Bodmér
+"0711776";Sárszentmihály
+"0712636";Kisapostag
+"0713152";Cece
+"0713259";Szabadegyháza
+"0713462";Iváncsa
+"0713897";Vértesboglár
+"0713903";Nádasdladány
+"0714465";Tabajd
+"0714827";Székesfehérvár
+"0714951";Sukoró
+"0715176";Alcsútdoboz
+"0715750";Gánt
+"0715918";Gyúró
+"0715972";Jenő
+"0716346";Besnyő
+"0716683";Káloz
+"0716948";Mátyásdomb
+"0717376";Aba
+"0717482";Újbarok
+"0717525";Polgárdi
+"0717552";Mezőfalva
+"0717622";Úrhida
+"0717738";Igar
+"0717774";Pusztavám
+"0718254";Bodajk
+"0718485";Mór
+"0718740";Szabadhídvég
+"0719114";Lovasberény
+"0719354";Perkáta
+"0719549";Szár
+"0720002";Csákvár
+"0720206";Seregélyes
+"0720358";Előszállás
+"0721005";Tordas
+"0721342";Kajászó
+"0721786";Pázmánd
+"0721908";Csókakő
+"0721926";Kápolnásnyék
+"0723153";Bakonykúti
+"0723427";Hantos
+"0723490";Mány
+"0723588";Nagyveleg
+"0723603";Ercsi
+"0723694";Sárbogárd
+"0725016";Velence
+"0725140";Sárosd
+"0725283";Alsószentiván
+"0725344";Sárkeresztúr
+"0725715";Moha
+"0725751";Pákozd
+"0726134";Nagyvenyim
+"0726824";Alap
+"0727599";Nadap
+"0727678";Magyaralmás
+"0728705";Szabadbattyán
+"0728848";Pátka
+"0728990";Kisláng
+"0729018";Pusztaszabolcs
+"0729036";Mezőszilas
+"0729267";Tác
+"0729939";Felcsút
+"0730243";Zámoly
+"0730544";Csabdi
+"0730650";Kőszárhegy
+"0731103";Balinka
+"0731538";Sárszentágota
+"0731802";Sárkeresztes
+"0732018";Iszkaszentgyörgy
+"0732203";Fehérvárcsurgó
+"0732364";Nagylók
+"0732753";Dég
+"0733321";Soponya
+"0734209";Kulcs
+"0734263";Zichyújfalu
+"0734306";Óbarok
+"0734342";Daruszentmiklós
+"0800000";Győr-Moson-Sopron Vármegyei Önkormányzat
+"0802060";Gönyű
+"0802079";Dunaremete
+"0802237";Vág
+"0802361";Nagybajcs
+"0802413";Kisbabot
+"0802495";Nagycenk
+"0802556";Mórichida
+"0802617";Sopronnémeti
+"0802635";Öttevény
+"0803364";Szilsárkány
+"0803753";Rábcakapi
+"0803887";Szerecseny
+"0804020";Himod
+"0804039";Csorna
+"0804172";Tárnokréti
+"0804367";Bogyoszló
+"0804376";Lázi
+"0804589";Veszkény
+"0804622";Zsira
+"0804783";Mosonmagyaróvár
+"0804792";Rábacsanak
+"0804880";Ágfalva
+"0805014";Vének
+"0805944";Bakonyszentlászló
+"0806196";Barbacs
+"0806220";Bodonhely
+"0806239";Vadosfa
+"0806619";Börcs
+"0806646";Jobaháza
+"0806770";Markotabödöge
+"0806895";Kópháza
+"0806956";Fehértó
+"0807481";Győrújbarát
+"0807649";Harka
+"0807746";Répcevis
+"0807816";Kisbodak
+"0808518";Sopron
+"0808536";Szany
+"0808563";Csapod
+"0808606";Sikátor
+"0808721";Győrasszonyfa
+"0809487";Fertőendréd
+"0809885";Fertőd
+"0810029";Hövej
+"0810047";Csáfordjánosfa
+"0810454";Dunasziget
+"0810560";Bezi
+"0810588";Beled
+"0810658";Fertőhomok
+"0811068";Röjtökmuzsaj
+"0811253";Fertőboz
+"0811262";Kóny
+"0811369";Szakony
+"0811457";Tényő
+"0811882";Abda
+"0812113";Kajárpéc
+"0812283";Máriakálnok
+"0812308";Hédervár
+"0812405";Vámosszabadi
+"0812414";Fertőrákos
+"0812627";Sokorópátka
+"0812715";Pázmándfalu
+"0812812";Mezőörs
+"0812955";Nyúl
+"0812964";Püski
+"0813198";Győrladamér
+"0813505";Csikvánd
+"0813912";Magyarkeresztúr
+"0814261";Táp
+"0814438";Répceszemere
+"0814687";Pinnye
+"0814748";Kimle
+"0814793";Rábakecöl
+"0815033";Enese
+"0815042";Babót
+"0815121";Osli
+"0815228";Győrzámoly
+"0815237";Egyházasfalu
+"0815273";Rábaszentandrás
+"0815343";Fertőszentmiklós
+"0815422";Rábatamási
+"0815501";Bősárkány
+"0815529";Pér
+"0815653";Győrszemere
+"0815714";Szárföld
+"0815875";Dunaszentpál
+"0815954";Cirák
+"0816221";Lipót
+"0816319";Völcsej
+"0816674";Töltéstava
+"0816708";Écs
+"0816869";Zsebeháza
+"0817297";Rábaszentmiklós
+"0817507";Románd
+"0817880";Vásárosfalu
+"0817905";Hegyeshalom
+"0817969";Gyalóka
+"0818403";Hegykő
+"0818412";Várbalog
+"0819035";Tét
+"0819239";Levél
+"0819266";Szil
+"0819309";Győrsövényház
+"0819637";Páli
+"0819673";Újkér
+"0819752";Nyalka
+"0820136";Rábasebes
+"0820288";Egyed
+"0820385";Mérges
+"0820400";Gyömöre
+"0820604";Ikrény
+"0820792";Und
+"0821078";Dunaszeg
+"0821801";Ravazd
+"0821865";Darnózseli
+"0821917";Dör
+"0821971";Tápszentmiklós
+"0821980";Mihályi
+"0822062";Bakonypéterd
+"0822442";Edve
+"0822691";Veszprémvarsány
+"0822831";Petőháza
+"0822886";Kisbajcs
+"0823375";Hidegség
+"0823481";Pásztori
+"0823773";Pereszteg
+"0823843";Gyóró
+"0824208";Sobor
+"0824305";Pannonhalma
+"0824633";Koroncó
+"0824721";Rábapordány
+"0825335";Rábapatona
+"0825584";Győr
+"0825724";Sopronkövesd
+"0825797";Vitnyéd
+"0826347";Ebergőc
+"0826444";Maglóca
+"0826587";Rajka
+"0826790";Halászi
+"0826860";Gyarmat
+"0826921";Ásványráró
+"0827085";Cakóháza
+"0827304";Potyond
+"0827359";Mecsér
+"0827739";Dunakiliti
+"0828149";Mosonszolnok
+"0828334";Kapuvár
+"0828769";Bágyogszovát
+"0828936";Bakonygyirót
+"0829090";Sopronhorpács
+"0829221";Jánossomorja
+"0829328";Nemeskér
+"0829407";Agyagosszergény
+"0829805";Bezenye
+"0830021";Sarród
+"0830191";Csér
+"0830678";Fenyőfő
+"0831194";Lövő
+"0831316";Győrság
+"0831370";Pusztacsalád
+"0831440";Fertőszéplak
+"0831626";Kunsziget
+"0831635";Iván
+"0831787";Győrújfalu
+"0831839";Újrónafő
+"0832249";Árpás
+"0832595";Dénesfa
+"0832717";Feketeerdő
+"0832939";Nagylózs
+"0833251";Felpéc
+"0833385";Acsalag
+"0833543";Nagyszentjános
+"0833668";Lébény
+"0833677";Mosonszentmiklós
+"0833695";Kisfalud
+"0833701";Rábacsécsény
+"0833710";Rábaszentmihály
+"0833914";Tarjánpuszta
+"0833950";Bőny
+"0833969";Rétalap
+"0833996";Farád
+"0834351";Károlyháza
+"0834412";Mosonudvar
+"0900000";Hajdú-Bihar Vármegyei Önkormányzat
+"0902167";Komádi
+"0902307";Kaba
+"0902918";Balmazújváros
+"0903045";Hajdúböszörmény
+"0903258";Földes
+"0903319";Ártánd
+"0903683";Magyarhomorog
+"0904118";Hortobágy
+"0904817";Zsáka
+"0905175";Hajdúszoboszló
+"0905573";Derecske
+"0905768";Létavértes
+"0906187";Nyíradony
+"0906266";Hosszúpályi
+"0906309";Nagyrábé
+"0908907";Nagykereki
+"0908943";Körösszegapáti
+"0908989";Vámospércs
+"0909478";Nagyhegyes
+"0910162";Püspökladány
+"0910393";Hajdúhadház
+"0911138";Vekerd
+"0911837";Pocsaj
+"0911925";Újtikos
+"0912450";Csökmő
+"0912788";Berettyóújfalu
+"0912803";Hajdúdorog
+"0914003";Nyíracsád
+"0914137";Bojt
+"0914614";Ebes
+"0914678";Darvas
+"0915130";Debrecen
+"0915167";Bakonszeg
+"0915477";Kismarja
+"0915644";Tiszacsege
+"0915741";Egyek
+"0916568";Görbeháza
+"0916762";Váncsod
+"0916993";Furta
+"0917455";Kokad
+"0917473";Hajdúszovát
+"0918175";Gáborján
+"0918467";Berekböszörmény
+"0918847";Mezősas
+"0919099";Szentpéterszeg
+"0919691";Tetétlen
+"0919956";Biharkeresztes
+"0920011";Bagamér
+"0920419";Újléta
+"0922150";Fülöp
+"0922406";Hajdúnánás
+"0923117";Polgár
+"0923214";Téglás
+"0923393";Újiráz
+"0923940";Sárrétudvari
+"0924217";Mikepércs
+"0924828";Biharnagybajom
+"0925007";Sáránd
+"0925256";Bihardancsháza
+"0925469";Esztár
+"0925876";Told
+"0925894";Monostorpályi
+"0925964";Konyár
+"0926116";Sáp
+"0926170";Hajdúbagos
+"0926693";Báránd
+"0927641";Álmosd
+"0928103";Nádudvar
+"0929391";Hencida
+"0929887";Bihartorda
+"0930845";Tiszagyulaháza
+"0931033";Mezőpeterd
+"0931042";Tépe
+"0931097";Hajdúsámson
+"0931130";Körösszakál
+"0932294";Nyírábrány
+"0932382";Nyírmártonfalva
+"0932568";Újszentmargita
+"0933437";Szerep
+"0933446";Bedő
+"0934014";Folyás
+"0934102";Bocskaikert
+"1000000";Heves Vármegyei Önkormányzat
+"1002963";Bükkszék
+"1002981";Egerfarmos
+"1003276";Füzesabony
+"1003382";Szarvaskő
+"1003452";Boldog
+"1003513";Visznek
+"1004084";Hevesvezekény
+"1004145";Hort
+"1004400";Bekölce
+"1005236";Gyöngyös
+"1005643";Szilvásvárad
+"1005759";Vécs
+"1005935";Karácsond
+"1006345";Aldebrő
+"1006503";Átány
+"1007083";Tiszanána
+"1007180";Sarud
+"1007241";Apc
+"1007436";Parád
+"1007515";Domoszló
+"1008323";Gyöngyöspata
+"1008527";Sirok
+"1008660";Demjén
+"1009052";Tarnaszentmária
+"1009201";Detk
+"1009609";Recsk
+"1009964";Tófalu
+"1009982";Szűcsi
+"1010074";Istenmezeje
+"1010241";Hevesaranyos
+"1010418";Nagyút
+"1010621";Bükkszenterzsébet
+"1011013";Szihalom
+"1011411";Halmajugra
+"1011527";Balaton
+"1012070";Pétervására
+"1012229";Terpes
+"1012432";Fedémes
+"1012502";Kisnána
+"1012821";Egerbakta
+"1013231";Szentdomonkos
+"1013240";Tarnalelesz
+"1013338";Gyöngyösoroszi
+"1013523";Szúcs
+"1013648";Egerszólát
+"1013879";Ivád
+"1014076";Tenk
+"1014128";Tarnaörs
+"1014526";Heves
+"1014535";Kömlő
+"1014580";Vámosgyörk
+"1014872";Mátraderecske
+"1014933";Bodony
+"1015307";Kápolna
+"1015796";Ludas
+"1016063";Szajla
+"1016090";Atkár
+"1016160";Tarnaszentmiklós
+"1016328";Felsőtárkány
+"1016540";Markaz
+"1016610";Egercsehi
+"1016841";Csány
+"1017163";Tarnazsadány
+"1017181";Ecséd
+"1017534";Gyöngyöshalász
+"1017987";Andornaktálya
+"1018281";Kisköre
+"1018810";Noszvaj
+"1019123";Gyöngyössolymos
+"1019567";Pély
+"1019965";Mátraballa
+"1020118";Erk
+"1020215";Parádsasvár
+"1020242";Heréd
+"1020491";Eger
+"1020747";Feldebrő
+"1021722";Zagyvaszántó
+"1022099";Bükkszentmárton
+"1022196";Poroszló
+"1022309";Hatvan
+"1022354";Boconád
+"1022460";Kisfüzes
+"1023241";Adács
+"1023348";Tarnaméra
+"1023445";Zaránk
+"1023995";Kompolt
+"1024022";Bátor
+"1024147";Verpelét
+"1024235";Erdőtelek
+"1024554";Abasár
+"1024758";Egerszalók
+"1024943";Nagykökényes
+"1025089";Mezőszemere
+"1026019";Egerbocs
+"1026879";Nagyfüged
+"1027012";Váraszó
+"1027216";Ostoros
+"1027517";Besenyőtelek
+"1027605";Nagytálya
+"1027623";Újlőrincfalva
+"1027650";Rózsaszentmárton
+"1027696";Maklár
+"1028079";Kerecsend
+"1028088";Gyöngyöstarján
+"1028282";Nagyvisnyó
+"1028556";Erdőkövesd
+"1029045";Mátraszentimre
+"1029276";Novaj
+"1030261";Dormánd
+"1030401";Lőrinci
+"1031246";Visonta
+"1031282";Mikófalva
+"1031486";Nagyréde
+"1031565";Mónosbél
+"1031662";Mezőtárkány
+"1032179";Kál
+"1032966";Tarnabod
+"1033260";Bélapátfalva
+"1033686";Petőfibánya
+"1034324";Pálosvörösmart
+"1034379";Kerekharaszt
+"1100000";Komárom-Esztergom Vármegyei Önkormányzat
+"1102510";Kocs
+"1104428";Ács
+"1104525";Kecskéd
+"1105449";Komárom
+"1106521";Gyermely
+"1106594";Dömös
+"1106664";Ete
+"1106682";Aka
+"1107311";Bokod
+"1107630";Kömlőd
+"1108624";Bársonyos
+"1108688";Süttő
+"1108758";Tát
+"1110490";Dorog
+"1110995";Kerékteleki
+"1111891";Héreg
+"1114155";Tokod
+"1114669";Pilismarót
+"1115255";Lábatlan
+"1115282";Vértessomló
+"1115352";Nyergesújfalu
+"1116416";Császár
+"1116744";Bajna
+"1117251";Várgesztes
+"1117330";Kisbér
+"1118139";Ácsteszér
+"1118157";Tatabánya
+"1118272";Csép
+"1118926";Csolnok
+"1118935";Tarján
+"1119363";Bábolna
+"1120127";Tata
+"1120163";Naszály
+"1120923";Kisigmánd
+"1120987";Tárkány
+"1121421";Szomor
+"1121874";Piliscsév
+"1122372";Nagyigmánd
+"1122381";Bakonyszombathely
+"1122619";Szomód
+"1122637";Máriahalom
+"1122910";Dág
+"1123852";Ászár
+"1124101";Dunaszentmiklós
+"1124244";Bakonybánk
+"1125131";Esztergom
+"1125229";Bakonysárkány
+"1125487";Leányvár
+"1126903";Sárisáp
+"1126930";Mocsa
+"1127076";Nagysáp
+"1127632";Úny
+"1128255";Mogyorósbánya
+"1129212";Baj
+"1129355";Bajót
+"1129577";Kesztölc
+"1129629";Vértestolna
+"1129638";Epöl
+"1130012";Réde
+"1130225";Tardos
+"1130553";Környe
+"1130766";Oroszlány
+"1131264";Vértesszőlős
+"1131422";Bana
+"1131990";Súr
+"1132346";Almásfüzitő
+"1132586";Vérteskethely
+"1133109";Csatka
+"1133163";Dad
+"1133491";Szárliget
+"1133516";Szákszend
+"1133640";Csém
+"1133826";Neszmély
+"1133835";Dunaalmás
+"1134023";Tokodaltáró
+"1134227";Annavölgy
+"1200000";Nógrád Vármegyei Önkormányzat
+"1201508";Ipolyszög
+"1201526";Somoskőújfalu
+"1202389";Bercel
+"1202778";Ludányhalászi
+"1203249";Őrhalom
+"1203328";Ipolytarnóc
+"1203665";Cered
+"1203841";Bokor
+"1203993";Héhalom
+"1204251";Ecseg
+"1204330";Mátraszőlős
+"1204358";Nógrád
+"1204507";Szendehely
+"1204844";Terény
+"1204871";Litke
+"1205050";Csitár
+"1205324";Herencsény
+"1205883";Palotás
+"1205980";Egyházasgerge
+"1206381";Tolmács
+"1206628";Szécsény
+"1206743";Diósjenő
+"1207199";Patak
+"1207320";Debercsény
+"1207409";Pásztó
+"1207621";Alsótold
+"1207959";Szilaspogony
+"1208156";Drégelypalánk
+"1208387";Nógrádsáp
+"1208642";Kálló
+"1208712";Jobbágyi
+"1208855";Karancskeszi
+"1209034";Berkenye
+"1209043";Szente
+"1209797";Nézsa
+"1209894";Borsosberény
+"1210199";Szarvasgede
+"1210320";Vizslás
+"1211590";Piliny
+"1211846";Kétbodony
+"1212016";Becske
+"1212131";Nógrádmegyer
+"1212195";Romhány
+"1212511";Dejtár
+"1212520";Ságújfalu
+"1213204";Hont
+"1213222";Mihálygerge
+"1213657";Balassagyarmat
+"1213718";Horpács
+"1213754";Szanda
+"1213842";Kozárd
+"1214234";Buják
+"1214641";Márkháza
+"1214881";Sóshartyán
+"1215325";Szátok
+"1215370";Etes
+"1216391";Nagybárkány
+"1216425";Alsópetény
+"1216878";Hugyag
+"1217659";Egyházasdengeleg
+"1217862";Pusztaberki
+"1218494";Garáb
+"1218625";Karancsalja
+"1218786";Szügy
+"1219044";Szurdokpüspöki
+"1219318";Ősagárd
+"1219372";Mátranovák
+"1219451";Kutasó
+"1219497";Nógrádsipek
+"1219798";Szalmatercs
+"1220048";Bárna
+"1220075";Mátramindszent
+"1220145";Csesztve
+"1220190";Lucfalva
+"1221041";Karancslapujtő
+"1221102";Nagylóc
+"1221582";Érsekvadkert
+"1221634";Szirák
+"1221661";Zabar
+"1221795";Erdőtarcsa
+"1221935";Cserháthaláp
+"1222594";Cserhátsurány
+"1222655";Erdőkürt
+"1223047";Szécsénke
+"1223825";Rétság
+"1223986";Nagyoroszi
+"1224174";Tereske
+"1224323";Felsőpetény
+"1224332";Mátraszele
+"1224341";Bánk
+"1224439";Dorogháza
+"1224572";Sámsonháza
+"1225496";Endrefalva
+"1225548";Karancsberény
+"1225663";Galgaguta
+"1225788";Salgótarján
+"1226295";Kisbárkány
+"1226833";Iliny
+"1226897";Karancsság
+"1226967";Magyargéc
+"1227243";Kisbágyon
+"1227340";Nógrádszakál
+"1227580";Nemti
+"1227915";Mohora
+"1228194";Szuha
+"1228389";Kazár
+"1228884";Rimóc
+"1229319";Ipolyvece
+"1229425";Nőtincs
+"1229498";Varsány
+"1229832";Nógrádmarcal
+"1230100";Mátraverebély
+"1230270";Csécse
+"1230395";Legénd
+"1230915";Vanyarc
+"1231413";Keszeg
+"1232300";Nógrádkövesd
+"1232319";Cserhátszentiván
+"1232407";Magyarnándor
+"1232896";Tar
+"1232911";Bér
+"1233011";Szécsényfelfalu
+"1233206";Kisecset
+"1233242";Hollókő
+"1233312";Felsőtold
+"1233400";Kishartyán
+"1233525";Mátraterenye
+"1233534";Bátonyterenye
+"1233880";Patvarc
+"1234281";Nagykeresztúr
+"1234360";Rákóczibánya
+"1300000";Pest Vármegyei Önkormányzat
+"1302370";Rád
+"1302769";Tápiószőlős
+"1303300";Iklad
+"1303407";Budajenő
+"1303692";Mende
+"1304057";Pécel
+"1304075";Ócsa
+"1304154";Tárnok
+"1304181";Perőcsény
+"1304303";Püspökszilágy
+"1304394";Makád
+"1304570";Márianosztra
+"1304808";Domony
+"1304905";Pócsmegyer
+"1304978";Ipolytölgyes
+"1305184";Csemő
+"1305227";Kisnémedi
+"1305281";Örkény
+"1305290";Pilisszántó
+"1305698";Váckisújfalu
+"1305917";Vácduka
+"1306035";Felsőpakony
+"1306293";Újhartyán
+"1306372";Pomáz
+"1306822";Csobánka
+"1306840";Sóskút
+"1306859";Törökbálint
+"1306947";Szokolya
+"1307108";Tinnye
+"1307144";Piliscsaba
+"1307384";Solymár
+"1307542";Szentlőrinckáta
+"1307807";Isaszeg
+"1307870";Szigetcsép
+"1308280";Telki
+"1308332";Táborfalva
+"1308457";Pilisszentlászló
+"1308545";Őrbottyán
+"1308891";Biatorbágy
+"1309104";Vácszentlászló
+"1309122";Farmos
+"1309131";Bag
+"1309140";Lórév
+"1309247";Dabas
+"1309405";Tápióság
+"1309441";Gomba
+"1309584";Dunaharaszti
+"1309593";Tura
+"1309690";Halásztelek
+"1309821";Pilis
+"1309849";Hernád
+"1309973";Délegyháza
+"1309991";Nagykovácsi
+"1310108";Áporka
+"1310551";Monor
+"1310737";Vámosmikola
+"1310755";Majosháza
+"1310816";Kiskunlacháza
+"1310922";Maglód
+"1311004";Jászkarajenő
+"1311341";Cegléd
+"1311396";Pilisszentiván
+"1311934";Üröm
+"1312052";Budakeszi
+"1312690";Sződ
+"1312894";Üllő
+"1313277";Szigethalom
+"1313295";Galgagyörk
+"1313435";Nagykáta
+"1313480";Erdőkertes
+"1313949";Hévízgyörk
+"1314146";Tápiószele
+"1314340";Pilisvörösvár
+"1314571";Tápiószentmárton
+"1314775";Nagybörzsöny
+"1314960";Zebegény
+"1315015";Tápióbicske
+"1315024";Páty
+"1315185";Szigetszentmárton
+"1315440";Szentendre
+"1315583";Pusztazámor
+"1316188";Aszód
+"1317260";Ráckeve
+"1317303";Tápiógyörgye
+"1317312";Százhalombatta
+"1317598";Valkó
+"1317668";Vácrátót
+"1317783";Mogyoród
+"1317808";Újszilvás
+"1318342";Veresegyház
+"1318397";Dány
+"1318476";Csévharaszt
+"1318573";Acsa
+"1318616";Dunakeszi
+"1318689";Penc
+"1318731";Pilisszentkereszt
+"1318777";Bernecebaráti
+"1319248";Tésa
+"1319503";Galgahévíz
+"1319682";Újlengyel
+"1319716";Nagykőrös
+"1319886";Váchartyán
+"1320066";Nyársapát
+"1320534";Dunavarsány
+"1320640";Ceglédbercel
+"1321388";Püspökhatvan
+"1321458";Szada
+"1321467";Tóalmás
+"1321713";Sülysáp
+"1321847";Péteri
+"1322008";Törtel
+"1322035";Zsámbok
+"1322114";Szigetújfalu
+"1322248";Pánd
+"1322345";Kemence
+"1322488";Verseg
+"1322585";Vasad
+"1322682";Letkés
+"1322804";Csömör
+"1323038";Nyáregyháza
+"1323083";Pusztavacs
+"1323199";Alsónémedi
+"1323278";Budaörs
+"1323409";Nagytarcsa
+"1323463";Budakalász
+"1323649";Göd
+"1324013";Diósd
+"1324466";Mikebuda
+"1324518";Ecser
+"1324527";Tök
+"1324679";Kóspallag
+"1324916";Szob
+"1324934";Vác
+"1325034";Zsámbék
+"1325098";Bénye
+"1325362";Dunabogdány
+"1325627";Gyál
+"1326213";Szigetmonostor
+"1326259";Szigetbecse
+"1326815";Vecsés
+"1326985";Csővár
+"1327128";Galgamácsa
+"1327386";Tatárszentgyörgy
+"1327687";Kosd
+"1327827";Káva
+"1327872";Abony
+"1328097";Ipolydamásd
+"1328185";Perbál
+"1328413";Visegrád
+"1328644";Úri
+"1328653";Szentmártonkáta
+"1328866";Sződliget
+"1328954";Szigetszentmiklós
+"1329601";Pilisborosjenő
+"1329647";Dömsöd
+"1329735";Gyömrő
+"1329823";Tököl
+"1329850";Kisoroszi
+"1330331";Vácegres
+"1330696";Kartal
+"1330720";Taksony
+"1330809";Leányfalu
+"1330988";Érd
+"1331361";Kóka
+"1331653";Albertirsa
+"1331732";Nagymaros
+"1331796";Tápiószecső
+"1331811";Dánszentmiklós
+"1331963";Tahitótfalu
+"1332027";Bugyi
+"1332106";Inárcs
+"1332230";Kakucs
+"1332559";Gödöllő
+"1332610";Fót
+"1332771";Kocsér
+"1332975";Kőröstetétlen
+"1333118";Csomád
+"1333552";Herceghalom
+"1333561";Apaj
+"1333729";Verőce
+"1333738";Kismaros
+"1334148";Pilisjászfalu
+"1334157";Kistarcsa
+"1334166";Kerepes
+"1334315";Remeteszőlős
+"1334333";Csörög
+"1334397";Monorierdő
+"1400000";Somogy Vármegyei Önkormányzat
+"1402051";Sávoly
+"1402477";Csombárd
+"1403203";Nyim
+"1403416";Somogyszil
+"1403489";Edde
+"1403559";Balatonvilágos
+"1403735";Bárdudvarnok
+"1403799";Csákány
+"1404127";Som
+"1404598";Kereki
+"1404826";Kisgyalán
+"1404835";Somogyzsitfa
+"1404853";Somogyudvarhely
+"1404932";Taszár
+"1405078";Rinyabesenyő
+"1405193";Szorosad
+"1405263";Karád
+"1405272";Kánya
+"1405351";Kára
+"1405500";Somogyaracs
+"1405810";Szőkedencs
+"1405971";Csokonyavisonta
+"1406008";Zamárdi
+"1406080";Ádánd
+"1406105";Kálmáncsa
+"1406141";Patalom
+"1406211";Hollád
+"1406424";Kaposszerdahely
+"1406451";Gamás
+"1406585";Gálosfa
+"1406600";Somogyszentpál
+"1406877";Visz
+"1406910";Bélavár
+"1407056";Öreglak
+"1407117";Balatonföldvár
+"1407205";Újvárfalva
+"1407375";Balatonkeresztúr
+"1407913";Nemesdéd
+"1408040";Csoma
+"1408183";Vése
+"1408411";Kastélyosdombó
+"1408590";Tab
+"1408703";Büssü
+"1408837";Háromfa
+"1409098";Kaposfő
+"1409177";Gige
+"1409274";Varászló
+"1409645";Vörs
+"1409858";Komlósd
+"1409928";Hetes
+"1409946";Hencse
+"1410010";Lulla
+"1410153";Torvaj
+"1410427";Magyaratád
+"1410506";Bodrog
+"1410603";Csurgónagymarton
+"1410861";Ecseny
+"1410959";Nikla
+"1410986";Szulok
+"1411040";Lakócsa
+"1411101";Szőlősgyörök
+"1411174";Kéthely
+"1411192";Igal
+"1411466";Zala
+"1411484";Somogycsicsó
+"1411509";Szenta
+"1411828";Porrog
+"1411916";Balatonőszöd
+"1412168";Patca
+"1412663";Kaposkeresztúr
+"1412876";Somogymeggyes
+"1412973";Szentgáloskér
+"1413611";Drávagárdony
+"1413693";Táska
+"1413745";Kőkút
+"1413781";Kiskorpád
+"1413790";Polány
+"1413824";Somodor
+"1413930";Porrogszentkirály
+"1413985";Felsőmocsolád
+"1413994";Bolhás
+"1414012";Őrtilos
+"1414386";Kercseliget
+"1414395";Bakháza
+"1414562";Balatonmáriafürdő
+"1414599";Görgeteg
+"1414623";Zákány
+"1414632";Fonyód
+"1414854";Szabadi
+"1414863";Látrány
+"1414942";Ságvár
+"1415103";Szenna
+"1415194";Szólád
+"1415510";Kőröshegy
+"1415592";Patosfa
+"1415626";Somogysámson
+"1415732";Kaposújlak
+"1415884";Drávatamási
+"1415909";Nágocs
+"1415927";Jákó
+"1415981";Somogydöröcske
+"1416106";Mesztegnyő
+"1416258";Lad
+"1416407";Tótújfalu
+"1416470";Balatonújlak
+"1416601";Balatonszabadi
+"1416726";Hedrehely
+"1416735";Tarany
+"1416823";Ordacsehi
+"1417127";Beleg
+"1417279";Juta
+"1417358";Buzsák
+"1417446";Kelevíz
+"1417491";Zselicszentpál
+"1417561";Nemesvid
+"1417631";Siófok
+"1417844";Tikos
+"1417941";Nagyatád
+"1418078";Somogyfajsz
+"1418120";Bolhó
+"1418148";Kötcse
+"1418227";Kaposmérő
+"1418500";Marcali
+"1418546";Somogyszob
+"1418607";Szegerdő
+"1418634";Hács
+"1419017";Visnye
+"1419026";Pusztakovácsi
+"1419053";Kisasszond
+"1419150";Homokszentgyörgy
+"1419442";Somogyvár
+"1419460";Balatonendréd
+"1419619";Iharos
+"1419770";Osztopán
+"1420057";Somogyegres
+"1420093";Törökkoppány
+"1420321";Rinyaújnép
+"1420330";Somogygeszti
+"1420473";Kaposvár
+"1420598";Nagycsepely
+"1420622";Rinyaújlak
+"1420710";Bedegkér
+"1420729";Balatonfenyves
+"1420905";Mike
+"1421315";Csurgó
+"1421324";Balatonszentgyörgy
+"1421333";Istvándi
+"1421449";Nagyberki
+"1421652";Nagybajom
+"1421856";Somogyvámos
+"1422026";Fonó
+"1422673";Bonnya
+"1422707";Főnyed
+"1422822";Balatonszemes
+"1423092";Siójut
+"1423311";Pusztaszemes
+"1423630";Mernye
+"1423904";Gyugy
+"1423968";Teleki
+"1424110";Zselickislak
+"1424314";Csököly
+"1424387";Kisbajom
+"1424457";Bálványos
+"1424493";Kisbárapáti
+"1424536";Orci
+"1424615";Tapsony
+"1424846";Heresznye
+"1424907";Balatonszárszó
+"1425043";Somogybükkösd
+"1425371";Magyaregres
+"1425511";Nemeskisfalud
+"1425520";Nagyszakácsi
+"1425681";Cserénfa
+"1425706";Szentbalázs
+"1425830";Hajmás
+"1425867";Kaposhomok
+"1426222";Gadány
+"1426277";Bőszénfa
+"1426301";Inke
+"1426392";Pamuk
+"1426453";Kadarkút
+"1426532";Böhönye
+"1426675";Lengyeltóti
+"1426754";Rinyaszentkirály
+"1426781";Várda
+"1426842";Zselickisfalud
+"1426888";Kazsok
+"1427270";Csömend
+"1427368";Segesd
+"1427377";Balatonberény
+"1427535";Somogysimonyi
+"1427553";Pogányszentpéter
+"1427614";Zimány
+"1427784";Iharosberény
+"1428264";Gadács
+"1428291";Lábod
+"1428316";Bábonymegyer
+"1428361";Potony
+"1428510";Porrogszentpál
+"1428574";Szabás
+"1428714";Andocs
+"1428723";Somogysárd
+"1428811";Kaposgyarmat
+"1428857";Kutas
+"1428963";Somogyjád
+"1429063";Nagyberény
+"1429197";Péterhida
+"1429780";Vízvár
+"1430119";Berzence
+"1430146";Szenyér
+"1430474";Babócsa
+"1430571";Gölle
+"1430580";Somogyacsa
+"1430775";Hosszúvíz
+"1430827";Kisberény
+"1430854";Mezőcsokonya
+"1430863";Ráksi
+"1430960";Gyékényes
+"1431121";Sántos
+"1431219";Somogyaszaló
+"1431343";Mosdós
+"1431352";Darány
+"1431644";Fiad
+"1432115";Ötvöskónyi
+"1432133";Sérsekszőlős
+"1432337";Baté
+"1432355";Libickozma
+"1432416";Tengőd
+"1432461";Szilvásszentmárton
+"1432470";Somogybabod
+"1432601";Somogytúr
+"1432674";Rinyakovácsi
+"1432780";Simonfa
+"1432799";Barcs
+"1432805";Nagykorpád
+"1432841";Szentborbás
+"1433057";Zics
+"1433376";Miklósi
+"1433394";Kapoly
+"1433853";Balatonboglár
+"1433862";Balatonlelle
+"1434041";Pálmajor
+"1434184";Alsóbogát
+"1434193";Kaszó
+"1434236";Szántód
+"1434403";Zákányfalu
+"1500000";Szabolcs-Szatmár-Bereg Vármegyei Önkormányzat
+"1502088";Mánd
+"1502325";Baktalórántháza
+"1502671";Kántorjánosi
+"1502945";Biri
+"1502990";Bátorliget
+"1503391";Piricse
+"1503586";Szabolcsveresmart
+"1503629";Géberjén
+"1503647";Döge
+"1503850";Tiszabercel
+"1503878";Nyírpilis
+"1504312";Tarpa
+"1504446";Tiszakerecseny
+"1504491";Sényő
+"1504613";Gelénes
+"1504710";Nagyar
+"1504774";Szakoly
+"1504996";Garbolc
+"1505041";Nyírderzs
+"1505616";Hetefejércse
+"1505670";Gégény
+"1505801";Gávavencsellő
+"1506275";Zajta
+"1506433";Tiszadada
+"1506488";Nagyecsed
+"1506938";Vállaj
+"1507445";Kocsord
+"1507463";Mérk
+"1507472";Berkesz
+"1507597";Tiszavasvári
+"1507676";Gyulaháza
+"1507843";Jánkmajtis
+"1507904";Nyírcsaholy
+"1507995";Lövőpetri
+"1508420";Napkor
+"1508509";Kishódos
+"1508554";Tiszakanyár
+"1508776";Ajak
+"1508794";Tiszakóród
+"1508934";Vámosoroszi
+"1508952";Tiborszállás
+"1508998";Túrricse
+"1509025";Őr
+"1509061";Rápolt
+"1509113";Tiszaeszlár
+"1509238";Nyírgyulaj
+"1509256";Nyírtét
+"1509265";Kisvárda
+"1509353";Aranyosapáti
+"1509423";Tiszaadony
+"1509654";Ilk
+"1509681";Cégénydányád
+"1509715";Császló
+"1509751";Kisszekeres
+"1509919";Tuzsér
+"1510117";Újkenéz
+"1510126";Győrtelek
+"1510205";Tiszarád
+"1510436";Szamossályi
+"1510791";Fülesd
+"1510807";Nyírparasznya
+"1510834";Olcsvaapáti
+"1510852";Érpatak
+"1511095";Nyírlövő
+"1511129";Olcsva
+"1511244";Pócspetri
+"1511271";Nyírlugos
+"1511299";Bököny
+"1511907";Tiszamogyorós
+"1512061";Hermánszeg
+"1512098";Nyírtura
+"1512186";Pátroha
+"1512274";Nyírmada
+"1512593";Tiszadob
+"1512672";Kisvarsány
+"1512928";Csaholc
+"1513000";Gemzse
+"1513019";Hodász
+"1513037";Zsurk
+"1513046";Szamosszeg
+"1513143";Jéke
+"1513213";Tunyogmatolcs
+"1513541";Tiszaszalka
+"1513550";Nyírtelek
+"1513602";Túristvándi
+"1513639";Besenyőd
+"1513727";Gacsály
+"1513860";Pusztadobos
+"1514359";Kékcse
+"1514377";Fülpösdaróc
+"1514447";Tiszatelek
+"1514508";Dombrád
+"1514696";Nyíribrony
+"1514739";Rakamaz
+"1514845";Nyírbátor
+"1515802";Nyírbéltek
+"1515963";Balsa
+"1516036";Kisnamény
+"1516203";Záhony
+"1516300";Szamoskér
+"1516522";Nyírvasvári
+"1516629";Magy
+"1516665";Kölcse
+"1516957";Tornyospálca
+"1517075";Jánd
+"1517084";Penészlek
+"1517206";Nyíregyháza
+"1517215";Porcsalma
+"1517224";Petneháza
+"1517428";Rozsály
+"1517589";Jármi
+"1517756";Demecser
+"1517817";Tiszabecs
+"1517826";Mándok
+"1518005";Szamosangyalos
+"1518290";Nyírkarász
+"1518324";Vásárosnamény
+"1518528";Eperjeske
+"1518591";Vaja
+"1518795";Darnó
+"1518874";Mátészalka
+"1518971";Fehérgyarmat
+"1519169";Szabolcs
+"1519211";Nábrád
+"1519424";Kisar
+"1519558";Gyügye
+"1519655";Máriapócs
+"1519707";Buj
+"1519992";Kemecse
+"1520172";Tiszabezdéd
+"1520260";Tivadar
+"1520303";Apagy
+"1520668";Mátyus
+"1520677";Beregsurány
+"1521227";Beszterec
+"1521290";Laskod
+"1521485";Nagydobos
+"1521573";Rétközberencs
+"1522017";Szamosbecs
+"1522053";Szabolcsbáka
+"1522239";Botpalád
+"1522284";Ófehértó
+"1522336";Komlódtótfalu
+"1522415";Fényeslitke
+"1522743";Nagycserkesz
+"1523250";Fábiánháza
+"1523269";Nyírmeggyes
+"1523524";Tiszalök
+"1523612";Kömörő
+"1523685";Pátyod
+"1523728";Kótaj
+"1523889";Sonkád
+"1524095";Csengersima
+"1524448";Tiszacsécse
+"1524475";Timár
+"1524581";Rohod
+"1524785";Nagykálló
+"1525441";Benk
+"1525636";Ibrány
+"1525928";Nyírkércs
+"1525973";Nyírcsászári
+"1526091";Lónya
+"1526107";Csegöld
+"1526365";Nyírmihálydi
+"1526480";Barabás
+"1526550";Ömböly
+"1526611";Újfehértó
+"1526851";Csengerújfalu
+"1526958";Balkány
+"1526976";Nagyhódos
+"1527100";Vasmegyer
+"1527119";Nemesborzova
+"1527146";Komoró
+"1527155";Nagyhalász
+"1527225";Kálmánháza
+"1527252";Tiszanagyfalu
+"1527261";Tisztaberek
+"1527322";Vámosatya
+"1527544";Tiszaszentmárton
+"1527748";Pap
+"1527924";Ópályi
+"1527988";Nagyszekeres
+"1528060";Nyírtass
+"1528246";Beregdaróc
+"1528431";Kék
+"1528440";Nyírgelse
+"1528477";Kisléta
+"1528750";Zsarolyán
+"1528802";Nyírbogdány
+"1528893";Geszteréd
+"1528945";Győröcske
+"1528981";Ura
+"1529300";Kispalád
+"1529416";Csaroda
+"1529443";Gulács
+"1529559";Panyola
+"1529799";Méhtelek
+"1529911";Tákos
+"1529975";Anarcs
+"1529984";Magosliget
+"1530085";Szamostatárfalva
+"1530641";Csenger
+"1530979";Levelek
+"1531088";Székely
+"1531158";Nyírbogát
+"1531237";Szatmárcseke
+"1531273";Szamosújlak
+"1531398";Tyukod
+"1531404";Kállósemjén
+"1531477";Nyírjákó
+"1531750";Milota
+"1531769";Ököritófülpös
+"1531820";Uszka
+"1531857";Ramocsaháza
+"1531972";Paszab
+"1532328";Encsencs
+"1532452";Nyírkáta
+"1532577";Papos
+"1532656";Mezőladány
+"1532692";Penyige
+"1532869";Kérsemjén
+"1533145";Nyírpazony
+"1533224";Márokpapi
+"1533358";Terem
+"1533659";Újdombrád
+"1533747";Tiszavid
+"1533774";Gyüre
+"1533783";Nagyvarsány
+"1534388";Szorgalmatos
+"1600000";Jász-Nagykun-Szolnok Vármegyei Önkormányzat
+"1602626";Martfű
+"1603373";Tiszapüspöki
+"1604260";Mezőtúr
+"1604923";Karcag
+"1605254";Kuncsorba
+"1605777";Szászberek
+"1605795";Cserkeszőlő
+"1605874";Szajol
+"1606318";Nagyrév
+"1607418";Kengyel
+"1607490";Tószeg
+"1607852";Tiszaszőlős
+"1609557";Tomajmonostora
+"1609627";Tiszatenyő
+"1610773";Tiszabő
+"1611235";Kőtelek
+"1611305";Besenyszög
+"1612423";Rákócziújfalu
+"1612441";Abádszalók
+"1613170";Csépa
+"1613514";Jászszentandrás
+"1613815";Tiszaföldvár
+"1614207";Rákóczifalva
+"1614836";Zagyvarékas
+"1615246";Pusztamonostor
+"1615291";Újszász
+"1615574";Nagykörű
+"1615787";Tiszaörs
+"1615811";Jászboldogháza
+"1616230";Tiszaderzs
+"1616647";Fegyvernek
+"1617145";Kenderes
+"1617695";Tiszasüly
+"1617978";Jászdózsa
+"1618209";Jászberény
+"1619813";Kétpó
+"1620181";Tiszaroff
+"1620428";Szelevény
+"1620446";Tiszainoka
+"1621111";Jászladány
+"1621157";Vezseny
+"1621494";Tiszasas
+"1621689";Nagyiván
+"1622105";Jászárokszállás
+"1622202";Jászapáti
+"1622567";Kunhegyes
+"1622770";Tiszabura
+"1622789";Tiszaszentimre
+"1622798";Jászkisér
+"1622859";Jánoshida
+"1622929";Jászágó
+"1622938";Cibakháza
+"1623135";Jásztelek
+"1623171";Kunmadaras
+"1623339";Jászfényszaru
+"1623579";Jászfelsőszentgyörgy
+"1624086";Jászivány
+"1625186";Jászjákóhalma
+"1625265";Alattyán
+"1625919";Kisújszállás
+"1626286";Mezőhék
+"1627313";Törökszentmiklós
+"1627854";Szolnok
+"1628006";Öcsöd
+"1628228";Túrkeve
+"1628699";Tiszaigar
+"1629346";Tiszajenő
+"1629382";Örményes
+"1629726";Tiszafüred
+"1630234";Mesterszállás
+"1630304";Tiszagyenda
+"1630386";Tiszakürt
+"1630711";Jászalsószentgyörgy
+"1631866";Tiszavárkony
+"1632504";Kunszentmárton
+"1634005";Berekfürdő
+"1634050";Hunyadfalva
+"1634175";Csataszög
+"1700000";Tolna Vármegyei Önkormányzat
+"1702033";Kakasd
+"1702565";Döbrököz
+"1702796";Nak
+"1702811";Miszla
+"1703425";Bogyiszló
+"1703869";Kistormás
+"1704464";Szakály
+"1704701";Iregszemcse
+"1704747";Sárpilis
+"1704862";Paks
+"1705661";Ozora
+"1705731";Gerjen
+"1706017";Magyarkeszi
+"1706497";Bonyhád
+"1706512";Kismányok
+"1706558";Bölcske
+"1706637";Varsád
+"1706761";Nagyszékely
+"1706901";Tengelic
+"1707029";Mucsi
+"1707685";Dombóvár
+"1708448";Értény
+"1708864";Bátaszék
+"1708961";Őcsény
+"1709326";Jágónak
+"1709371";Pálfa
+"1709414";Várdomb
+"1709539";Dunaszentgyörgy
+"1709618";Pári
+"1710083";Szakcs
+"1710463";Kölesd
+"1711031";Tolnanémedi
+"1711563";Alsónyék
+"1711688";Diósberény
+"1711712";Báta
+"1711970";Bikács
+"1711998";Csibrák
+"1712326";Györköny
+"1713620";Mucsfa
+"1713709";Nagyszokoly
+"1714030";Nagymányok
+"1714100";Kajdacs
+"1714164";Harc
+"1714304";Závod
+"1714605";Lápafő
+"1714711";Szálka
+"1714818";Bonyhádvarasd
+"1715006";Németkér
+"1715316";Szakadát
+"1715459";Regöly
+"1715820";Felsőnána
+"1716452";Nagyvejke
+"1716814";Szedres
+"1717640";Keszőhidegkút
+"1717710";Kisdorog
+"1717914";Felsőnyék
+"1717950";Fürged
+"1718263";Szárazd
+"1718388";Nagydorog
+"1718917";Murga
+"1718962";Kaposszekcső
+"1718980";Fadd
+"1719202";Dúzs
+"1719284";Cikó
+"1719585";Pincehely
+"1719938";Pusztahencse
+"1720507";Kurd
+"1720561";Újireg
+"1720701";Mórágy
+"1720783";Simontornya
+"1720817";Sárszentlőrinc
+"1721184";Koppányszántó
+"1721360";Udvari
+"1721625";Zomba
+"1721731";Kéty
+"1722433";Kocsola
+"1722761";Szekszárd
+"1723296";Kapospula
+"1723791";Kalaznó
+"1724192";Fácánkert
+"1724411";Lengyel
+"1724563";Tamási
+"1724989";Decs
+"1725274";Tolna
+"1725539";Györe
+"1725645";Sióagárd
+"1726055";Hőgyész
+"1726125";Aparhant
+"1726727";Grábóc
+"1727182";Nagykónyi
+"1727711";Izmény
+"1727766";Kisszékely
+"1728662";Belecska
+"1728909";Bátaapáti
+"1729124";Várong
+"1729230";Dalmand
+"1729337";Madocsa
+"1729665";Alsónána
+"1730094";Csikóstőttős
+"1730289";Gyönk
+"1730359";Gyulaj
+"1730562";Medina
+"1731185";Kisvejke
+"1731459";Tevel
+"1731501";Dunaföldvár
+"1732735";Attala
+"1732850";Váralja
+"1733349";Mőcsény
+"1733570";Pörböly
+"1800000";Vas Vármegyei Önkormányzat
+"1802042";Narda
+"1802246";Vát
+"1802431";Bük
+"1802440";Szatta
+"1802501";Kisunyom
+"1802574";Kenéz
+"1802839";Nemeskocs
+"1802884";Vasalja
+"1802927";Duka
+"1803009";Szombathely
+"1803036";Döröske
+"1803090";Borgáta
+"1803142";Vönöck
+"1803197";Rábahídvég
+"1803221";Magyarlak
+"1803294";Molnaszecsőd
+"1803674";Nemeskeresztúr
+"1803911";Csákánydoroszló
+"1804190";Köcsk
+"1804224";Csörötnek
+"1804640";Kám
+"1804695";Vasvár
+"1805023";Bozsok
+"1805102";Balogunyom
+"1805166";Tömörd
+"1805476";Bő
+"1805713";Harasztifalu
+"1805740";Kőszegdoroszló
+"1805953";Kissomlyó
+"1806248";Pinkamindszent
+"1806390";Bozzai
+"1806406";Jákfa
+"1806716";Nádasd
+"1807162";Pácsony
+"1807171";Sorkifalud
+"1807214";Acsád
+"1807278";Püspökmolnári
+"1807296";Bögöte
+"1807551";Rádóckölked
+"1807667";Oszkó
+"1807940";Viszák
+"1807977";Ispánk
+"1808013";Felsőjánosfa
+"1808226";Hegyhátszentpéter
+"1808271";Cák
+"1808873";Apátistvánfalva
+"1808882";Peresznye
+"1809070";Csénye
+"1809195";Vásárosmiske
+"1809229";Tokorcs
+"1809283";Nagygeresd
+"1809672";Nemesrempehollós
+"1809724";Győrvár
+"1809788";Sárfimizdó
+"1809876";Chernelházadamonya
+"1809937";Kenyeri
+"1810223";Szalafő
+"1810232";Egyházashetye
+"1810278";Sé
+"1810311";Pusztacsó
+"1810384";Bejcgyertyános
+"1810579";Sajtoskál
+"1810597";Rum
+"1810630";Őriszentpéter
+"1810676";Halogy
+"1810843";Nick
+"1810913";Karakó
+"1811147";Kisrákos
+"1811156";Gór
+"1811387";Ikervár
+"1811572";Petőmihályfa
+"1811633";Vasszentmihály
+"1811651";Bögöt
+"1811679";Jánosháza
+"1811943";Gyöngyösfalu
+"1812043";Ölbő
+"1812104";Vasszilvágy
+"1812140";Csepreg
+"1812247";Kemenesmagasi
+"1812292";Zsennye
+"1812317";Andrásfa
+"1812335";Tompaládony
+"1812724";Csehimindszent
+"1812733";Horvátlövő
+"1813028";Kondorfa
+"1813426";Kemenesmihályfa
+"1813453";Őrimagyarósd
+"1813532";Körmend
+"1813587";Felsőcsatár
+"1813684";Perenye
+"1813958";Ják
+"1814021";Lukácsháza
+"1814067";Pápoc
+"1814809";Mersevát
+"1814988";Pecöl
+"1814997";Hegyháthodász
+"1815060";Nagymizdó
+"1815334";Vasegerszeg
+"1815486";Kiszsidány
+"1815671";Pósfa
+"1815723";Mesteri
+"1815990";Daraboshegy
+"1816151";Dozmat
+"1816212";Tanakajd
+"1816504";Szaknyér
+"1816832";Kőszeg
+"1816887";Horvátzsidány
+"1816911";Kemeneskápolna
+"1817020";Bajánsenye
+"1817093";Orfalu
+"1817288";Magyarszecsőd
+"1817367";Nárai
+"1817729";Szarvaskend
+"1817996";Rábatöttös
+"1818032";Hegyhátszentjakab
+"1818430";Velemér
+"1818883";Salköveskút
+"1819345";Kétvölgy
+"1819488";Csehi
+"1819521";Szőce
+"1819743";Olaszfa
+"1819761";Kerkáskápolna
+"1820084";Kemenesszentmárton
+"1820109";Kőszegszerdahely
+"1820349";Vashosszúfalu
+"1820367";Pornóapáti
+"1820394";Vasasszonyfa
+"1820695";Döbörhegy
+"1820880";Hosszúpereszteg
+"1820932";Szakonyfalu
+"1820996";Kemenespálfa
+"1821254";Szentpéterfa
+"1821306";Sárvár
+"1821537";Uraiújfalu
+"1821643";Zsédeny
+"1821838";Hegyhátszentmárton
+"1822044";Ólmod
+"1822318";Nyőgér
+"1822390";Csönge
+"1822549";Alsószölnök
+"1822716";Kemestaródfa
+"1822725";Alsóújlak
+"1822983";Sótony
+"1823108";Pankasz
+"1823287";Felsőszölnök
+"1823320";Nemescsó
+"1823816";Csempeszkopács
+"1823861";Rátót
+"1824059";Nemeskolta
+"1824183";Gencsapáti
+"1824484";Kemenessömjén
+"1824509";Nemesbőd
+"1824800";Söpte
+"1824837";Nagytilaj
+"1825423";Magyarszombatfa
+"1825760";Meggyeskovácsi
+"1825946";Egyházasrádóc
+"1825982";Vassurány
+"1826000";Velem
+"1826046";Kőszegpaty
+"1826064";Csipkerek
+"1826073";Rábapaty
+"1826143";Nagysimonyi
+"1826152";Gérce
+"1826240";Nemesládony
+"1826426";Vép
+"1826596";Kercaszomor
+"1826620";Katafa
+"1826736";Rábagyarmat
+"1826763";Simaság
+"1826772";Csánig
+"1826806";Rönök
+"1827030";Gyanógeregye
+"1827094";Celldömölk
+"1827289";Magyarnádalja
+"1827793";Szergény
+"1827960";Sorkikápolna
+"1827997";Szemenye
+"1828626";Répceszentgyörgy
+"1828796";Egervölgy
+"1829081";Lócs
+"1829203";Boba
+"1829373";Vasszécseny
+"1829452";Halastó
+"1829504";Iklanberény
+"1829568";Telekes
+"1829692";Sorokpolány
+"1829841";Felsőmarác
+"1829869";Nagyrákos
+"1829878";Torony
+"1829896";Porpác
+"1829957";Káld
+"1830216";Hegyhátsál
+"1830429";Egyházashollós
+"1830599";Mikosszéplak
+"1830702";Vaskeresztes
+"1830748";Sitke
+"1830872";Megyehíd
+"1830881";Répcelak
+"1830906";Gasztony
+"1830942";Gersekarát
+"1831051";Vámoscsalád
+"1831556";Nemesmedves
+"1831583";Szentgotthárd
+"1831680";Ivánc
+"1831875";Mesterháza
+"1832036";Keléd
+"1832045";Táplánszentkereszt
+"1832124";Bérbaltavár
+"1832188";Hegyfalu
+"1832629";Ostffyasszonyfa
+"1832832";Meszlen
+"1832920";Nagykölked
+"1832984";Bucsu
+"1833172";Szeleste
+"1834087";Tormásliget
+"1900000";Veszprém Vármegyei Önkormányzat
+"1902185";Csopak
+"1902194";Nemesvámos
+"1902219";Balatonfűzfő
+"1902422";Hegyesd
+"1902714";Tótvázsony
+"1902787";Nemesgulács
+"1902936";Dudar
+"1903072";Balatoncsicsó
+"1903267";Badacsonytördemic
+"1903568";Szentantalfa
+"1903601";Sóly
+"1903610";Malomsok
+"1903638";Balatonhenye
+"1903948";Raposka
+"1904066";Küngös
+"1904288";Kispirit
+"1904321";Bodorfa
+"1904534";Mindszentkálla
+"1904552";Litér
+"1904561";Ábrahámhegy
+"1904631";Tüskevár
+"1904668";Mihályháza
+"1904765";Borszörcsök
+"1904987";Megyer
+"1905087";Lovászpatona
+"1905148";Balatonkenese
+"1905157";Somlójenő
+"1905388";Sümegprága
+"1905421";Királyszentistván
+"1905555";Nemeshany
+"1905564";Lovas
+"1905625";Révfülöp
+"1905634";Káptalantóti
+"1905652";Nemesgörzsöny
+"1905838";Balatonalmádi
+"1906327";Bakonypölöske
+"1906363";Dörgicse
+"1906673";Ajka
+"1907065";Városlőd
+"1907092";Szentbékkálla
+"1907250";Hosztót
+"1907287";Bakonykoppány
+"1907302";Adásztevel
+"1907339";Aszófő
+"1907348";Papkeszi
+"1907427";Bazsi
+"1907898";Halimba
+"1907922";Szentgál
+"1907931";Kisapáti
+"1908262";Nagygyimót
+"1908749";Karakószörcsök
+"1909292";Gecse
+"1909502";Vid
+"1909520";Gyulakeszi
+"1909733";Vigántpetend
+"1910001";Nagydém
+"1910065";Szentimrefalva
+"1910092";Örvényes
+"1910250";Farkasgyepű
+"1910409";Németbánya
+"1910445";Egyházaskesző
+"1910870";Doba
+"1911420";Pula
+"1911439";Várpalota
+"1911545";Szentjakabfa
+"1911703";Vöröstó
+"1911767";Veszprém
+"1911855";Pápakovácsi
+"1912238";Balatonederics
+"1912478";Kemenesszentpéter
+"1912654";Zalahaláp
+"1912742";Ganna
+"1913125";Takácsi
+"1913772";Sáska
+"1914173";Bánd
+"1914243";Somlóvecse
+"1914270";Káptalanfa
+"1914553";Kapolcs
+"1914757";Noszlop
+"1915088";Hetyefő
+"1915361";Hajmáskér
+"1915547";Pénzesgyőr
+"1915565";Balatonudvari
+"1915705";Vilonya
+"1915778";Barnag
+"1916072";Csajág
+"1916142";Külsővat
+"1916267";Szentkirályszabadja
+"1916489";Szápár
+"1916595";Oroszi
+"1916656";Vászoly
+"1916692";Szőc
+"1916717";Gic
+"1917011";Paloznak
+"1917039";Tagyon
+"1917154";Balatonszepezd
+"1917172";Dabronc
+"1917321";Taliándörögd
+"1917437";Jásd
+"1917570";Lesencefalu
+"1917871";Lesencetomaj
+"1918193";Gógánfa
+"1918856";Lókút
+"1919141";Kamond
+"1919196";Nagyvázsony
+"1919336";Veszprémgalsa
+"1919734";Kemeneshőgyész
+"1919868";Pápadereske
+"1920154";Dáka
+"1920251";Csehbánya
+"1920437";Magyarpolány
+"1920570";Tés
+"1920756";Hidegkút
+"1920826";Zánka
+"1920853";Úrkút
+"1921175";Balatonfüred
+"1921403";Nagypirit
+"1921430";Veszprémfajsz
+"1921607";Pápasalamon
+"1921759";Nemesszalók
+"1921777";Vanyola
+"1921962";Lesenceistvánd
+"1922220";Marcaltő
+"1922327";Badacsonytomaj
+"1922451";Pécsely
+"1922512";Monoszló
+"1922813";Bakonyszentkirály
+"1922901";Béb
+"1923001";Kisszőlős
+"1923010";Ukk
+"1923180";Nagyesztergár
+"1923454";Kővágóörs
+"1923515";Porva
+"1923551";Nagyacsád
+"1923560";Mezőlak
+"1923597";Zalaszegvár
+"1923658";Herend
+"1923700";Kiscsősz
+"1923746";Bakonybél
+"1923913";Óbudavár
+"1923922";Bakonyszentiván
+"1924004";Nyirád
+"1924040";Monostorapáti
+"1924068";Ősi
+"1924129";Bakonytamási
+"1924369";Felsőörs
+"1924642";Csesznek
+"1924651";Vinár
+"1924767";Ugod
+"1924891";Szigliget
+"1925201";Nagytevel
+"1925308";Balatonakali
+"1925450";Öskü
+"1925566";Hárskút
+"1925593";Sümeg
+"1925654";Kerta
+"1925779";Somlószőlős
+"1925803";Hegymagas
+"1925849";Rigács
+"1925858";Köveskál
+"1925991";Bakonynána
+"1926037";Kékkút
+"1926204";Várkesző
+"1926374";Magyargencs
+"1926417";Bakonyszücs
+"1926499";Zirc
+"1926514";Olaszfalu
+"1926523";Nóráp
+"1926541";Kup
+"1926569";Somlóvásárhely
+"1926648";Vaszar
+"1927058";Békás
+"1927137";Mencshely
+"1927207";Zalagyömörő
+"1927818";Homokbödöge
+"1927979";Nagyalásony
+"1928015";Iszkáz
+"1928112";Öcs
+"1928237";Dabrony
+"1928370";Apácatorna
+"1928422";Nemesvita
+"1928501";Balatonszőlős
+"1928671";Gyepükaján
+"1928972";Pusztamiske
+"1929009";Nyárád
+"1929072";Kisberzseny
+"1929294";Marcalgergelyi
+"1929434";Tapolca
+"1929461";Balatonfőkajár
+"1929470";Döbrönte
+"1929513";Bakonyjákó
+"1929902";Bakonyság
+"1929993";Zalaerdőd
+"1930173";Kislőd
+"1930182";Kolontár
+"1930252";Borzavár
+"1930410";Bakonyoszlop
+"1930465";Tihany
+"1930526";Alsóörs
+"1930793";Salföld
+"1930924";Csabrendek
+"1931255";Pápateszér
+"1931307";Adorjánháza
+"1931699";Csetény
+"1931945";Pápa
+"1932212";Márkó
+"1932276";Devecser
+"1932814";Csögle
+"1932878";Csót
+"1933039";Zalameggyes
+"1933127";Berhida
+"1933844";Balatonrendes
+"1933871";Egeralja
+"1933941";Eplény
+"1934218";Uzsa
+"1934254";Pétfürdő
+"1934421";Balatonakarattya
+"2000000";Zala Vármegyei Önkormányzat
+"2002097";Gutorfölde
+"2002103";Maróc
+"2002130";Mihályfa
+"2002404";Surd
+"2002486";Zalacséb
+"2002529";Várfölde
+"2002583";Csesztreg
+"2002608";Zalaszentiván
+"2002644";Alibánfa
+"2002662";Milejszeg
+"2002909";Magyarszentmiklós
+"2002972";Zalasárszeg
+"2003054";Lickóvadamos
+"2003124";Szentkozmadombja
+"2003188";Iborfia
+"2003355";Nova
+"2003434";Lasztonya
+"2003726";Zebecke
+"2003814";Hévíz
+"2004002";Zalacsány
+"2004163";Bödeháza
+"2004455";Nagylengyel
+"2004473";Kányavár
+"2004738";Bak
+"2004756";Misefa
+"2004950";Ortaháza
+"2004969";Tormafölde
+"2005218";Nagygörbő
+"2005342";Tófej
+"2005537";Kallósd
+"2005704";Pethőhenye
+"2006071";Keménfa
+"2006132";Csapi
+"2006169";Nemesapáti
+"2006178";Eszteregnye
+"2006530";Pusztamagyaród
+"2006549";Vindornyalak
+"2006567";Sormás
+"2007135";Cserszegtomaj
+"2007232";Zalaszentlászló
+"2007579";Zalabaksa
+"2007658";Nemeshetés
+"2007700";Szepetnek
+"2007782";Döbröce
+"2007968";Murarátka
+"2007986";Bucsuta
+"2008059";Nemesszentandrás
+"2008068";Gellénháza
+"2008101";Sárhida
+"2008369";Vöckönd
+"2008439";Bánokszentgyörgy
+"2008615";Szentliszló
+"2008767";Alsószenterzsébet
+"2008828";Teskánd
+"2008916";Magyarföld
+"2009089";Gelsesziget
+"2009168";Belezna
+"2009380";Zalaújlak
+"2009575";Kerkaszentkirály
+"2009812";Kisgörbő
+"2009867";Pölöske
+"2010056";Borsfa
+"2010269";Hahót
+"2010302";Vasboldogasszony
+"2010348";Zalakomár
+"2010649";Csertalakos
+"2010685";Vállus
+"2010782";Boncodfölde
+"2010889";Lispeszentadorján
+"2010931";Hagyárosbörönd
+"2011059";Baglad
+"2011165";Szentpéterúr
+"2011208";Hosszúvölgy
+"2011475";Lendvajakabfa
+"2011554";Szécsisziget
+"2011642";Felsőpáhok
+"2011785";Zalakaros
+"2011800";Vindornyaszőlős
+"2012089";Gelse
+"2012122";Letenye
+"2012496";Zalaistvánd
+"2012539";Gyűrűs
+"2012575";Lenti
+"2012609";Türje
+"2012760";Nagybakónak
+"2012830";Bezeréd
+"2012919";Vonyarcvashegy
+"2012946";Garabonc
+"2012991";Galambok
+"2013055";Kissziget
+"2013064";Magyarszerdahely
+"2013082";Kozmadombja
+"2013091";Zalaszentmárton
+"2013301";Zalaszentlőrinc
+"2013569";Gosztola
+"2013736";Zalavár
+"2013921";Iklódbördőce
+"2014085";Sénye
+"2014182";Várvölgy
+"2014225";Szentmargitfalva
+"2014298";Ramocsa
+"2014322";Vaspör
+"2014720";Pálfiszeg
+"2014906";Sármellék
+"2014979";Nagyrécse
+"2015097";Baktüttös
+"2015112";Kerkafalva
+"2015556";Sand
+"2015769";Esztergályhorváti
+"2016009";Dötk
+"2016081";Kispáli
+"2016249";Kiscsehi
+"2016364";Kisvásárhely
+"2016382";Tótszentmárton
+"2016513";Nagyrada
+"2016531";Fűzvölgy
+"2016850";Pórszombat
+"2016896";Zalaigrice
+"2016920";Pusztaapáti
+"2017002";Balatongyörök
+"2017057";Zalavég
+"2017118";Resznek
+"2017400";Zalaapáti
+"2017516";Gáborjánháza
+"2017543";Bocfölde
+"2017613";Gombosszeg
+"2017853";Szilvágy
+"2018023";Nemesrádó
+"2018041";Karmacs
+"2018096";Zalaszentjakab
+"2018360";Becsvölgye
+"2018421";Keszthely
+"2018449";Zalaszentmihály
+"2018564";Zalaszentbalázs
+"2018652";Szentgyörgyvölgy
+"2018698";Bázakerettye
+"2018768";Zalaköveskút
+"2018829";Alsórajk
+"2018953";Ozmánbük
+"2019080";Söjtör
+"2019178";Petrikeresztúr
+"2019187";Fityeház
+"2019479";Kustánszeg
+"2019512";Alsónemesapáti
+"2019859";Nemespátró
+"2019895";Hernyék
+"2019929";Bókaháza
+"2020039";Gétye
+"2020312";Kiskutas
+"2020543";Szalapa
+"2020589";Nagykapornak
+"2020613";Búcsúszentlászló
+"2020835";Orbányosfa
+"2020941";Kistolmács
+"2020950";Belsősárd
+"2021014";Molnári
+"2021050";Pókaszepetk
+"2021139";Börzönce
+"2021263";Babosdöbréte
+"2021379";Kisbucsa
+"2021397";Sümegcsehi
+"2021476";Felsőrajk
+"2021500";Kálócfa
+"2022080";Kerkakutas
+"2022141";Mikekarácsonyfa
+"2022178";Nagykutas
+"2022497";Ormándlak
+"2022877";Böde
+"2022947";Zalaszabar
+"2022965";Kacorlak
+"2023126";Szentgyörgyvár
+"2023144";Becsehely
+"2023302";Gyenesdiás
+"2023384";Almásháza
+"2023436";Csatár
+"2023834";Zalaháshágy
+"2023898";Rezi
+"2024138";Rigyác
+"2024262";Egeraracsa
+"2024271";Pakod
+"2024280";Zalabér
+"2024590";Zajk
+"2024660";Pötréte
+"2024703";Tekenye
+"2024776";Padár
+"2024864";Batyk
+"2024873";Homokkomárom
+"2025025";Liszó
+"2025052";Orosztony
+"2025113";Tótszerdahely
+"2025210";Murakeresztúr
+"2025353";Kemendollár
+"2025414";Németfalu
+"2025478";Oltárc
+"2025609";Nemessándorháza
+"2025885";Dobri
+"2026161";Szijártóháza
+"2026268";Valkonya
+"2026462";Balatonmagyaród
+"2026639";Pusztaszentlászló
+"2027447";Barlahida
+"2027465";Pusztaederics
+"2027483";Lendvadedes
+"2027492";Csöde
+"2027526";Miháld
+"2027562";Zalaszombatfa
+"2027720";Salomvár
+"2027775";Óhíd
+"2027951";Tilaj
+"2028167";Lovászi
+"2028200";Ligetfalva
+"2028325";Hottó
+"2028468";Nagypáli
+"2028495";Zalaboldogfa
+"2028778";Dióskál
+"2029160";Páka
+"2029364";Csömödér
+"2029489";Kerkabarabás
+"2029656";Pat
+"2029683";Zalatárnok
+"2029771";Gősfa
+"2030067";Szentpéterfölde
+"2030313";Zalalövő
+"2030368";Bagod
+"2030757";Petrivente
+"2030890";Felsőszenterzsébet
+"2030933";Nagykanizsa
+"2030997";Semjénháza
+"2031112";Pölöskefő
+"2031149";Csonkahegyhát
+"2031291";Bocska
+"2031529";Kerecseny
+"2031592";Rédics
+"2031617";Zalamerenye
+"2031741";Pacsa
+"2031981";Márokföld
+"2032054";Zalaegerszeg
+"2032063";Kávás
+"2032081";Alsópáhok
+"2032142";Vindornyafok
+"2032197";Újudvar
+"2032221";Külsősárd
+"2032267";Kilimán
+"2032513";Pördefölde
+"2032522";Zalaszentgrót
+"2032638";Tornyiszentmiklós
+"2032647";Kerkateskánd
+"2032665";Nemesnép
+"2032708";Dobronhegy
+"2032726";Kisrécse
+"2032902";Kehidakustány
+"2032948";Nemesbük
+"2033136";Zalaszentgyörgy
+"2033288";Zalaszántó
+"2033428";Egervár
+"2033792";Lakhegy
+"2033978";Csörnyeföld
+"2033987";Muraszemenye
+`;
+
+        // Adatstruktúra
+        let dataMap = new Map(); // ksh -> onev
+        let reverseMap = new Map(); // onev lowercase -> ksh
+        let allData = [];
+
+        // LocalStorage kulcsok
+        const STORAGE_KEY = 'onkormany_data';
+        const STORAGE_TIMESTAMP = 'onkormany_timestamp';
+        const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 óra
+
+        // Inicializálás
+        document.addEventListener('DOMContentLoaded', function() {
+            const cacheLoaded = loadFromCache();
+            if (!cacheLoaded) {
+                // Ha nincs cache, automatikusan betöltjük a default CSV fájlt
+                loadDefaultCSV();
+            }
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('csvFile').addEventListener('change', handleFileSelect);
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.getElementById('validateBtn').addEventListener('click', handleBulkValidate);
+            document.getElementById('exportBtn').addEventListener('click', handleExport);
+            document.getElementById('clearBtn').addEventListener('click', handleClear);
+            document.getElementById('toggleCsvBtn').addEventListener('click', toggleCustomCsv);
+        }
+
+        function toggleCustomCsv() {
+            const csvSection = document.getElementById('customCsvSection');
+            const btn = document.getElementById('toggleCsvBtn');
+
+            if (csvSection.style.display === 'none') {
+                csvSection.style.display = 'block';
+                btn.textContent = '✖️ Mégse';
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-outline-danger');
+            } else {
+                csvSection.style.display = 'none';
+                btn.textContent = '📂 Egyéni CSV betöltése';
+                btn.classList.remove('btn-outline-danger');
+                btn.classList.add('btn-outline-secondary');
+            }
+        }
+
+        function loadFromCache() {
+            const timestamp = localStorage.getItem(STORAGE_TIMESTAMP);
+            const now = new Date().getTime();
+
+            if (timestamp && (now - parseInt(timestamp)) < CACHE_DURATION) {
+                const cachedData = localStorage.getItem(STORAGE_KEY);
+                if (cachedData) {
+                    try {
+                        const parsed = JSON.parse(cachedData);
+                        allData = parsed;
+                        processData(allData);
+                        updateStatus(`Cached adatok betöltve (${allData.length} rekord)`, 'success');
+                        showMainContent();
+                        return true;
+                    } catch (e) {
+                        console.error('Cache betöltési hiba:', e);
+                    }
+                }
+            }
+            return false;
+        }
+
+        function saveToCache(data) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                localStorage.setItem(STORAGE_TIMESTAMP, new Date().getTime().toString());
+            } catch (e) {
+                console.error('Cache mentési hiba:', e);
+            }
+        }
+
+        function loadDefaultCSV() {
+            showLoading(true);
+            updateStatus('Beágyazott adatok betöltése...', 'info');
+
+            // Beágyazott CSV adat feldolgozása (nincs szükség hálózati kérésre)
+            Papa.parse(EMBEDDED_CSV_DATA, {
+                header: true,
+                delimiter: ';',
+                skipEmptyLines: true,
+                complete: function(results) {
+                    allData = results.data;
+                    processData(allData);
+                    saveToCache(allData);
+                    updateStatus(`Sikeresen betöltve ${allData.length} rekord`, 'success');
+                    showLoading(false);
+                    showMainContent();
+                },
+                error: function(error) {
+                    updateStatus('Hiba a CSV betöltése során: ' + error.message, 'danger');
+                    showLoading(false);
+                }
+            });
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            showLoading(true);
+            updateStatus('CSV fájl betöltése folyamatban...', 'info');
+
+            Papa.parse(file, {
+                header: true,
+                delimiter: ';',
+                skipEmptyLines: true,
+                complete: function(results) {
+                    allData = results.data;
+                    processData(allData);
+                    saveToCache(allData);
+                    updateStatus(`Sikeresen betöltve ${allData.length} rekord`, 'success');
+                    showLoading(false);
+                    showMainContent();
+                },
+                error: function(error) {
+                    updateStatus('Hiba a CSV betöltése során: ' + error.message, 'danger');
+                    showLoading(false);
+                }
+            });
+        }
+
+        function processData(data) {
+            dataMap.clear();
+            reverseMap.clear();
+
+            data.forEach(row => {
+                const ksh = row.ksh ? row.ksh.trim() : '';
+                const onev = row.onev ? row.onev.trim() : '';
+
+                if (ksh && onev) {
+                    dataMap.set(ksh, onev);
+                    reverseMap.set(onev.toLowerCase(), ksh);
+                }
+            });
+
+            console.log(`Feldolgozva ${dataMap.size} rekord`);
+        }
+
+        function handleSearch(event) {
+            const searchTerm = event.target.value.trim().toLowerCase();
+            const resultsBody = document.getElementById('searchResults');
+
+            if (!searchTerm || dataMap.size === 0) {
+                displaySearchResults([]);
+                return;
+            }
+
+            const results = [];
+
+            // Keresés KSH kód alapján
+            for (let [ksh, onev] of dataMap) {
+                if (ksh.toLowerCase().includes(searchTerm) ||
+                    onev.toLowerCase().includes(searchTerm)) {
+                    results.push({ ksh, onev });
+                }
+            }
+
+            displaySearchResults(results, searchTerm);
+        }
+
+        function displaySearchResults(results, searchTerm = '') {
+            const resultsBody = document.getElementById('searchResults');
+            const statsDiv = document.getElementById('searchStats');
+
+            if (results.length === 0) {
+                resultsBody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">Nincs találat</td></tr>';
+                statsDiv.innerHTML = 'Találatok száma: <strong>0</strong>';
+                return;
+            }
+
+            // Limitáljuk az eredményeket (max 100)
+            const displayResults = results.slice(0, 100);
+
+            resultsBody.innerHTML = displayResults.map(item => {
+                let kshDisplay = item.ksh;
+                let onevDisplay = item.onev;
+
+                // Highlighting
+                if (searchTerm) {
+                    const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+                    kshDisplay = kshDisplay.replace(regex, '<span class="highlight">$1</span>');
+                    onevDisplay = onevDisplay.replace(regex, '<span class="highlight">$1</span>');
+                }
+
+                return `
+                    <tr>
+                        <td>${kshDisplay}</td>
+                        <td>${onevDisplay}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            statsDiv.innerHTML = `Találatok száma: <strong>${results.length}</strong>${results.length > 100 ? ' (első 100 megjelenítve)' : ''}`;
+        }
+
+        function handleBulkValidate() {
+            const input = document.getElementById('bulkInput').value;
+            if (!input.trim()) {
+                alert('Kérem, illesszen be adatokat!');
+                return;
+            }
+
+            if (dataMap.size === 0) {
+                alert('Kérem, először töltsön be egy CSV fájlt!');
+                return;
+            }
+
+            const lines = input.split('\n').filter(line => line.trim());
+            const results = [];
+
+            lines.forEach((line, index) => {
+                const parts = line.split('\t');
+                if (parts.length < 2) return;
+
+                const ksh = parts[0].trim().replace(/"/g, '');
+                const onev = parts[1].trim().replace(/"/g, '');
+                const correctName = dataMap.get(ksh) || '';
+                const isValid = correctName.toLowerCase() === onev.toLowerCase();
+
+                results.push({
+                    index: index + 1,
+                    ksh,
+                    onev,
+                    correctName,
+                    isValid
+                });
+            });
+
+            displayBulkResults(results);
+        }
+
+        function displayBulkResults(results) {
+            const resultsBody = document.getElementById('bulkResults');
+            const statsDiv = document.getElementById('bulkStats');
+            const exportBtn = document.getElementById('exportBtn');
+
+            const validCount = results.filter(r => r.isValid).length;
+            const invalidCount = results.length - validCount;
+            const accuracy = results.length > 0 ? ((validCount / results.length) * 100).toFixed(1) : 0;
+
+            resultsBody.innerHTML = results.map(item => `
+                <tr class="${item.isValid ? 'valid-row' : 'invalid-row'}">
+                    <td>${item.index}</td>
+                    <td>${item.ksh}</td>
+                    <td>${item.onev}</td>
+                    <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
+                    <td class="text-center">
+                        ${item.isValid ?
+                            '<span class="badge bg-success">✓ Helyes</span>' :
+                            '<span class="badge bg-danger">✗ Hibás</span>'}
+                    </td>
+                </tr>
+            `).join('');
+
+            document.getElementById('totalCount').textContent = results.length;
+            document.getElementById('validCount').textContent = validCount;
+            document.getElementById('invalidCount').textContent = invalidCount;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+
+            statsDiv.style.display = 'block';
+            exportBtn.style.display = 'inline-block';
+
+            // Store results for export
+            window.lastBulkResults = results;
+        }
+
+        function handleExport() {
+            if (!window.lastBulkResults || window.lastBulkResults.length === 0) {
+                alert('Nincs exportálható eredmény!');
+                return;
+            }
+
+            const csvContent = [
+                ['Sorszám', 'Megadott KSH', 'Megadott Név', 'Helyes Név', 'Státusz'],
+                ...window.lastBulkResults.map(r => [
+                    r.index,
+                    r.ksh,
+                    r.onev,
+                    r.correctName,
+                    r.isValid ? 'Helyes' : 'Hibás'
+                ])
+            ].map(row => row.join(';')).join('\n');
+
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `ellenorzes_eredmeny_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+        }
+
+        function handleClear() {
+            document.getElementById('bulkInput').value = '';
+            document.getElementById('bulkResults').innerHTML =
+                '<tr><td colspan="5" class="text-center text-muted">Az eredmények itt jelennek meg</td></tr>';
+            document.getElementById('bulkStats').style.display = 'none';
+            document.getElementById('exportBtn').style.display = 'none';
+            window.lastBulkResults = null;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showMainContent() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('toggleCsvBtn').style.display = 'inline-block';
+            // Automatikusan az összes adat megjelenítése
+            displaySearchResults(Array.from(dataMap.entries()).map(([ksh, onev]) => ({ ksh, onev })));
+        }
+
+        function updateStatus(message, type) {
+            const statusDiv = document.getElementById('loadStatus');
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = message;
+            statusDiv.className = `alert alert-${type}`;
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+    </script>
+</body>
+</html>
