@@ -1,0 +1,12796 @@
+// Önkormányzati KSH kódok ésnevek
+// Generálva: 2025-10-06T14:52:49.436Z
+// Forrás: t_onkorm_tech_20251006.csv
+
+export const onkormanyData = [
+  {
+    "ksh": "0102112",
+    "onev": "Budapest XVII. Kerület"
+  },
+  {
+    "ksh": "0103179",
+    "onev": "Budapest II. Kerület"
+  },
+  {
+    "ksh": "0104011",
+    "onev": "Budapest XIX. Kerület"
+  },
+  {
+    "ksh": "0105467",
+    "onev": "Budapest IV. Kerület"
+  },
+  {
+    "ksh": "0106026",
+    "onev": "Budapest XX. Kerület"
+  },
+  {
+    "ksh": "0108208",
+    "onev": "Budapest XVI. Kerület"
+  },
+  {
+    "ksh": "0109566",
+    "onev": "Budapest I. Kerület"
+  },
+  {
+    "ksh": "0110214",
+    "onev": "Budapest XXII. Kerület"
+  },
+  {
+    "ksh": "0110700",
+    "onev": "Budapest X. Kerület"
+  },
+  {
+    "ksh": "0111314",
+    "onev": "Budapest XV. Kerület"
+  },
+  {
+    "ksh": "0113189",
+    "onev": "Budapest XXI. Kerület"
+  },
+  {
+    "ksh": "0113392",
+    "onev": "Budapest V. Kerület"
+  },
+  {
+    "ksh": "0113578",
+    "onev": "Budapest Főváros"
+  },
+  {
+    "ksh": "0114216",
+    "onev": "Budapest XI. Kerület"
+  },
+  {
+    "ksh": "0116337",
+    "onev": "Budapest XIV. Kerület"
+  },
+  {
+    "ksh": "0116586",
+    "onev": "Budapest VI. Kerület"
+  },
+  {
+    "ksh": "0118069",
+    "onev": "Budapest III. Kerület"
+  },
+  {
+    "ksh": "0124299",
+    "onev": "Budapest XIII. Kerület"
+  },
+  {
+    "ksh": "0124697",
+    "onev": "Budapest XII. Kerület"
+  },
+  {
+    "ksh": "0125405",
+    "onev": "Budapest VIII. Kerület"
+  },
+  {
+    "ksh": "0129285",
+    "onev": "Budapest XVIII. Kerület"
+  },
+  {
+    "ksh": "0129586",
+    "onev": "Budapest IX. Kerület"
+  },
+  {
+    "ksh": "0129744",
+    "onev": "Budapest VII. Kerület"
+  },
+  {
+    "ksh": "0134139",
+    "onev": "Budapest XXIII. Kerület"
+  },
+  {
+    "ksh": "0200000",
+    "onev": "Baranya Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0202228",
+    "onev": "Martonfa"
+  },
+  {
+    "ksh": "0202264",
+    "onev": "Vásárosdombó"
+  },
+  {
+    "ksh": "0202547",
+    "onev": "Sumony"
+  },
+  {
+    "ksh": "0202653",
+    "onev": "Nagyharsány"
+  },
+  {
+    "ksh": "0202857",
+    "onev": "Geresdlak"
+  },
+  {
+    "ksh": "0203018",
+    "onev": "Szebény"
+  },
+  {
+    "ksh": "0203151",
+    "onev": "Kistapolca"
+  },
+  {
+    "ksh": "0203285",
+    "onev": "Hirics"
+  },
+  {
+    "ksh": "0203337",
+    "onev": "Ivánbattyán"
+  },
+  {
+    "ksh": "0203346",
+    "onev": "Ivándárda"
+  },
+  {
+    "ksh": "0203470",
+    "onev": "Meződ"
+  },
+  {
+    "ksh": "0203540",
+    "onev": "Kökény"
+  },
+  {
+    "ksh": "0203780",
+    "onev": "Ócsárd"
+  },
+  {
+    "ksh": "0203832",
+    "onev": "Keszü"
+  },
+  {
+    "ksh": "0203896",
+    "onev": "Cserkút"
+  },
+  {
+    "ksh": "0203975",
+    "onev": "Baksa"
+  },
+  {
+    "ksh": "0203984",
+    "onev": "Nagybudmér"
+  },
+  {
+    "ksh": "0204048",
+    "onev": "Tófű"
+  },
+  {
+    "ksh": "0204136",
+    "onev": "Töttös"
+  },
+  {
+    "ksh": "0204297",
+    "onev": "Kacsóta"
+  },
+  {
+    "ksh": "0204385",
+    "onev": "Magyartelek"
+  },
+  {
+    "ksh": "0204437",
+    "onev": "Udvar"
+  },
+  {
+    "ksh": "0204482",
+    "onev": "Oroszló"
+  },
+  {
+    "ksh": "0204516",
+    "onev": "Rózsafa"
+  },
+  {
+    "ksh": "0204543",
+    "onev": "Feked"
+  },
+  {
+    "ksh": "0204899",
+    "onev": "Bikal"
+  },
+  {
+    "ksh": "0205139",
+    "onev": "Birján"
+  },
+  {
+    "ksh": "0205209",
+    "onev": "Villánykövesd"
+  },
+  {
+    "ksh": "0205403",
+    "onev": "Babarc"
+  },
+  {
+    "ksh": "0205412",
+    "onev": "Magyarmecske"
+  },
+  {
+    "ksh": "0205430",
+    "onev": "Magyarhertelend"
+  },
+  {
+    "ksh": "0205485",
+    "onev": "Baranyaszentgyörgy"
+  },
+  {
+    "ksh": "0205519",
+    "onev": "Siklós"
+  },
+  {
+    "ksh": "0205528",
+    "onev": "Szörény"
+  },
+  {
+    "ksh": "0205607",
+    "onev": "Szederkény"
+  },
+  {
+    "ksh": "0205722",
+    "onev": "Kisbeszterce"
+  },
+  {
+    "ksh": "0205892",
+    "onev": "Vokány"
+  },
+  {
+    "ksh": "0205999",
+    "onev": "Kárász"
+  },
+  {
+    "ksh": "0206062",
+    "onev": "Újpetre"
+  },
+  {
+    "ksh": "0206099",
+    "onev": "Ellend"
+  },
+  {
+    "ksh": "0206336",
+    "onev": "Kozármisleny"
+  },
+  {
+    "ksh": "0206415",
+    "onev": "Kákics"
+  },
+  {
+    "ksh": "0206479",
+    "onev": "Lapáncsa"
+  },
+  {
+    "ksh": "0206725",
+    "onev": "Borjád"
+  },
+  {
+    "ksh": "0206789",
+    "onev": "Kemse"
+  },
+  {
+    "ksh": "0206798",
+    "onev": "Hidas"
+  },
+  {
+    "ksh": "0206813",
+    "onev": "Mágocs"
+  },
+  {
+    "ksh": "0206831",
+    "onev": "Kishajmás"
+  },
+  {
+    "ksh": "0206868",
+    "onev": "Adorjás"
+  },
+  {
+    "ksh": "0206886",
+    "onev": "Aranyosgadány"
+  },
+  {
+    "ksh": "0206965",
+    "onev": "Katádfa"
+  },
+  {
+    "ksh": "0206992",
+    "onev": "Kővágótöttös"
+  },
+  {
+    "ksh": "0207010",
+    "onev": "Páprád"
+  },
+  {
+    "ksh": "0207074",
+    "onev": "Vázsnok"
+  },
+  {
+    "ksh": "0207126",
+    "onev": "Hetvehely"
+  },
+  {
+    "ksh": "0207153",
+    "onev": "Palkonya"
+  },
+  {
+    "ksh": "0207366",
+    "onev": "Szárász"
+  },
+  {
+    "ksh": "0207533",
+    "onev": "Bürüs"
+  },
+  {
+    "ksh": "0207560",
+    "onev": "Garé"
+  },
+  {
+    "ksh": "0207603",
+    "onev": "Bánfa"
+  },
+  {
+    "ksh": "0207694",
+    "onev": "Szőkéd"
+  },
+  {
+    "ksh": "0207737",
+    "onev": "Merenye"
+  },
+  {
+    "ksh": "0207773",
+    "onev": "Dencsháza"
+  },
+  {
+    "ksh": "0208110",
+    "onev": "Kórós"
+  },
+  {
+    "ksh": "0208138",
+    "onev": "Várad"
+  },
+  {
+    "ksh": "0208299",
+    "onev": "Bakonya"
+  },
+  {
+    "ksh": "0208341",
+    "onev": "Okorvölgy"
+  },
+  {
+    "ksh": "0208475",
+    "onev": "Szajk"
+  },
+  {
+    "ksh": "0208572",
+    "onev": "Kétújfalu"
+  },
+  {
+    "ksh": "0208651",
+    "onev": "Kisszentmárton"
+  },
+  {
+    "ksh": "0208800",
+    "onev": "Siklósnagyfalu"
+  },
+  {
+    "ksh": "0208819",
+    "onev": "Felsőszentmárton"
+  },
+  {
+    "ksh": "0209007",
+    "onev": "Szalatnak"
+  },
+  {
+    "ksh": "0209159",
+    "onev": "Drávakeresztúr"
+  },
+  {
+    "ksh": "0209186",
+    "onev": "Dunaszekcső"
+  },
+  {
+    "ksh": "0209308",
+    "onev": "Szemely"
+  },
+  {
+    "ksh": "0209450",
+    "onev": "Márfa"
+  },
+  {
+    "ksh": "0209548",
+    "onev": "Kisvaszar"
+  },
+  {
+    "ksh": "0209636",
+    "onev": "Görcsönydoboka"
+  },
+  {
+    "ksh": "0209663",
+    "onev": "Babarcszőlős"
+  },
+  {
+    "ksh": "0209803",
+    "onev": "Szentkatalin"
+  },
+  {
+    "ksh": "0210038",
+    "onev": "Liptód"
+  },
+  {
+    "ksh": "0210135",
+    "onev": "Palotabozsok"
+  },
+  {
+    "ksh": "0210542",
+    "onev": "Kémes"
+  },
+  {
+    "ksh": "0210694",
+    "onev": "Bogdása"
+  },
+  {
+    "ksh": "0210746",
+    "onev": "Kistótfalu"
+  },
+  {
+    "ksh": "0210825",
+    "onev": "Pécsvárad"
+  },
+  {
+    "ksh": "0210940",
+    "onev": "Nagykozár"
+  },
+  {
+    "ksh": "0211086",
+    "onev": "Cún"
+  },
+  {
+    "ksh": "0211183",
+    "onev": "Kisdér"
+  },
+  {
+    "ksh": "0211217",
+    "onev": "Szűr"
+  },
+  {
+    "ksh": "0211402",
+    "onev": "Mecsekpölöske"
+  },
+  {
+    "ksh": "0211518",
+    "onev": "Rádfalva"
+  },
+  {
+    "ksh": "0211730",
+    "onev": "Orfű"
+  },
+  {
+    "ksh": "0211952",
+    "onev": "Dinnyeberki"
+  },
+  {
+    "ksh": "0212201",
+    "onev": "Zók"
+  },
+  {
+    "ksh": "0212353",
+    "onev": "Kistamási"
+  },
+  {
+    "ksh": "0212380",
+    "onev": "Drávapiski"
+  },
+  {
+    "ksh": "0212548",
+    "onev": "Abaliget"
+  },
+  {
+    "ksh": "0212645",
+    "onev": "Óbánya"
+  },
+  {
+    "ksh": "0212751",
+    "onev": "Gerde"
+  },
+  {
+    "ksh": "0212849",
+    "onev": "Kisjakabfalva"
+  },
+  {
+    "ksh": "0212858",
+    "onev": "Nagyhajmás"
+  },
+  {
+    "ksh": "0212867",
+    "onev": "Pereked"
+  },
+  {
+    "ksh": "0213116",
+    "onev": "Boldogasszonyfa"
+  },
+  {
+    "ksh": "0213286",
+    "onev": "Felsőegerszeg"
+  },
+  {
+    "ksh": "0213310",
+    "onev": "Bicsérd"
+  },
+  {
+    "ksh": "0213329",
+    "onev": "Almamellék"
+  },
+  {
+    "ksh": "0213347",
+    "onev": "Gerényes"
+  },
+  {
+    "ksh": "0213365",
+    "onev": "Botykapeterd"
+  },
+  {
+    "ksh": "0213444",
+    "onev": "Mecseknádasd"
+  },
+  {
+    "ksh": "0213499",
+    "onev": "Erzsébet"
+  },
+  {
+    "ksh": "0213675",
+    "onev": "Tengeri"
+  },
+  {
+    "ksh": "0213851",
+    "onev": "Csertő"
+  },
+  {
+    "ksh": "0214119",
+    "onev": "Bezedek"
+  },
+  {
+    "ksh": "0214191",
+    "onev": "Nagyváty"
+  },
+  {
+    "ksh": "0214368",
+    "onev": "Bosta"
+  },
+  {
+    "ksh": "0214483",
+    "onev": "Máriakéménd"
+  },
+  {
+    "ksh": "0214517",
+    "onev": "Kovácsszénája"
+  },
+  {
+    "ksh": "0214650",
+    "onev": "Nagynyárád"
+  },
+  {
+    "ksh": "0215051",
+    "onev": "Matty"
+  },
+  {
+    "ksh": "0215079",
+    "onev": "Szabadszentkirály"
+  },
+  {
+    "ksh": "0215219",
+    "onev": "Marócsa"
+  },
+  {
+    "ksh": "0215389",
+    "onev": "Pécsdevecser"
+  },
+  {
+    "ksh": "0215404",
+    "onev": "Szulimán"
+  },
+  {
+    "ksh": "0215495",
+    "onev": "Basal"
+  },
+  {
+    "ksh": "0215538",
+    "onev": "Kővágószőlős"
+  },
+  {
+    "ksh": "0215635",
+    "onev": "Tarrós"
+  },
+  {
+    "ksh": "0215848",
+    "onev": "Zengővárkony"
+  },
+  {
+    "ksh": "0215866",
+    "onev": "Szentlőrinc"
+  },
+  {
+    "ksh": "0216027",
+    "onev": "Monyoród"
+  },
+  {
+    "ksh": "0216115",
+    "onev": "Pellérd"
+  },
+  {
+    "ksh": "0216285",
+    "onev": "Mindszentgodisa"
+  },
+  {
+    "ksh": "0216355",
+    "onev": "Szentlászló"
+  },
+  {
+    "ksh": "0216443",
+    "onev": "Markóc"
+  },
+  {
+    "ksh": "0216461",
+    "onev": "Berkesd"
+  },
+  {
+    "ksh": "0216498",
+    "onev": "Egyházasharaszti"
+  },
+  {
+    "ksh": "0216771",
+    "onev": "Székelyszabar"
+  },
+  {
+    "ksh": "0216805",
+    "onev": "Kékesd"
+  },
+  {
+    "ksh": "0216975",
+    "onev": "Kisherend"
+  },
+  {
+    "ksh": "0216984",
+    "onev": "Szellő"
+  },
+  {
+    "ksh": "0217190",
+    "onev": "Helesfa"
+  },
+  {
+    "ksh": "0217242",
+    "onev": "Pogány"
+  },
+  {
+    "ksh": "0217385",
+    "onev": "Alsómocsolád"
+  },
+  {
+    "ksh": "0217419",
+    "onev": "Drávafok"
+  },
+  {
+    "ksh": "0217464",
+    "onev": "Kásád"
+  },
+  {
+    "ksh": "0217604",
+    "onev": "Liget"
+  },
+  {
+    "ksh": "0217747",
+    "onev": "Zádor"
+  },
+  {
+    "ksh": "0217792",
+    "onev": "Patapoklosi"
+  },
+  {
+    "ksh": "0217835",
+    "onev": "Fazekasboda"
+  },
+  {
+    "ksh": "0217899",
+    "onev": "Kölked"
+  },
+  {
+    "ksh": "0218050",
+    "onev": "Sámod"
+  },
+  {
+    "ksh": "0218111",
+    "onev": "Nagycsány"
+  },
+  {
+    "ksh": "0218236",
+    "onev": "Nemeske"
+  },
+  {
+    "ksh": "0218315",
+    "onev": "Gyód"
+  },
+  {
+    "ksh": "0218333",
+    "onev": "Gilvánfa"
+  },
+  {
+    "ksh": "0218519",
+    "onev": "Vejti"
+  },
+  {
+    "ksh": "0218555",
+    "onev": "Olasz"
+  },
+  {
+    "ksh": "0218582",
+    "onev": "Túrony"
+  },
+  {
+    "ksh": "0218661",
+    "onev": "Ózdfalu"
+  },
+  {
+    "ksh": "0218704",
+    "onev": "Erdősmecske"
+  },
+  {
+    "ksh": "0218865",
+    "onev": "Lúzsok"
+  },
+  {
+    "ksh": "0218908",
+    "onev": "Kisasszonyfa"
+  },
+  {
+    "ksh": "0219008",
+    "onev": "Belvárdgyula"
+  },
+  {
+    "ksh": "0219132",
+    "onev": "Kátoly"
+  },
+  {
+    "ksh": "0219415",
+    "onev": "Pécs"
+  },
+  {
+    "ksh": "0219646",
+    "onev": "Ófalu"
+  },
+  {
+    "ksh": "0219725",
+    "onev": "Versend"
+  },
+  {
+    "ksh": "0219831",
+    "onev": "Szilágy"
+  },
+  {
+    "ksh": "0219877",
+    "onev": "Nagypall"
+  },
+  {
+    "ksh": "0219901",
+    "onev": "Csányoszró"
+  },
+  {
+    "ksh": "0219910",
+    "onev": "Kiskassa"
+  },
+  {
+    "ksh": "0220279",
+    "onev": "Véménd"
+  },
+  {
+    "ksh": "0220376",
+    "onev": "Almáskeresztúr"
+  },
+  {
+    "ksh": "0220464",
+    "onev": "Baranyahídvég"
+  },
+  {
+    "ksh": "0220552",
+    "onev": "Királyegyháza"
+  },
+  {
+    "ksh": "0220659",
+    "onev": "Márok"
+  },
+  {
+    "ksh": "0220686",
+    "onev": "Okorág"
+  },
+  {
+    "ksh": "0220862",
+    "onev": "Sárok"
+  },
+  {
+    "ksh": "0220899",
+    "onev": "Boda"
+  },
+  {
+    "ksh": "0220978",
+    "onev": "Téseny"
+  },
+  {
+    "ksh": "0221023",
+    "onev": "Hegyszentmárton"
+  },
+  {
+    "ksh": "0221096",
+    "onev": "Pécsudvard"
+  },
+  {
+    "ksh": "0221281",
+    "onev": "Somogyviszló"
+  },
+  {
+    "ksh": "0221519",
+    "onev": "Pécsbagota"
+  },
+  {
+    "ksh": "0221528",
+    "onev": "Harkány"
+  },
+  {
+    "ksh": "0221591",
+    "onev": "Csebény"
+  },
+  {
+    "ksh": "0221616",
+    "onev": "Kislippó"
+  },
+  {
+    "ksh": "0221698",
+    "onev": "Drávasztára"
+  },
+  {
+    "ksh": "0221704",
+    "onev": "Old"
+  },
+  {
+    "ksh": "0221892",
+    "onev": "Bogádmindszent"
+  },
+  {
+    "ksh": "0222071",
+    "onev": "Velény"
+  },
+  {
+    "ksh": "0222211",
+    "onev": "Szőke"
+  },
+  {
+    "ksh": "0222257",
+    "onev": "Szalánta"
+  },
+  {
+    "ksh": "0222266",
+    "onev": "Pócsa"
+  },
+  {
+    "ksh": "0222275",
+    "onev": "Bakóca"
+  },
+  {
+    "ksh": "0222424",
+    "onev": "Tormás"
+  },
+  {
+    "ksh": "0222576",
+    "onev": "Csonkamindszent"
+  },
+  {
+    "ksh": "0222600",
+    "onev": "Magyarszék"
+  },
+  {
+    "ksh": "0222664",
+    "onev": "Gyöngyösmellék"
+  },
+  {
+    "ksh": "0222734",
+    "onev": "Drávapalkonya"
+  },
+  {
+    "ksh": "0222868",
+    "onev": "Kisbudmér"
+  },
+  {
+    "ksh": "0222974",
+    "onev": "Lippó"
+  },
+  {
+    "ksh": "0223074",
+    "onev": "Horváthertelend"
+  },
+  {
+    "ksh": "0223162",
+    "onev": "Bükkösd"
+  },
+  {
+    "ksh": "0223205",
+    "onev": "Siklósbodony"
+  },
+  {
+    "ksh": "0223472",
+    "onev": "Somberek"
+  },
+  {
+    "ksh": "0223506",
+    "onev": "Piskó"
+  },
+  {
+    "ksh": "0223542",
+    "onev": "Magyarlukafa"
+  },
+  {
+    "ksh": "0223764",
+    "onev": "Palé"
+  },
+  {
+    "ksh": "0223807",
+    "onev": "Somogyapáti"
+  },
+  {
+    "ksh": "0223959",
+    "onev": "Mohács"
+  },
+  {
+    "ksh": "0224226",
+    "onev": "Kovácshida"
+  },
+  {
+    "ksh": "0224378",
+    "onev": "Bár"
+  },
+  {
+    "ksh": "0224402",
+    "onev": "Vékény"
+  },
+  {
+    "ksh": "0224624",
+    "onev": "Lovászhetény"
+  },
+  {
+    "ksh": "0224712",
+    "onev": "Szilvás"
+  },
+  {
+    "ksh": "0224749",
+    "onev": "Baranyajenő"
+  },
+  {
+    "ksh": "0224855",
+    "onev": "Romonya"
+  },
+  {
+    "ksh": "0224925",
+    "onev": "Bisse"
+  },
+  {
+    "ksh": "0224952",
+    "onev": "Vásárosbéc"
+  },
+  {
+    "ksh": "0225070",
+    "onev": "Somogyhatvan"
+  },
+  {
+    "ksh": "0225122",
+    "onev": "Zaláta"
+  },
+  {
+    "ksh": "0225177",
+    "onev": "Magyarbóly"
+  },
+  {
+    "ksh": "0225247",
+    "onev": "Köblény"
+  },
+  {
+    "ksh": "0225292",
+    "onev": "Regenye"
+  },
+  {
+    "ksh": "0225812",
+    "onev": "Ág"
+  },
+  {
+    "ksh": "0225821",
+    "onev": "Erdősmárok"
+  },
+  {
+    "ksh": "0226082",
+    "onev": "Cserdi"
+  },
+  {
+    "ksh": "0226329",
+    "onev": "Nyugotszenterzsébet"
+  },
+  {
+    "ksh": "0226408",
+    "onev": "Komló"
+  },
+  {
+    "ksh": "0226578",
+    "onev": "Szigetvár"
+  },
+  {
+    "ksh": "0226994",
+    "onev": "Tótszentgyörgy"
+  },
+  {
+    "ksh": "0227021",
+    "onev": "Kisharsány"
+  },
+  {
+    "ksh": "0227067",
+    "onev": "Magyarsarlós"
+  },
+  {
+    "ksh": "0227164",
+    "onev": "Nagypeterd"
+  },
+  {
+    "ksh": "0227298",
+    "onev": "Apátvarasd"
+  },
+  {
+    "ksh": "0227401",
+    "onev": "Egyházaskozár"
+  },
+  {
+    "ksh": "0227508",
+    "onev": "Szágy"
+  },
+  {
+    "ksh": "0227702",
+    "onev": "Tékes"
+  },
+  {
+    "ksh": "0227863",
+    "onev": "Majs"
+  },
+  {
+    "ksh": "0227881",
+    "onev": "Hásságy"
+  },
+  {
+    "ksh": "0227933",
+    "onev": "Himesháza"
+  },
+  {
+    "ksh": "0228024",
+    "onev": "Villány"
+  },
+  {
+    "ksh": "0228121",
+    "onev": "Drávacsepely"
+  },
+  {
+    "ksh": "0228273",
+    "onev": "Endrőc"
+  },
+  {
+    "ksh": "0228404",
+    "onev": "Gyöngyfa"
+  },
+  {
+    "ksh": "0228529",
+    "onev": "Varga"
+  },
+  {
+    "ksh": "0228538",
+    "onev": "Vajszló"
+  },
+  {
+    "ksh": "0228583",
+    "onev": "Áta"
+  },
+  {
+    "ksh": "0228608",
+    "onev": "Drávaszabolcs"
+  },
+  {
+    "ksh": "0228617",
+    "onev": "Drávacsehi"
+  },
+  {
+    "ksh": "0228741",
+    "onev": "Sellye"
+  },
+  {
+    "ksh": "0228918",
+    "onev": "Egerág"
+  },
+  {
+    "ksh": "0228927",
+    "onev": "Nagytótfalu"
+  },
+  {
+    "ksh": "0229142",
+    "onev": "Somogyhárságy"
+  },
+  {
+    "ksh": "0229522",
+    "onev": "Molvány"
+  },
+  {
+    "ksh": "0229540",
+    "onev": "Mozsgó"
+  },
+  {
+    "ksh": "0229753",
+    "onev": "Magyaregregy"
+  },
+  {
+    "ksh": "0229762",
+    "onev": "Pettend"
+  },
+  {
+    "ksh": "0229920",
+    "onev": "Maráza"
+  },
+  {
+    "ksh": "0229948",
+    "onev": "Ipacsfa"
+  },
+  {
+    "ksh": "0229966",
+    "onev": "Homorúd"
+  },
+  {
+    "ksh": "0230030",
+    "onev": "Drávaszerdahely"
+  },
+  {
+    "ksh": "0230049",
+    "onev": "Besence"
+  },
+  {
+    "ksh": "0230438",
+    "onev": "Görcsöny"
+  },
+  {
+    "ksh": "0230492",
+    "onev": "Mekényes"
+  },
+  {
+    "ksh": "0230614",
+    "onev": "Csarnóta"
+  },
+  {
+    "ksh": "0230836",
+    "onev": "Hosszúhetény"
+  },
+  {
+    "ksh": "0230951",
+    "onev": "Hegyhátmaróc"
+  },
+  {
+    "ksh": "0231060",
+    "onev": "Szava"
+  },
+  {
+    "ksh": "0231389",
+    "onev": "Lothárd"
+  },
+  {
+    "ksh": "0231431",
+    "onev": "Husztót"
+  },
+  {
+    "ksh": "0231714",
+    "onev": "Sósvertike"
+  },
+  {
+    "ksh": "0231927",
+    "onev": "Beremend"
+  },
+  {
+    "ksh": "0231936",
+    "onev": "Illocska"
+  },
+  {
+    "ksh": "0232009",
+    "onev": "Szentdénes"
+  },
+  {
+    "ksh": "0232072",
+    "onev": "Teklafalu"
+  },
+  {
+    "ksh": "0232151",
+    "onev": "Bogád"
+  },
+  {
+    "ksh": "0232160",
+    "onev": "Sásd"
+  },
+  {
+    "ksh": "0232373",
+    "onev": "Diósviszló"
+  },
+  {
+    "ksh": "0232391",
+    "onev": "Drávaiványi"
+  },
+  {
+    "ksh": "0232425",
+    "onev": "Peterd"
+  },
+  {
+    "ksh": "0232744",
+    "onev": "Tésenfa"
+  },
+  {
+    "ksh": "0233002",
+    "onev": "Bodolyabér"
+  },
+  {
+    "ksh": "0233066",
+    "onev": "Ibafa"
+  },
+  {
+    "ksh": "0233084",
+    "onev": "Gordisa"
+  },
+  {
+    "ksh": "0233154",
+    "onev": "Bóly"
+  },
+  {
+    "ksh": "0233215",
+    "onev": "Kisnyárád"
+  },
+  {
+    "ksh": "0233233",
+    "onev": "Gödre"
+  },
+  {
+    "ksh": "0233279",
+    "onev": "Alsószentmárton"
+  },
+  {
+    "ksh": "0233330",
+    "onev": "Lánycsók"
+  },
+  {
+    "ksh": "0233482",
+    "onev": "Sátorhely"
+  },
+  {
+    "ksh": "0233613",
+    "onev": "Szentegát"
+  },
+  {
+    "ksh": "0233756",
+    "onev": "Máza"
+  },
+  {
+    "ksh": "0233765",
+    "onev": "Szászvár"
+  },
+  {
+    "ksh": "0233899",
+    "onev": "Nagydobsza"
+  },
+  {
+    "ksh": "0233905",
+    "onev": "Kisdobsza"
+  },
+  {
+    "ksh": "0233923",
+    "onev": "Mánfa"
+  },
+  {
+    "ksh": "0233932",
+    "onev": "Hobol"
+  },
+  {
+    "ksh": "0234032",
+    "onev": "Szaporca"
+  },
+  {
+    "ksh": "0300000",
+    "onev": "Bács-Kiskun Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0302149",
+    "onev": "Foktő"
+  },
+  {
+    "ksh": "0302705",
+    "onev": "Pálmonostora"
+  },
+  {
+    "ksh": "0302954",
+    "onev": "Felsőszentiván"
+  },
+  {
+    "ksh": "0303230",
+    "onev": "Fajsz"
+  },
+  {
+    "ksh": "0303522",
+    "onev": "Baja"
+  },
+  {
+    "ksh": "0303577",
+    "onev": "Géderlak"
+  },
+  {
+    "ksh": "0303656",
+    "onev": "Bátmonostor"
+  },
+  {
+    "ksh": "0304093",
+    "onev": "Helvécia"
+  },
+  {
+    "ksh": "0304109",
+    "onev": "Dusnok"
+  },
+  {
+    "ksh": "0305786",
+    "onev": "Ladánybene"
+  },
+  {
+    "ksh": "0305856",
+    "onev": "Kunadacs"
+  },
+  {
+    "ksh": "0306044",
+    "onev": "Kunbaja"
+  },
+  {
+    "ksh": "0306202",
+    "onev": "Lakitelek"
+  },
+  {
+    "ksh": "0306442",
+    "onev": "Kalocsa"
+  },
+  {
+    "ksh": "0307524",
+    "onev": "Drágszél"
+  },
+  {
+    "ksh": "0307612",
+    "onev": "Dunavecse"
+  },
+  {
+    "ksh": "0307728",
+    "onev": "Kunbaracs"
+  },
+  {
+    "ksh": "0307861",
+    "onev": "Dunapataj"
+  },
+  {
+    "ksh": "0308095",
+    "onev": "Imrehegy"
+  },
+  {
+    "ksh": "0308305",
+    "onev": "Bócsa"
+  },
+  {
+    "ksh": "0308350",
+    "onev": "Harkakötöny"
+  },
+  {
+    "ksh": "0308378",
+    "onev": "Jászszentlászló"
+  },
+  {
+    "ksh": "0308679",
+    "onev": "Öregcsertő"
+  },
+  {
+    "ksh": "0308697",
+    "onev": "Bácsszentgyörgy"
+  },
+  {
+    "ksh": "0308785",
+    "onev": "Újsolt"
+  },
+  {
+    "ksh": "0309344",
+    "onev": "Kiskőrös"
+  },
+  {
+    "ksh": "0309469",
+    "onev": "Jánoshalma"
+  },
+  {
+    "ksh": "0310180",
+    "onev": "Bácsbokod"
+  },
+  {
+    "ksh": "0310472",
+    "onev": "Császártöltés"
+  },
+  {
+    "ksh": "0310533",
+    "onev": "Dávod"
+  },
+  {
+    "ksh": "0310667",
+    "onev": "Városföld"
+  },
+  {
+    "ksh": "0310719",
+    "onev": "Bácsalmás"
+  },
+  {
+    "ksh": "0311280",
+    "onev": "Katymár"
+  },
+  {
+    "ksh": "0311606",
+    "onev": "Dunaszentbenedek"
+  },
+  {
+    "ksh": "0311794",
+    "onev": "Szank"
+  },
+  {
+    "ksh": "0311864",
+    "onev": "Érsekcsanád"
+  },
+  {
+    "ksh": "0311961",
+    "onev": "Bátya"
+  },
+  {
+    "ksh": "0312025",
+    "onev": "Csólyospálos"
+  },
+  {
+    "ksh": "0312344",
+    "onev": "Csengőd"
+  },
+  {
+    "ksh": "0312566",
+    "onev": "Dunafalva"
+  },
+  {
+    "ksh": "0312937",
+    "onev": "Hercegszántó"
+  },
+  {
+    "ksh": "0313408",
+    "onev": "Ballószög"
+  },
+  {
+    "ksh": "0313806",
+    "onev": "Kömpöc"
+  },
+  {
+    "ksh": "0314058",
+    "onev": "Fülöpszállás"
+  },
+  {
+    "ksh": "0314094",
+    "onev": "Tiszaug"
+  },
+  {
+    "ksh": "0314544",
+    "onev": "Tataháza"
+  },
+  {
+    "ksh": "0314766",
+    "onev": "Dunatetétlen"
+  },
+  {
+    "ksh": "0315158",
+    "onev": "Zsana"
+  },
+  {
+    "ksh": "0315398",
+    "onev": "Pirtó"
+  },
+  {
+    "ksh": "0315431",
+    "onev": "Petőfiszállás"
+  },
+  {
+    "ksh": "0315699",
+    "onev": "Csikéria"
+  },
+  {
+    "ksh": "0316018",
+    "onev": "Mélykút"
+  },
+  {
+    "ksh": "0316276",
+    "onev": "Ordas"
+  },
+  {
+    "ksh": "0316294",
+    "onev": "Uszód"
+  },
+  {
+    "ksh": "0316373",
+    "onev": "Csávoly"
+  },
+  {
+    "ksh": "0316939",
+    "onev": "Orgovány"
+  },
+  {
+    "ksh": "0317677",
+    "onev": "Lajosmizse"
+  },
+  {
+    "ksh": "0317686",
+    "onev": "Ágasegyháza"
+  },
+  {
+    "ksh": "0317923",
+    "onev": "Jakabszállás"
+  },
+  {
+    "ksh": "0318166",
+    "onev": "Kéleshalom"
+  },
+  {
+    "ksh": "0318218",
+    "onev": "Soltszentimre"
+  },
+  {
+    "ksh": "0318458",
+    "onev": "Harta"
+  },
+  {
+    "ksh": "0318670",
+    "onev": "Páhi"
+  },
+  {
+    "ksh": "0318759",
+    "onev": "Hajós"
+  },
+  {
+    "ksh": "0319327",
+    "onev": "Borota"
+  },
+  {
+    "ksh": "0319530",
+    "onev": "Szakmár"
+  },
+  {
+    "ksh": "0319789",
+    "onev": "Kecel"
+  },
+  {
+    "ksh": "0319947",
+    "onev": "Szalkszentmárton"
+  },
+  {
+    "ksh": "0319983",
+    "onev": "Soltvadkert"
+  },
+  {
+    "ksh": "0320297",
+    "onev": "Kiskunfélegyháza"
+  },
+  {
+    "ksh": "0320525",
+    "onev": "Tass"
+  },
+  {
+    "ksh": "0321069",
+    "onev": "Dunaegyháza"
+  },
+  {
+    "ksh": "0321120",
+    "onev": "Szentkirály"
+  },
+  {
+    "ksh": "0321148",
+    "onev": "Apostag"
+  },
+  {
+    "ksh": "0321245",
+    "onev": "Sükösd"
+  },
+  {
+    "ksh": "0321944",
+    "onev": "Akasztó"
+  },
+  {
+    "ksh": "0321999",
+    "onev": "Izsák"
+  },
+  {
+    "ksh": "0322530",
+    "onev": "Kerekegyháza"
+  },
+  {
+    "ksh": "0323056",
+    "onev": "Nyárlőrinc"
+  },
+  {
+    "ksh": "0323357",
+    "onev": "Madaras"
+  },
+  {
+    "ksh": "0324396",
+    "onev": "Kiskunmajsa"
+  },
+  {
+    "ksh": "0324545",
+    "onev": "Tiszaalpár"
+  },
+  {
+    "ksh": "0324998",
+    "onev": "Tázlár"
+  },
+  {
+    "ksh": "0325061",
+    "onev": "Szabadszállás"
+  },
+  {
+    "ksh": "0325432",
+    "onev": "Tabdi"
+  },
+  {
+    "ksh": "0325937",
+    "onev": "Balotaszállás"
+  },
+  {
+    "ksh": "0325955",
+    "onev": "Nagybaracska"
+  },
+  {
+    "ksh": "0326310",
+    "onev": "Rém"
+  },
+  {
+    "ksh": "0326383",
+    "onev": "Gátér"
+  },
+  {
+    "ksh": "0326471",
+    "onev": "Csátalja"
+  },
+  {
+    "ksh": "0326684",
+    "onev": "Kecskemét"
+  },
+  {
+    "ksh": "0327234",
+    "onev": "Bácsborsód"
+  },
+  {
+    "ksh": "0327571",
+    "onev": "Kelebia"
+  },
+  {
+    "ksh": "0327809",
+    "onev": "Mátételke"
+  },
+  {
+    "ksh": "0327845",
+    "onev": "Homokmégy"
+  },
+  {
+    "ksh": "0328130",
+    "onev": "Kunszentmiklós"
+  },
+  {
+    "ksh": "0328158",
+    "onev": "Kisszállás"
+  },
+  {
+    "ksh": "0328343",
+    "onev": "Vaskút"
+  },
+  {
+    "ksh": "0328486",
+    "onev": "Tompa"
+  },
+  {
+    "ksh": "0328820",
+    "onev": "Szeremle"
+  },
+  {
+    "ksh": "0329027",
+    "onev": "Kunfehértó"
+  },
+  {
+    "ksh": "0329115",
+    "onev": "Solt"
+  },
+  {
+    "ksh": "0330155",
+    "onev": "Bácsszőlős"
+  },
+  {
+    "ksh": "0330605",
+    "onev": "Kaskantyú"
+  },
+  {
+    "ksh": "0330623",
+    "onev": "Tiszakécske"
+  },
+  {
+    "ksh": "0330632",
+    "onev": "Miske"
+  },
+  {
+    "ksh": "0331468",
+    "onev": "Fülöpháza"
+  },
+  {
+    "ksh": "0331848",
+    "onev": "Gara"
+  },
+  {
+    "ksh": "0331893",
+    "onev": "Kunszállás"
+  },
+  {
+    "ksh": "0331918",
+    "onev": "Kunpeszér"
+  },
+  {
+    "ksh": "0332434",
+    "onev": "Kiskunhalas"
+  },
+  {
+    "ksh": "0332540",
+    "onev": "Nemesnádudvar"
+  },
+  {
+    "ksh": "0332823",
+    "onev": "Bugac"
+  },
+  {
+    "ksh": "0333589",
+    "onev": "Érsekhalma"
+  },
+  {
+    "ksh": "0333598",
+    "onev": "Felsőlajos"
+  },
+  {
+    "ksh": "0333604",
+    "onev": "Újtelek"
+  },
+  {
+    "ksh": "0333622",
+    "onev": "Fülöpjakab"
+  },
+  {
+    "ksh": "0333631",
+    "onev": "Bugacpusztaháza"
+  },
+  {
+    "ksh": "0334096",
+    "onev": "Móricgát"
+  },
+  {
+    "ksh": "0400000",
+    "onev": "Békés Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0402352",
+    "onev": "Újkígyós"
+  },
+  {
+    "ksh": "0402680",
+    "onev": "Békésszentandrás"
+  },
+  {
+    "ksh": "0403106",
+    "onev": "Kétsoprony"
+  },
+  {
+    "ksh": "0403461",
+    "onev": "Kétegyháza"
+  },
+  {
+    "ksh": "0404206",
+    "onev": "Mezőgyán"
+  },
+  {
+    "ksh": "0404242",
+    "onev": "Nagykamarás"
+  },
+  {
+    "ksh": "0404279",
+    "onev": "Kamut"
+  },
+  {
+    "ksh": "0405032",
+    "onev": "Gyula"
+  },
+  {
+    "ksh": "0405397",
+    "onev": "Pusztaföldvár"
+  },
+  {
+    "ksh": "0406257",
+    "onev": "Zsadány"
+  },
+  {
+    "ksh": "0406804",
+    "onev": "Kötegyán"
+  },
+  {
+    "ksh": "0407393",
+    "onev": "Gerendás"
+  },
+  {
+    "ksh": "0408244",
+    "onev": "Nagyszénás"
+  },
+  {
+    "ksh": "0409432",
+    "onev": "Ecsegfalva"
+  },
+  {
+    "ksh": "0409511",
+    "onev": "Gádoros"
+  },
+  {
+    "ksh": "0409760",
+    "onev": "Békés"
+  },
+  {
+    "ksh": "0410287",
+    "onev": "Kondoros"
+  },
+  {
+    "ksh": "0410764",
+    "onev": "Körösnagyharsány"
+  },
+  {
+    "ksh": "0411536",
+    "onev": "Magyardombegyház"
+  },
+  {
+    "ksh": "0411615",
+    "onev": "Körösladány"
+  },
+  {
+    "ksh": "0411873",
+    "onev": "Mezőhegyes"
+  },
+  {
+    "ksh": "0411989",
+    "onev": "Murony"
+  },
+  {
+    "ksh": "0412177",
+    "onev": "Kardoskút"
+  },
+  {
+    "ksh": "0412256",
+    "onev": "Füzesgyarmat"
+  },
+  {
+    "ksh": "0412618",
+    "onev": "Kertészsziget"
+  },
+  {
+    "ksh": "0412681",
+    "onev": "Telekgerendás"
+  },
+  {
+    "ksh": "0412900",
+    "onev": "Köröstarcsa"
+  },
+  {
+    "ksh": "0413471",
+    "onev": "Bucsa"
+  },
+  {
+    "ksh": "0415200",
+    "onev": "Békéscsaba"
+  },
+  {
+    "ksh": "0416045",
+    "onev": "Kunágota"
+  },
+  {
+    "ksh": "0416434",
+    "onev": "Tótkomlós"
+  },
+  {
+    "ksh": "0417394",
+    "onev": "Geszt"
+  },
+  {
+    "ksh": "0418102",
+    "onev": "Battonya"
+  },
+  {
+    "ksh": "0418838",
+    "onev": "Kisdombegyház"
+  },
+  {
+    "ksh": "0419257",
+    "onev": "Okány"
+  },
+  {
+    "ksh": "0419390",
+    "onev": "Bélmegyer"
+  },
+  {
+    "ksh": "0419594",
+    "onev": "Pusztaottlaka"
+  },
+  {
+    "ksh": "0419628",
+    "onev": "Mezőberény"
+  },
+  {
+    "ksh": "0420455",
+    "onev": "Csanádapáca"
+  },
+  {
+    "ksh": "0420765",
+    "onev": "Medgyesbodzás"
+  },
+  {
+    "ksh": "0421209",
+    "onev": "Lőkösháza"
+  },
+  {
+    "ksh": "0421883",
+    "onev": "Szeghalom"
+  },
+  {
+    "ksh": "0422132",
+    "onev": "Dombiratos"
+  },
+  {
+    "ksh": "0422752",
+    "onev": "Kaszaper"
+  },
+  {
+    "ksh": "0423065",
+    "onev": "Orosháza"
+  },
+  {
+    "ksh": "0423870",
+    "onev": "Szarvas"
+  },
+  {
+    "ksh": "0423931",
+    "onev": "Méhkerék"
+  },
+  {
+    "ksh": "0424031",
+    "onev": "Dombegyház"
+  },
+  {
+    "ksh": "0424350",
+    "onev": "Újszalonta"
+  },
+  {
+    "ksh": "0424794",
+    "onev": "Kardos"
+  },
+  {
+    "ksh": "0424819",
+    "onev": "Dévaványa"
+  },
+  {
+    "ksh": "0425168",
+    "onev": "Sarkadkeresztúr"
+  },
+  {
+    "ksh": "0425502",
+    "onev": "Csárdaszállás"
+  },
+  {
+    "ksh": "0426028",
+    "onev": "Nagybánhegyes"
+  },
+  {
+    "ksh": "0426189",
+    "onev": "Békéssámson"
+  },
+  {
+    "ksh": "0426709",
+    "onev": "Csorvás"
+  },
+  {
+    "ksh": "0427438",
+    "onev": "Örménykút"
+  },
+  {
+    "ksh": "0427906",
+    "onev": "Magyarbánhegyes"
+  },
+  {
+    "ksh": "0428565",
+    "onev": "Sarkad"
+  },
+  {
+    "ksh": "0429531",
+    "onev": "Vésztő"
+  },
+  {
+    "ksh": "0429595",
+    "onev": "Almáskamarás"
+  },
+  {
+    "ksh": "0429610",
+    "onev": "Biharugra"
+  },
+  {
+    "ksh": "0430128",
+    "onev": "Medgyesegyháza"
+  },
+  {
+    "ksh": "0430164",
+    "onev": "Körösújfalu"
+  },
+  {
+    "ksh": "0430322",
+    "onev": "Mezőkovácsháza"
+  },
+  {
+    "ksh": "0431228",
+    "onev": "Végegyháza"
+  },
+  {
+    "ksh": "0431325",
+    "onev": "Szabadkígyós"
+  },
+  {
+    "ksh": "0431334",
+    "onev": "Csabacsűd"
+  },
+  {
+    "ksh": "0431574",
+    "onev": "Kevermes"
+  },
+  {
+    "ksh": "0432957",
+    "onev": "Elek"
+  },
+  {
+    "ksh": "0433075",
+    "onev": "Tarhos"
+  },
+  {
+    "ksh": "0433190",
+    "onev": "Doboz"
+  },
+  {
+    "ksh": "0433297",
+    "onev": "Hunya"
+  },
+  {
+    "ksh": "0433455",
+    "onev": "Gyomaendrőd"
+  },
+  {
+    "ksh": "0434078",
+    "onev": "Csabaszabadi"
+  },
+  {
+    "ksh": "0500000",
+    "onev": "Borsod-Abaúj-Zemplén Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0502024",
+    "onev": "Martonyi"
+  },
+  {
+    "ksh": "0502158",
+    "onev": "Muhi"
+  },
+  {
+    "ksh": "0502273",
+    "onev": "Abaújvár"
+  },
+  {
+    "ksh": "0502282",
+    "onev": "Hejőkürt"
+  },
+  {
+    "ksh": "0502291",
+    "onev": "Tiszabábolna"
+  },
+  {
+    "ksh": "0502468",
+    "onev": "Hegymeg"
+  },
+  {
+    "ksh": "0502741",
+    "onev": "Fáj"
+  },
+  {
+    "ksh": "0502820",
+    "onev": "Abaújlak"
+  },
+  {
+    "ksh": "0502848",
+    "onev": "Felsőzsolca"
+  },
+  {
+    "ksh": "0502866",
+    "onev": "Oszlár"
+  },
+  {
+    "ksh": "0502875",
+    "onev": "Sáta"
+  },
+  {
+    "ksh": "0503063",
+    "onev": "Zádorfalva"
+  },
+  {
+    "ksh": "0503081",
+    "onev": "Sajóhídvég"
+  },
+  {
+    "ksh": "0503133",
+    "onev": "Taktaszada"
+  },
+  {
+    "ksh": "0503160",
+    "onev": "Szuhafő"
+  },
+  {
+    "ksh": "0503212",
+    "onev": "Sajóivánka"
+  },
+  {
+    "ksh": "0503443",
+    "onev": "Mezőzombor"
+  },
+  {
+    "ksh": "0503504",
+    "onev": "Sajóbábony"
+  },
+  {
+    "ksh": "0503531",
+    "onev": "Léh"
+  },
+  {
+    "ksh": "0503595",
+    "onev": "Abaújszántó"
+  },
+  {
+    "ksh": "0503708",
+    "onev": "Taktabáj"
+  },
+  {
+    "ksh": "0503717",
+    "onev": "Tiszadorogma"
+  },
+  {
+    "ksh": "0503744",
+    "onev": "Gagyvendégi"
+  },
+  {
+    "ksh": "0503762",
+    "onev": "Kiskinizs"
+  },
+  {
+    "ksh": "0503771",
+    "onev": "Arnót"
+  },
+  {
+    "ksh": "0503805",
+    "onev": "Szakáld"
+  },
+  {
+    "ksh": "0503823",
+    "onev": "Ároktő"
+  },
+  {
+    "ksh": "0503902",
+    "onev": "Mád"
+  },
+  {
+    "ksh": "0503939",
+    "onev": "Cigánd"
+  },
+  {
+    "ksh": "0503957",
+    "onev": "Viszló"
+  },
+  {
+    "ksh": "0504215",
+    "onev": "Nyomár"
+  },
+  {
+    "ksh": "0504233",
+    "onev": "Aszaló"
+  },
+  {
+    "ksh": "0504419",
+    "onev": "Nyésta"
+  },
+  {
+    "ksh": "0504604",
+    "onev": "Hejőkeresztúr"
+  },
+  {
+    "ksh": "0504677",
+    "onev": "Emőd"
+  },
+  {
+    "ksh": "0504686",
+    "onev": "Dédestapolcsány"
+  },
+  {
+    "ksh": "0504729",
+    "onev": "Sály"
+  },
+  {
+    "ksh": "0504914",
+    "onev": "Trizs"
+  },
+  {
+    "ksh": "0505005",
+    "onev": "Irota"
+  },
+  {
+    "ksh": "0505069",
+    "onev": "Györgytarló"
+  },
+  {
+    "ksh": "0505096",
+    "onev": "Viss"
+  },
+  {
+    "ksh": "0505120",
+    "onev": "Sátoraljaújhely"
+  },
+  {
+    "ksh": "0505245",
+    "onev": "Nemesbikk"
+  },
+  {
+    "ksh": "0505306",
+    "onev": "Bőcs"
+  },
+  {
+    "ksh": "0505315",
+    "onev": "Borsodnádasd"
+  },
+  {
+    "ksh": "0505333",
+    "onev": "Csobád"
+  },
+  {
+    "ksh": "0505458",
+    "onev": "Kenézlő"
+  },
+  {
+    "ksh": "0505494",
+    "onev": "Gadna"
+  },
+  {
+    "ksh": "0505582",
+    "onev": "Nagycsécs"
+  },
+  {
+    "ksh": "0505591",
+    "onev": "Izsófalva"
+  },
+  {
+    "ksh": "0505847",
+    "onev": "Harsány"
+  },
+  {
+    "ksh": "0505865",
+    "onev": "Egerlövő"
+  },
+  {
+    "ksh": "0505926",
+    "onev": "Bódvaszilas"
+  },
+  {
+    "ksh": "0506053",
+    "onev": "Ragály"
+  },
+  {
+    "ksh": "0506123",
+    "onev": "Dövény"
+  },
+  {
+    "ksh": "0506460",
+    "onev": "Füzérkajata"
+  },
+  {
+    "ksh": "0506655",
+    "onev": "Hejőbába"
+  },
+  {
+    "ksh": "0506691",
+    "onev": "Kazincbarcika"
+  },
+  {
+    "ksh": "0506707",
+    "onev": "Borsodivánka"
+  },
+  {
+    "ksh": "0506929",
+    "onev": "Bekecs"
+  },
+  {
+    "ksh": "0506974",
+    "onev": "Cserépfalu"
+  },
+  {
+    "ksh": "0507038",
+    "onev": "Lénárddaróc"
+  },
+  {
+    "ksh": "0507223",
+    "onev": "Vadna"
+  },
+  {
+    "ksh": "0507588",
+    "onev": "Felsőregmec"
+  },
+  {
+    "ksh": "0507719",
+    "onev": "Dámóc"
+  },
+  {
+    "ksh": "0507764",
+    "onev": "Kánó"
+  },
+  {
+    "ksh": "0507825",
+    "onev": "Monok"
+  },
+  {
+    "ksh": "0507889",
+    "onev": "Szőlősardó"
+  },
+  {
+    "ksh": "0508004",
+    "onev": "Hét"
+  },
+  {
+    "ksh": "0508022",
+    "onev": "Bükkszentkereszt"
+  },
+  {
+    "ksh": "0508077",
+    "onev": "Szendrő"
+  },
+  {
+    "ksh": "0508086",
+    "onev": "Ináncs"
+  },
+  {
+    "ksh": "0508129",
+    "onev": "Sajóörös"
+  },
+  {
+    "ksh": "0508147",
+    "onev": "Szászfa"
+  },
+  {
+    "ksh": "0508165",
+    "onev": "Tard"
+  },
+  {
+    "ksh": "0508174",
+    "onev": "Felsőberecki"
+  },
+  {
+    "ksh": "0508217",
+    "onev": "Alsótelekes"
+  },
+  {
+    "ksh": "0508396",
+    "onev": "Boldva"
+  },
+  {
+    "ksh": "0508402",
+    "onev": "Regéc"
+  },
+  {
+    "ksh": "0508484",
+    "onev": "Szentistvánbaksa"
+  },
+  {
+    "ksh": "0508493",
+    "onev": "Csenyéte"
+  },
+  {
+    "ksh": "0508633",
+    "onev": "Tiszapalkonya"
+  },
+  {
+    "ksh": "0508846",
+    "onev": "Baskó"
+  },
+  {
+    "ksh": "0508970",
+    "onev": "Sajósenye"
+  },
+  {
+    "ksh": "0509016",
+    "onev": "Monaj"
+  },
+  {
+    "ksh": "0509317",
+    "onev": "Révleányvár"
+  },
+  {
+    "ksh": "0509362",
+    "onev": "Aggtelek"
+  },
+  {
+    "ksh": "0509399",
+    "onev": "Hernádcéce"
+  },
+  {
+    "ksh": "0509496",
+    "onev": "Szirmabesenyő"
+  },
+  {
+    "ksh": "0509706",
+    "onev": "Gömörszőlős"
+  },
+  {
+    "ksh": "0509742",
+    "onev": "Felsődobsza"
+  },
+  {
+    "ksh": "0509830",
+    "onev": "Szemere"
+  },
+  {
+    "ksh": "0510144",
+    "onev": "Varbóc"
+  },
+  {
+    "ksh": "0510171",
+    "onev": "Sajógalgóc"
+  },
+  {
+    "ksh": "0510357",
+    "onev": "Abod"
+  },
+  {
+    "ksh": "0510366",
+    "onev": "Füzérradvány"
+  },
+  {
+    "ksh": "0510375",
+    "onev": "Tornakápolna"
+  },
+  {
+    "ksh": "0510524",
+    "onev": "Detek"
+  },
+  {
+    "ksh": "0510612",
+    "onev": "Komjáti"
+  },
+  {
+    "ksh": "0510728",
+    "onev": "Edelény"
+  },
+  {
+    "ksh": "0510904",
+    "onev": "Garadna"
+  },
+  {
+    "ksh": "0510968",
+    "onev": "Mogyoróska"
+  },
+  {
+    "ksh": "0510977",
+    "onev": "Tiszavalk"
+  },
+  {
+    "ksh": "0511022",
+    "onev": "Zsujta"
+  },
+  {
+    "ksh": "0511110",
+    "onev": "Szuhakálló"
+  },
+  {
+    "ksh": "0511226",
+    "onev": "Hangács"
+  },
+  {
+    "ksh": "0511323",
+    "onev": "Mezőkeresztes"
+  },
+  {
+    "ksh": "0511332",
+    "onev": "Sajónémeti"
+  },
+  {
+    "ksh": "0511350",
+    "onev": "Damak"
+  },
+  {
+    "ksh": "0511378",
+    "onev": "Füzérkomlós"
+  },
+  {
+    "ksh": "0511448",
+    "onev": "Kisrozvágy"
+  },
+  {
+    "ksh": "0511493",
+    "onev": "Szinpetri"
+  },
+  {
+    "ksh": "0511581",
+    "onev": "Vilmány"
+  },
+  {
+    "ksh": "0511660",
+    "onev": "Legyesbénye"
+  },
+  {
+    "ksh": "0511697",
+    "onev": "Hidasnémeti"
+  },
+  {
+    "ksh": "0511749",
+    "onev": "Mezőnyárád"
+  },
+  {
+    "ksh": "0511758",
+    "onev": "Meszes"
+  },
+  {
+    "ksh": "0511819",
+    "onev": "Kurityán"
+  },
+  {
+    "ksh": "0512034",
+    "onev": "Kelemér"
+  },
+  {
+    "ksh": "0512159",
+    "onev": "Hejőszalonta"
+  },
+  {
+    "ksh": "0512210",
+    "onev": "Tállya"
+  },
+  {
+    "ksh": "0512362",
+    "onev": "Pálháza"
+  },
+  {
+    "ksh": "0512371",
+    "onev": "Pamlény"
+  },
+  {
+    "ksh": "0512399",
+    "onev": "Kistokaj"
+  },
+  {
+    "ksh": "0512469",
+    "onev": "Rátka"
+  },
+  {
+    "ksh": "0512487",
+    "onev": "Újcsanálos"
+  },
+  {
+    "ksh": "0512557",
+    "onev": "Fancsal"
+  },
+  {
+    "ksh": "0512706",
+    "onev": "Háromhuta"
+  },
+  {
+    "ksh": "0512885",
+    "onev": "Nyékládháza"
+  },
+  {
+    "ksh": "0512982",
+    "onev": "Vilyvitány"
+  },
+  {
+    "ksh": "0513134",
+    "onev": "Golop"
+  },
+  {
+    "ksh": "0513268",
+    "onev": "Sóstófalva"
+  },
+  {
+    "ksh": "0513356",
+    "onev": "Égerszög"
+  },
+  {
+    "ksh": "0513374",
+    "onev": "Kázsmárk"
+  },
+  {
+    "ksh": "0513596",
+    "onev": "Bükkábrány"
+  },
+  {
+    "ksh": "0513763",
+    "onev": "Telkibánya"
+  },
+  {
+    "ksh": "0513833",
+    "onev": "Mezőcsát"
+  },
+  {
+    "ksh": "0513888",
+    "onev": "Tiszakeszi"
+  },
+  {
+    "ksh": "0513976",
+    "onev": "Tiszakarád"
+  },
+  {
+    "ksh": "0514289",
+    "onev": "Csokvaomány"
+  },
+  {
+    "ksh": "0514313",
+    "onev": "Sajókaza"
+  },
+  {
+    "ksh": "0514331",
+    "onev": "Arló"
+  },
+  {
+    "ksh": "0514401",
+    "onev": "Bodrogolaszi"
+  },
+  {
+    "ksh": "0514429",
+    "onev": "Alsógagy"
+  },
+  {
+    "ksh": "0514474",
+    "onev": "Boldogkőváralja"
+  },
+  {
+    "ksh": "0514492",
+    "onev": "Ózd"
+  },
+  {
+    "ksh": "0514702",
+    "onev": "Kissikátor"
+  },
+  {
+    "ksh": "0514784",
+    "onev": "Tardona"
+  },
+  {
+    "ksh": "0514890",
+    "onev": "Tomor"
+  },
+  {
+    "ksh": "0514915",
+    "onev": "Mályinka"
+  },
+  {
+    "ksh": "0515149",
+    "onev": "Vámosújfalu"
+  },
+  {
+    "ksh": "0515264",
+    "onev": "Kéked"
+  },
+  {
+    "ksh": "0515413",
+    "onev": "Pusztaradvány"
+  },
+  {
+    "ksh": "0515468",
+    "onev": "Nagyhuta"
+  },
+  {
+    "ksh": "0515608",
+    "onev": "Gesztely"
+  },
+  {
+    "ksh": "0515617",
+    "onev": "Zalkod"
+  },
+  {
+    "ksh": "0515662",
+    "onev": "Abaújalpár"
+  },
+  {
+    "ksh": "0515680",
+    "onev": "Jósvafő"
+  },
+  {
+    "ksh": "0515839",
+    "onev": "Hernádbűd"
+  },
+  {
+    "ksh": "0515857",
+    "onev": "Lak"
+  },
+  {
+    "ksh": "0515893",
+    "onev": "Pácin"
+  },
+  {
+    "ksh": "0515936",
+    "onev": "Gönc"
+  },
+  {
+    "ksh": "0515945",
+    "onev": "Sajómercse"
+  },
+  {
+    "ksh": "0516054",
+    "onev": "Sajószentpéter"
+  },
+  {
+    "ksh": "0516124",
+    "onev": "Borsodgeszt"
+  },
+  {
+    "ksh": "0516133",
+    "onev": "Rakacaszend"
+  },
+  {
+    "ksh": "0516179",
+    "onev": "Szögliget"
+  },
+  {
+    "ksh": "0516559",
+    "onev": "Komlóska"
+  },
+  {
+    "ksh": "0516577",
+    "onev": "Imola"
+  },
+  {
+    "ksh": "0516638",
+    "onev": "Sajópetri"
+  },
+  {
+    "ksh": "0516753",
+    "onev": "Szalonna"
+  },
+  {
+    "ksh": "0516780",
+    "onev": "Hejőpapi"
+  },
+  {
+    "ksh": "0516799",
+    "onev": "Borsodszirák"
+  },
+  {
+    "ksh": "0516902",
+    "onev": "Tornabarakony"
+  },
+  {
+    "ksh": "0517048",
+    "onev": "Pusztafalu"
+  },
+  {
+    "ksh": "0517066",
+    "onev": "Keresztéte"
+  },
+  {
+    "ksh": "0517109",
+    "onev": "Füzér"
+  },
+  {
+    "ksh": "0517136",
+    "onev": "Hernádszentandrás"
+  },
+  {
+    "ksh": "0517349",
+    "onev": "Kiscsécs"
+  },
+  {
+    "ksh": "0517932",
+    "onev": "Fony"
+  },
+  {
+    "ksh": "0518184",
+    "onev": "Baktakék"
+  },
+  {
+    "ksh": "0518245",
+    "onev": "Taktaharkány"
+  },
+  {
+    "ksh": "0518306",
+    "onev": "Tokaj"
+  },
+  {
+    "ksh": "0518351",
+    "onev": "Uppony"
+  },
+  {
+    "ksh": "0518379",
+    "onev": "Mezőnagymihály"
+  },
+  {
+    "ksh": "0518537",
+    "onev": "Sajópálfala"
+  },
+  {
+    "ksh": "0518643",
+    "onev": "Göncruszka"
+  },
+  {
+    "ksh": "0518722",
+    "onev": "Kupa"
+  },
+  {
+    "ksh": "0518801",
+    "onev": "Tornanádaska"
+  },
+  {
+    "ksh": "0518892",
+    "onev": "Szomolya"
+  },
+  {
+    "ksh": "0518944",
+    "onev": "Boldogkőújfalu"
+  },
+  {
+    "ksh": "0519105",
+    "onev": "Zubogy"
+  },
+  {
+    "ksh": "0519220",
+    "onev": "Ricse"
+  },
+  {
+    "ksh": "0519275",
+    "onev": "Ziliz"
+  },
+  {
+    "ksh": "0519293",
+    "onev": "Galvács"
+  },
+  {
+    "ksh": "0519381",
+    "onev": "Tiszaladány"
+  },
+  {
+    "ksh": "0519406",
+    "onev": "Bükkmogyorósd"
+  },
+  {
+    "ksh": "0519433",
+    "onev": "Mezőkövesd"
+  },
+  {
+    "ksh": "0519576",
+    "onev": "Krasznokvajda"
+  },
+  {
+    "ksh": "0519600",
+    "onev": "Makkoshotyka"
+  },
+  {
+    "ksh": "0519664",
+    "onev": "Alsódobsza"
+  },
+  {
+    "ksh": "0519840",
+    "onev": "Hernádvécse"
+  },
+  {
+    "ksh": "0520233",
+    "onev": "Jákfalva"
+  },
+  {
+    "ksh": "0520482",
+    "onev": "Alsóberecki"
+  },
+  {
+    "ksh": "0520516",
+    "onev": "Sárazsadány"
+  },
+  {
+    "ksh": "0520738",
+    "onev": "Sajóvámos"
+  },
+  {
+    "ksh": "0520774",
+    "onev": "Csobaj"
+  },
+  {
+    "ksh": "0520844",
+    "onev": "Lácacséke"
+  },
+  {
+    "ksh": "0520871",
+    "onev": "Szin"
+  },
+  {
+    "ksh": "0520969",
+    "onev": "Gibárt"
+  },
+  {
+    "ksh": "0521032",
+    "onev": "Alsózsolca"
+  },
+  {
+    "ksh": "0521087",
+    "onev": "Vizsoly"
+  },
+  {
+    "ksh": "0521193",
+    "onev": "Radostyán"
+  },
+  {
+    "ksh": "0521218",
+    "onev": "Karcsa"
+  },
+  {
+    "ksh": "0521236",
+    "onev": "Homrogd"
+  },
+  {
+    "ksh": "0521272",
+    "onev": "Prügy"
+  },
+  {
+    "ksh": "0521351",
+    "onev": "Szikszó"
+  },
+  {
+    "ksh": "0521546",
+    "onev": "Múcsony"
+  },
+  {
+    "ksh": "0521564",
+    "onev": "Girincs"
+  },
+  {
+    "ksh": "0521670",
+    "onev": "Sajókápolna"
+  },
+  {
+    "ksh": "0521740",
+    "onev": "Tarcal"
+  },
+  {
+    "ksh": "0521768",
+    "onev": "Megyaszó"
+  },
+  {
+    "ksh": "0521810",
+    "onev": "Varbó"
+  },
+  {
+    "ksh": "0521829",
+    "onev": "Hernádkércs"
+  },
+  {
+    "ksh": "0521953",
+    "onev": "Bánréve"
+  },
+  {
+    "ksh": "0522123",
+    "onev": "Fulókércs"
+  },
+  {
+    "ksh": "0522169",
+    "onev": "Szentistván"
+  },
+  {
+    "ksh": "0522187",
+    "onev": "Hejce"
+  },
+  {
+    "ksh": "0522479",
+    "onev": "Sajólászlófalva"
+  },
+  {
+    "ksh": "0522503",
+    "onev": "Erdőhorváti"
+  },
+  {
+    "ksh": "0522521",
+    "onev": "Balajt"
+  },
+  {
+    "ksh": "0522558",
+    "onev": "Onga"
+  },
+  {
+    "ksh": "0522628",
+    "onev": "Ónod"
+  },
+  {
+    "ksh": "0522840",
+    "onev": "Kisgyőr"
+  },
+  {
+    "ksh": "0522956",
+    "onev": "Korlát"
+  },
+  {
+    "ksh": "0523029",
+    "onev": "Rudabánya"
+  },
+  {
+    "ksh": "0523223",
+    "onev": "Alsóregmec"
+  },
+  {
+    "ksh": "0523418",
+    "onev": "Sima"
+  },
+  {
+    "ksh": "0523533",
+    "onev": "Felsővadász"
+  },
+  {
+    "ksh": "0523719",
+    "onev": "Gelej"
+  },
+  {
+    "ksh": "0523737",
+    "onev": "Bodroghalom"
+  },
+  {
+    "ksh": "0523755",
+    "onev": "Semjén"
+  },
+  {
+    "ksh": "0523782",
+    "onev": "Sajópüspöki"
+  },
+  {
+    "ksh": "0523977",
+    "onev": "Büttös"
+  },
+  {
+    "ksh": "0524156",
+    "onev": "Négyes"
+  },
+  {
+    "ksh": "0524165",
+    "onev": "Hernádkak"
+  },
+  {
+    "ksh": "0524253",
+    "onev": "Mikóháza"
+  },
+  {
+    "ksh": "0524420",
+    "onev": "Pere"
+  },
+  {
+    "ksh": "0524606",
+    "onev": "Szuhogy"
+  },
+  {
+    "ksh": "0524730",
+    "onev": "Pányok"
+  },
+  {
+    "ksh": "0524882",
+    "onev": "Hernádpetri"
+  },
+  {
+    "ksh": "0524970",
+    "onev": "Hernádszurdok"
+  },
+  {
+    "ksh": "0525104",
+    "onev": "Hangony"
+  },
+  {
+    "ksh": "0525159",
+    "onev": "Bánhorváti"
+  },
+  {
+    "ksh": "0525195",
+    "onev": "Bogács"
+  },
+  {
+    "ksh": "0525238",
+    "onev": "Filkeháza"
+  },
+  {
+    "ksh": "0525326",
+    "onev": "Erdőbénye"
+  },
+  {
+    "ksh": "0525380",
+    "onev": "Selyeb"
+  },
+  {
+    "ksh": "0525399",
+    "onev": "Igrici"
+  },
+  {
+    "ksh": "0525575",
+    "onev": "Cserépváralja"
+  },
+  {
+    "ksh": "0525618",
+    "onev": "Méra"
+  },
+  {
+    "ksh": "0525672",
+    "onev": "Hidvégardó"
+  },
+  {
+    "ksh": "0525690",
+    "onev": "Domaháza"
+  },
+  {
+    "ksh": "0525742",
+    "onev": "Kány"
+  },
+  {
+    "ksh": "0526198",
+    "onev": "Arka"
+  },
+  {
+    "ksh": "0526231",
+    "onev": "Ládbesenyő"
+  },
+  {
+    "ksh": "0526338",
+    "onev": "Abaújszolnok"
+  },
+  {
+    "ksh": "0526356",
+    "onev": "Berzék"
+  },
+  {
+    "ksh": "0526435",
+    "onev": "Nyíri"
+  },
+  {
+    "ksh": "0526505",
+    "onev": "Nagykinizs"
+  },
+  {
+    "ksh": "0526602",
+    "onev": "Köröm"
+  },
+  {
+    "ksh": "0526657",
+    "onev": "Járdánháza"
+  },
+  {
+    "ksh": "0526718",
+    "onev": "Abaújkér"
+  },
+  {
+    "ksh": "0526745",
+    "onev": "Parasznya"
+  },
+  {
+    "ksh": "0526949",
+    "onev": "Sajókeresztúr"
+  },
+  {
+    "ksh": "0527049",
+    "onev": "Becskeháza"
+  },
+  {
+    "ksh": "0527173",
+    "onev": "Sajólád"
+  },
+  {
+    "ksh": "0527191",
+    "onev": "Novajidrány"
+  },
+  {
+    "ksh": "0527331",
+    "onev": "Sajóecseg"
+  },
+  {
+    "ksh": "0527395",
+    "onev": "Mályi"
+  },
+  {
+    "ksh": "0527410",
+    "onev": "Putnok"
+  },
+  {
+    "ksh": "0527429",
+    "onev": "Bódvalenke"
+  },
+  {
+    "ksh": "0527456",
+    "onev": "Szendrőlád"
+  },
+  {
+    "ksh": "0527474",
+    "onev": "Sárospatak"
+  },
+  {
+    "ksh": "0527669",
+    "onev": "Dubicsány"
+  },
+  {
+    "ksh": "0527757",
+    "onev": "Sajóvelezd"
+  },
+  {
+    "ksh": "0527836",
+    "onev": "Tornaszentandrás"
+  },
+  {
+    "ksh": "0527890",
+    "onev": "Bükkaranyos"
+  },
+  {
+    "ksh": "0527942",
+    "onev": "Halmaj"
+  },
+  {
+    "ksh": "0528033",
+    "onev": "Nekézseny"
+  },
+  {
+    "ksh": "0528051",
+    "onev": "Tolcsva"
+  },
+  {
+    "ksh": "0528219",
+    "onev": "Litka"
+  },
+  {
+    "ksh": "0528307",
+    "onev": "Gagybátor"
+  },
+  {
+    "ksh": "0528352",
+    "onev": "Tiszaújváros"
+  },
+  {
+    "ksh": "0528398",
+    "onev": "Tiszalúc"
+  },
+  {
+    "ksh": "0528459",
+    "onev": "Csernely"
+  },
+  {
+    "ksh": "0528547",
+    "onev": "Kovácsvágás"
+  },
+  {
+    "ksh": "0528635",
+    "onev": "Teresztenye"
+  },
+  {
+    "ksh": "0528732",
+    "onev": "Gagyapáti"
+  },
+  {
+    "ksh": "0528787",
+    "onev": "Taktakenéz"
+  },
+  {
+    "ksh": "0528839",
+    "onev": "Alsószuha"
+  },
+  {
+    "ksh": "0528875",
+    "onev": "Kishuta"
+  },
+  {
+    "ksh": "0529054",
+    "onev": "Tornyosnémeti"
+  },
+  {
+    "ksh": "0529133",
+    "onev": "Tiszacsermely"
+  },
+  {
+    "ksh": "0529151",
+    "onev": "Vágáshuta"
+  },
+  {
+    "ksh": "0529188",
+    "onev": "Nagybarca"
+  },
+  {
+    "ksh": "0529249",
+    "onev": "Kesznyéten"
+  },
+  {
+    "ksh": "0529674",
+    "onev": "Beret"
+  },
+  {
+    "ksh": "0529708",
+    "onev": "Felsőgagy"
+  },
+  {
+    "ksh": "0529717",
+    "onev": "Rakaca"
+  },
+  {
+    "ksh": "0529814",
+    "onev": "Alsóvadász"
+  },
+  {
+    "ksh": "0530003",
+    "onev": "Vajdácska"
+  },
+  {
+    "ksh": "0530076",
+    "onev": "Vatta"
+  },
+  {
+    "ksh": "0530137",
+    "onev": "Hercegkút"
+  },
+  {
+    "ksh": "0530207",
+    "onev": "Borsodszentgyörgy"
+  },
+  {
+    "ksh": "0530298",
+    "onev": "Tiszatardos"
+  },
+  {
+    "ksh": "0530340",
+    "onev": "Sajószöged"
+  },
+  {
+    "ksh": "0530377",
+    "onev": "Tiszatarján"
+  },
+  {
+    "ksh": "0530447",
+    "onev": "Tibolddaróc"
+  },
+  {
+    "ksh": "0530456",
+    "onev": "Miskolc"
+  },
+  {
+    "ksh": "0530483",
+    "onev": "Forró"
+  },
+  {
+    "ksh": "0530508",
+    "onev": "Karos"
+  },
+  {
+    "ksh": "0530517",
+    "onev": "Tornaszentjakab"
+  },
+  {
+    "ksh": "0530669",
+    "onev": "Borsodbóta"
+  },
+  {
+    "ksh": "0530739",
+    "onev": "Szerencs"
+  },
+  {
+    "ksh": "0530784",
+    "onev": "Bodrogkeresztúr"
+  },
+  {
+    "ksh": "0531006",
+    "onev": "Bózsva"
+  },
+  {
+    "ksh": "0531015",
+    "onev": "Szalaszend"
+  },
+  {
+    "ksh": "0531167",
+    "onev": "Hollóháza"
+  },
+  {
+    "ksh": "0531200",
+    "onev": "Hernádnémeti"
+  },
+  {
+    "ksh": "0531510",
+    "onev": "Szegilong"
+  },
+  {
+    "ksh": "0531608",
+    "onev": "Zemplénagárd"
+  },
+  {
+    "ksh": "0531671",
+    "onev": "Felsőtelekes"
+  },
+  {
+    "ksh": "0531723",
+    "onev": "Felsőkelecsény"
+  },
+  {
+    "ksh": "0531778",
+    "onev": "Olaszliszka"
+  },
+  {
+    "ksh": "0531884",
+    "onev": "Répáshuta"
+  },
+  {
+    "ksh": "0531909",
+    "onev": "Rásonysápberencs"
+  },
+  {
+    "ksh": "0531954",
+    "onev": "Debréte"
+  },
+  {
+    "ksh": "0532090",
+    "onev": "Királd"
+  },
+  {
+    "ksh": "0532258",
+    "onev": "Szakácsi"
+  },
+  {
+    "ksh": "0532498",
+    "onev": "Kondó"
+  },
+  {
+    "ksh": "0532531",
+    "onev": "Serényfalva"
+  },
+  {
+    "ksh": "0532683",
+    "onev": "Perecse"
+  },
+  {
+    "ksh": "0532762",
+    "onev": "Felsőnyárád"
+  },
+  {
+    "ksh": "0532887",
+    "onev": "Bükkzsérc"
+  },
+  {
+    "ksh": "0532993",
+    "onev": "Kács"
+  },
+  {
+    "ksh": "0533048",
+    "onev": "Encs"
+  },
+  {
+    "ksh": "0533093",
+    "onev": "Alacska"
+  },
+  {
+    "ksh": "0533181",
+    "onev": "Nagyrozvágy"
+  },
+  {
+    "ksh": "0533303",
+    "onev": "Bódvarákó"
+  },
+  {
+    "ksh": "0533419",
+    "onev": "Perkupa"
+  },
+  {
+    "ksh": "0533808",
+    "onev": "Bodrogkisfalud"
+  },
+  {
+    "ksh": "0533817",
+    "onev": "Szegi"
+  },
+  {
+    "ksh": "0534069",
+    "onev": "Ormosbánya"
+  },
+  {
+    "ksh": "0534111",
+    "onev": "Csincse"
+  },
+  {
+    "ksh": "0534120",
+    "onev": "Rudolftelep"
+  },
+  {
+    "ksh": "0534272",
+    "onev": "Farkaslyuk"
+  },
+  {
+    "ksh": "0534290",
+    "onev": "Berente"
+  },
+  {
+    "ksh": "0600000",
+    "onev": "Csongrád-Csanád Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0602121",
+    "onev": "Csanádalberti"
+  },
+  {
+    "ksh": "0603966",
+    "onev": "Ruzsa"
+  },
+  {
+    "ksh": "0604349",
+    "onev": "Mórahalom"
+  },
+  {
+    "ksh": "0605111",
+    "onev": "Csongrád"
+  },
+  {
+    "ksh": "0605379",
+    "onev": "Csanádpalota"
+  },
+  {
+    "ksh": "0605546",
+    "onev": "Zákányszék"
+  },
+  {
+    "ksh": "0605962",
+    "onev": "Magyarcsanád"
+  },
+  {
+    "ksh": "0606284",
+    "onev": "Pitvaros"
+  },
+  {
+    "ksh": "0606354",
+    "onev": "Pusztamérges"
+  },
+  {
+    "ksh": "0607357",
+    "onev": "Makó"
+  },
+  {
+    "ksh": "0607755",
+    "onev": "Óföldeák"
+  },
+  {
+    "ksh": "0607834",
+    "onev": "Derekegyház"
+  },
+  {
+    "ksh": "0608192",
+    "onev": "Bordány"
+  },
+  {
+    "ksh": "0608253",
+    "onev": "Klárafalva"
+  },
+  {
+    "ksh": "0608314",
+    "onev": "Hódmezővásárhely"
+  },
+  {
+    "ksh": "0609210",
+    "onev": "Földeák"
+  },
+  {
+    "ksh": "0609955",
+    "onev": "Kövegy"
+  },
+  {
+    "ksh": "0610339",
+    "onev": "Ásotthalom"
+  },
+  {
+    "ksh": "0610515",
+    "onev": "Maroslele"
+  },
+  {
+    "ksh": "0612007",
+    "onev": "Szatymaz"
+  },
+  {
+    "ksh": "0612265",
+    "onev": "Székkutas"
+  },
+  {
+    "ksh": "0612779",
+    "onev": "Nagylak"
+  },
+  {
+    "ksh": "0612797",
+    "onev": "Ópusztaszer"
+  },
+  {
+    "ksh": "0613161",
+    "onev": "Röszke"
+  },
+  {
+    "ksh": "0613383",
+    "onev": "Domaszék"
+  },
+  {
+    "ksh": "0613666",
+    "onev": "Királyhegyes"
+  },
+  {
+    "ksh": "0614252",
+    "onev": "Apátfalva"
+  },
+  {
+    "ksh": "0614410",
+    "onev": "Kübekháza"
+  },
+  {
+    "ksh": "0614456",
+    "onev": "Szentes"
+  },
+  {
+    "ksh": "0614924",
+    "onev": "Újszentiván"
+  },
+  {
+    "ksh": "0616197",
+    "onev": "Ambrózfalva"
+  },
+  {
+    "ksh": "0616966",
+    "onev": "Tiszasziget"
+  },
+  {
+    "ksh": "0617233",
+    "onev": "Nagymágocs"
+  },
+  {
+    "ksh": "0617765",
+    "onev": "Zsombó"
+  },
+  {
+    "ksh": "0618999",
+    "onev": "Ferencszállás"
+  },
+  {
+    "ksh": "0619062",
+    "onev": "Árpádhalom"
+  },
+  {
+    "ksh": "0619974",
+    "onev": "Fábiánsebestyén"
+  },
+  {
+    "ksh": "0620914",
+    "onev": "Nagyér"
+  },
+  {
+    "ksh": "0621412",
+    "onev": "Üllés"
+  },
+  {
+    "ksh": "0621555",
+    "onev": "Mindszent"
+  },
+  {
+    "ksh": "0622293",
+    "onev": "Csanytelek"
+  },
+  {
+    "ksh": "0622646",
+    "onev": "Felgyő"
+  },
+  {
+    "ksh": "0622992",
+    "onev": "Eperjes"
+  },
+  {
+    "ksh": "0623676",
+    "onev": "Balástya"
+  },
+  {
+    "ksh": "0624077",
+    "onev": "Deszk"
+  },
+  {
+    "ksh": "0625733",
+    "onev": "Mártély"
+  },
+  {
+    "ksh": "0625900",
+    "onev": "Tömörkény"
+  },
+  {
+    "ksh": "0626666",
+    "onev": "Kiszombor"
+  },
+  {
+    "ksh": "0628592",
+    "onev": "Pusztaszer"
+  },
+  {
+    "ksh": "0629106",
+    "onev": "Baks"
+  },
+  {
+    "ksh": "0629179",
+    "onev": "Nagytőke"
+  },
+  {
+    "ksh": "0630535",
+    "onev": "Dóc"
+  },
+  {
+    "ksh": "0631024",
+    "onev": "Kistelek"
+  },
+  {
+    "ksh": "0631079",
+    "onev": "Öttömös"
+  },
+  {
+    "ksh": "0631705",
+    "onev": "Sándorfalva"
+  },
+  {
+    "ksh": "0632285",
+    "onev": "Csengele"
+  },
+  {
+    "ksh": "0632489",
+    "onev": "Szegvár"
+  },
+  {
+    "ksh": "0633020",
+    "onev": "Forráskút"
+  },
+  {
+    "ksh": "0633367",
+    "onev": "Szeged"
+  },
+  {
+    "ksh": "0634245",
+    "onev": "Algyő"
+  },
+  {
+    "ksh": "0700000",
+    "onev": "Fejér Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0702015",
+    "onev": "Ráckeresztúr"
+  },
+  {
+    "ksh": "0702200",
+    "onev": "Isztimér"
+  },
+  {
+    "ksh": "0702316",
+    "onev": "Etyek"
+  },
+  {
+    "ksh": "0702343",
+    "onev": "Kincsesbánya"
+  },
+  {
+    "ksh": "0702459",
+    "onev": "Vajta"
+  },
+  {
+    "ksh": "0702699",
+    "onev": "Sárkeszi"
+  },
+  {
+    "ksh": "0702723",
+    "onev": "Sáregres"
+  },
+  {
+    "ksh": "0702750",
+    "onev": "Vértesacsa"
+  },
+  {
+    "ksh": "0702802",
+    "onev": "Enying"
+  },
+  {
+    "ksh": "0702893",
+    "onev": "Söréd"
+  },
+  {
+    "ksh": "0703115",
+    "onev": "Dunaújváros"
+  },
+  {
+    "ksh": "0703498",
+    "onev": "Vereb"
+  },
+  {
+    "ksh": "0704659",
+    "onev": "Martonvásár"
+  },
+  {
+    "ksh": "0705360",
+    "onev": "Csákberény"
+  },
+  {
+    "ksh": "0705689",
+    "onev": "Mezőkomárom"
+  },
+  {
+    "ksh": "0705829",
+    "onev": "Vál"
+  },
+  {
+    "ksh": "0706114",
+    "onev": "Füle"
+  },
+  {
+    "ksh": "0706576",
+    "onev": "Mezőszentgyörgy"
+  },
+  {
+    "ksh": "0706734",
+    "onev": "Csősz"
+  },
+  {
+    "ksh": "0707001",
+    "onev": "Nagykarácsony"
+  },
+  {
+    "ksh": "0707047",
+    "onev": "Baracs"
+  },
+  {
+    "ksh": "0707269",
+    "onev": "Lepsény"
+  },
+  {
+    "ksh": "0707506",
+    "onev": "Lajoskomárom"
+  },
+  {
+    "ksh": "0708466",
+    "onev": "Beloiannisz"
+  },
+  {
+    "ksh": "0708581",
+    "onev": "Baracska"
+  },
+  {
+    "ksh": "0708730",
+    "onev": "Bakonycsernye"
+  },
+  {
+    "ksh": "0708925",
+    "onev": "Adony"
+  },
+  {
+    "ksh": "0709779",
+    "onev": "Csór"
+  },
+  {
+    "ksh": "0709900",
+    "onev": "Rácalmás"
+  },
+  {
+    "ksh": "0710296",
+    "onev": "Gárdony"
+  },
+  {
+    "ksh": "0710481",
+    "onev": "Bicske"
+  },
+  {
+    "ksh": "0711624",
+    "onev": "Bodmér"
+  },
+  {
+    "ksh": "0711776",
+    "onev": "Sárszentmihály"
+  },
+  {
+    "ksh": "0712636",
+    "onev": "Kisapostag"
+  },
+  {
+    "ksh": "0713152",
+    "onev": "Cece"
+  },
+  {
+    "ksh": "0713259",
+    "onev": "Szabadegyháza"
+  },
+  {
+    "ksh": "0713462",
+    "onev": "Iváncsa"
+  },
+  {
+    "ksh": "0713897",
+    "onev": "Vértesboglár"
+  },
+  {
+    "ksh": "0713903",
+    "onev": "Nádasdladány"
+  },
+  {
+    "ksh": "0714465",
+    "onev": "Tabajd"
+  },
+  {
+    "ksh": "0714827",
+    "onev": "Székesfehérvár"
+  },
+  {
+    "ksh": "0714951",
+    "onev": "Sukoró"
+  },
+  {
+    "ksh": "0715176",
+    "onev": "Alcsútdoboz"
+  },
+  {
+    "ksh": "0715750",
+    "onev": "Gánt"
+  },
+  {
+    "ksh": "0715918",
+    "onev": "Gyúró"
+  },
+  {
+    "ksh": "0715972",
+    "onev": "Jenő"
+  },
+  {
+    "ksh": "0716346",
+    "onev": "Besnyő"
+  },
+  {
+    "ksh": "0716683",
+    "onev": "Káloz"
+  },
+  {
+    "ksh": "0716948",
+    "onev": "Mátyásdomb"
+  },
+  {
+    "ksh": "0717376",
+    "onev": "Aba"
+  },
+  {
+    "ksh": "0717482",
+    "onev": "Újbarok"
+  },
+  {
+    "ksh": "0717525",
+    "onev": "Polgárdi"
+  },
+  {
+    "ksh": "0717552",
+    "onev": "Mezőfalva"
+  },
+  {
+    "ksh": "0717622",
+    "onev": "Úrhida"
+  },
+  {
+    "ksh": "0717738",
+    "onev": "Igar"
+  },
+  {
+    "ksh": "0717774",
+    "onev": "Pusztavám"
+  },
+  {
+    "ksh": "0718254",
+    "onev": "Bodajk"
+  },
+  {
+    "ksh": "0718485",
+    "onev": "Mór"
+  },
+  {
+    "ksh": "0718740",
+    "onev": "Szabadhídvég"
+  },
+  {
+    "ksh": "0719114",
+    "onev": "Lovasberény"
+  },
+  {
+    "ksh": "0719354",
+    "onev": "Perkáta"
+  },
+  {
+    "ksh": "0719549",
+    "onev": "Szár"
+  },
+  {
+    "ksh": "0720002",
+    "onev": "Csákvár"
+  },
+  {
+    "ksh": "0720206",
+    "onev": "Seregélyes"
+  },
+  {
+    "ksh": "0720358",
+    "onev": "Előszállás"
+  },
+  {
+    "ksh": "0721005",
+    "onev": "Tordas"
+  },
+  {
+    "ksh": "0721342",
+    "onev": "Kajászó"
+  },
+  {
+    "ksh": "0721786",
+    "onev": "Pázmánd"
+  },
+  {
+    "ksh": "0721908",
+    "onev": "Csókakő"
+  },
+  {
+    "ksh": "0721926",
+    "onev": "Kápolnásnyék"
+  },
+  {
+    "ksh": "0723153",
+    "onev": "Bakonykúti"
+  },
+  {
+    "ksh": "0723427",
+    "onev": "Hantos"
+  },
+  {
+    "ksh": "0723490",
+    "onev": "Mány"
+  },
+  {
+    "ksh": "0723588",
+    "onev": "Nagyveleg"
+  },
+  {
+    "ksh": "0723603",
+    "onev": "Ercsi"
+  },
+  {
+    "ksh": "0723694",
+    "onev": "Sárbogárd"
+  },
+  {
+    "ksh": "0725016",
+    "onev": "Velence"
+  },
+  {
+    "ksh": "0725140",
+    "onev": "Sárosd"
+  },
+  {
+    "ksh": "0725283",
+    "onev": "Alsószentiván"
+  },
+  {
+    "ksh": "0725344",
+    "onev": "Sárkeresztúr"
+  },
+  {
+    "ksh": "0725715",
+    "onev": "Moha"
+  },
+  {
+    "ksh": "0725751",
+    "onev": "Pákozd"
+  },
+  {
+    "ksh": "0726134",
+    "onev": "Nagyvenyim"
+  },
+  {
+    "ksh": "0726824",
+    "onev": "Alap"
+  },
+  {
+    "ksh": "0727599",
+    "onev": "Nadap"
+  },
+  {
+    "ksh": "0727678",
+    "onev": "Magyaralmás"
+  },
+  {
+    "ksh": "0728705",
+    "onev": "Szabadbattyán"
+  },
+  {
+    "ksh": "0728848",
+    "onev": "Pátka"
+  },
+  {
+    "ksh": "0728990",
+    "onev": "Kisláng"
+  },
+  {
+    "ksh": "0729018",
+    "onev": "Pusztaszabolcs"
+  },
+  {
+    "ksh": "0729036",
+    "onev": "Mezőszilas"
+  },
+  {
+    "ksh": "0729267",
+    "onev": "Tác"
+  },
+  {
+    "ksh": "0729939",
+    "onev": "Felcsút"
+  },
+  {
+    "ksh": "0730243",
+    "onev": "Zámoly"
+  },
+  {
+    "ksh": "0730544",
+    "onev": "Csabdi"
+  },
+  {
+    "ksh": "0730650",
+    "onev": "Kőszárhegy"
+  },
+  {
+    "ksh": "0731103",
+    "onev": "Balinka"
+  },
+  {
+    "ksh": "0731538",
+    "onev": "Sárszentágota"
+  },
+  {
+    "ksh": "0731802",
+    "onev": "Sárkeresztes"
+  },
+  {
+    "ksh": "0732018",
+    "onev": "Iszkaszentgyörgy"
+  },
+  {
+    "ksh": "0732203",
+    "onev": "Fehérvárcsurgó"
+  },
+  {
+    "ksh": "0732364",
+    "onev": "Nagylók"
+  },
+  {
+    "ksh": "0732753",
+    "onev": "Dég"
+  },
+  {
+    "ksh": "0733321",
+    "onev": "Soponya"
+  },
+  {
+    "ksh": "0734209",
+    "onev": "Kulcs"
+  },
+  {
+    "ksh": "0734263",
+    "onev": "Zichyújfalu"
+  },
+  {
+    "ksh": "0734306",
+    "onev": "Óbarok"
+  },
+  {
+    "ksh": "0734342",
+    "onev": "Daruszentmiklós"
+  },
+  {
+    "ksh": "0800000",
+    "onev": "Győr-Moson-Sopron Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0802060",
+    "onev": "Gönyű"
+  },
+  {
+    "ksh": "0802079",
+    "onev": "Dunaremete"
+  },
+  {
+    "ksh": "0802237",
+    "onev": "Vág"
+  },
+  {
+    "ksh": "0802361",
+    "onev": "Nagybajcs"
+  },
+  {
+    "ksh": "0802413",
+    "onev": "Kisbabot"
+  },
+  {
+    "ksh": "0802495",
+    "onev": "Nagycenk"
+  },
+  {
+    "ksh": "0802556",
+    "onev": "Mórichida"
+  },
+  {
+    "ksh": "0802617",
+    "onev": "Sopronnémeti"
+  },
+  {
+    "ksh": "0802635",
+    "onev": "Öttevény"
+  },
+  {
+    "ksh": "0803364",
+    "onev": "Szilsárkány"
+  },
+  {
+    "ksh": "0803753",
+    "onev": "Rábcakapi"
+  },
+  {
+    "ksh": "0803887",
+    "onev": "Szerecseny"
+  },
+  {
+    "ksh": "0804020",
+    "onev": "Himod"
+  },
+  {
+    "ksh": "0804039",
+    "onev": "Csorna"
+  },
+  {
+    "ksh": "0804172",
+    "onev": "Tárnokréti"
+  },
+  {
+    "ksh": "0804367",
+    "onev": "Bogyoszló"
+  },
+  {
+    "ksh": "0804376",
+    "onev": "Lázi"
+  },
+  {
+    "ksh": "0804589",
+    "onev": "Veszkény"
+  },
+  {
+    "ksh": "0804622",
+    "onev": "Zsira"
+  },
+  {
+    "ksh": "0804783",
+    "onev": "Mosonmagyaróvár"
+  },
+  {
+    "ksh": "0804792",
+    "onev": "Rábacsanak"
+  },
+  {
+    "ksh": "0804880",
+    "onev": "Ágfalva"
+  },
+  {
+    "ksh": "0805014",
+    "onev": "Vének"
+  },
+  {
+    "ksh": "0805944",
+    "onev": "Bakonyszentlászló"
+  },
+  {
+    "ksh": "0806196",
+    "onev": "Barbacs"
+  },
+  {
+    "ksh": "0806220",
+    "onev": "Bodonhely"
+  },
+  {
+    "ksh": "0806239",
+    "onev": "Vadosfa"
+  },
+  {
+    "ksh": "0806619",
+    "onev": "Börcs"
+  },
+  {
+    "ksh": "0806646",
+    "onev": "Jobaháza"
+  },
+  {
+    "ksh": "0806770",
+    "onev": "Markotabödöge"
+  },
+  {
+    "ksh": "0806895",
+    "onev": "Kópháza"
+  },
+  {
+    "ksh": "0806956",
+    "onev": "Fehértó"
+  },
+  {
+    "ksh": "0807481",
+    "onev": "Győrújbarát"
+  },
+  {
+    "ksh": "0807649",
+    "onev": "Harka"
+  },
+  {
+    "ksh": "0807746",
+    "onev": "Répcevis"
+  },
+  {
+    "ksh": "0807816",
+    "onev": "Kisbodak"
+  },
+  {
+    "ksh": "0808518",
+    "onev": "Sopron"
+  },
+  {
+    "ksh": "0808536",
+    "onev": "Szany"
+  },
+  {
+    "ksh": "0808563",
+    "onev": "Csapod"
+  },
+  {
+    "ksh": "0808606",
+    "onev": "Sikátor"
+  },
+  {
+    "ksh": "0808721",
+    "onev": "Győrasszonyfa"
+  },
+  {
+    "ksh": "0809487",
+    "onev": "Fertőendréd"
+  },
+  {
+    "ksh": "0809885",
+    "onev": "Fertőd"
+  },
+  {
+    "ksh": "0810029",
+    "onev": "Hövej"
+  },
+  {
+    "ksh": "0810047",
+    "onev": "Csáfordjánosfa"
+  },
+  {
+    "ksh": "0810454",
+    "onev": "Dunasziget"
+  },
+  {
+    "ksh": "0810560",
+    "onev": "Bezi"
+  },
+  {
+    "ksh": "0810588",
+    "onev": "Beled"
+  },
+  {
+    "ksh": "0810658",
+    "onev": "Fertőhomok"
+  },
+  {
+    "ksh": "0811068",
+    "onev": "Röjtökmuzsaj"
+  },
+  {
+    "ksh": "0811253",
+    "onev": "Fertőboz"
+  },
+  {
+    "ksh": "0811262",
+    "onev": "Kóny"
+  },
+  {
+    "ksh": "0811369",
+    "onev": "Szakony"
+  },
+  {
+    "ksh": "0811457",
+    "onev": "Tényő"
+  },
+  {
+    "ksh": "0811882",
+    "onev": "Abda"
+  },
+  {
+    "ksh": "0812113",
+    "onev": "Kajárpéc"
+  },
+  {
+    "ksh": "0812283",
+    "onev": "Máriakálnok"
+  },
+  {
+    "ksh": "0812308",
+    "onev": "Hédervár"
+  },
+  {
+    "ksh": "0812405",
+    "onev": "Vámosszabadi"
+  },
+  {
+    "ksh": "0812414",
+    "onev": "Fertőrákos"
+  },
+  {
+    "ksh": "0812627",
+    "onev": "Sokorópátka"
+  },
+  {
+    "ksh": "0812715",
+    "onev": "Pázmándfalu"
+  },
+  {
+    "ksh": "0812812",
+    "onev": "Mezőörs"
+  },
+  {
+    "ksh": "0812955",
+    "onev": "Nyúl"
+  },
+  {
+    "ksh": "0812964",
+    "onev": "Püski"
+  },
+  {
+    "ksh": "0813198",
+    "onev": "Győrladamér"
+  },
+  {
+    "ksh": "0813505",
+    "onev": "Csikvánd"
+  },
+  {
+    "ksh": "0813912",
+    "onev": "Magyarkeresztúr"
+  },
+  {
+    "ksh": "0814261",
+    "onev": "Táp"
+  },
+  {
+    "ksh": "0814438",
+    "onev": "Répceszemere"
+  },
+  {
+    "ksh": "0814687",
+    "onev": "Pinnye"
+  },
+  {
+    "ksh": "0814748",
+    "onev": "Kimle"
+  },
+  {
+    "ksh": "0814793",
+    "onev": "Rábakecöl"
+  },
+  {
+    "ksh": "0815033",
+    "onev": "Enese"
+  },
+  {
+    "ksh": "0815042",
+    "onev": "Babót"
+  },
+  {
+    "ksh": "0815121",
+    "onev": "Osli"
+  },
+  {
+    "ksh": "0815228",
+    "onev": "Győrzámoly"
+  },
+  {
+    "ksh": "0815237",
+    "onev": "Egyházasfalu"
+  },
+  {
+    "ksh": "0815273",
+    "onev": "Rábaszentandrás"
+  },
+  {
+    "ksh": "0815343",
+    "onev": "Fertőszentmiklós"
+  },
+  {
+    "ksh": "0815422",
+    "onev": "Rábatamási"
+  },
+  {
+    "ksh": "0815501",
+    "onev": "Bősárkány"
+  },
+  {
+    "ksh": "0815529",
+    "onev": "Pér"
+  },
+  {
+    "ksh": "0815653",
+    "onev": "Győrszemere"
+  },
+  {
+    "ksh": "0815714",
+    "onev": "Szárföld"
+  },
+  {
+    "ksh": "0815875",
+    "onev": "Dunaszentpál"
+  },
+  {
+    "ksh": "0815954",
+    "onev": "Cirák"
+  },
+  {
+    "ksh": "0816221",
+    "onev": "Lipót"
+  },
+  {
+    "ksh": "0816319",
+    "onev": "Völcsej"
+  },
+  {
+    "ksh": "0816674",
+    "onev": "Töltéstava"
+  },
+  {
+    "ksh": "0816708",
+    "onev": "Écs"
+  },
+  {
+    "ksh": "0816869",
+    "onev": "Zsebeháza"
+  },
+  {
+    "ksh": "0817297",
+    "onev": "Rábaszentmiklós"
+  },
+  {
+    "ksh": "0817507",
+    "onev": "Románd"
+  },
+  {
+    "ksh": "0817880",
+    "onev": "Vásárosfalu"
+  },
+  {
+    "ksh": "0817905",
+    "onev": "Hegyeshalom"
+  },
+  {
+    "ksh": "0817969",
+    "onev": "Gyalóka"
+  },
+  {
+    "ksh": "0818403",
+    "onev": "Hegykő"
+  },
+  {
+    "ksh": "0818412",
+    "onev": "Várbalog"
+  },
+  {
+    "ksh": "0819035",
+    "onev": "Tét"
+  },
+  {
+    "ksh": "0819239",
+    "onev": "Levél"
+  },
+  {
+    "ksh": "0819266",
+    "onev": "Szil"
+  },
+  {
+    "ksh": "0819309",
+    "onev": "Győrsövényház"
+  },
+  {
+    "ksh": "0819637",
+    "onev": "Páli"
+  },
+  {
+    "ksh": "0819673",
+    "onev": "Újkér"
+  },
+  {
+    "ksh": "0819752",
+    "onev": "Nyalka"
+  },
+  {
+    "ksh": "0820136",
+    "onev": "Rábasebes"
+  },
+  {
+    "ksh": "0820288",
+    "onev": "Egyed"
+  },
+  {
+    "ksh": "0820385",
+    "onev": "Mérges"
+  },
+  {
+    "ksh": "0820400",
+    "onev": "Gyömöre"
+  },
+  {
+    "ksh": "0820604",
+    "onev": "Ikrény"
+  },
+  {
+    "ksh": "0820792",
+    "onev": "Und"
+  },
+  {
+    "ksh": "0821078",
+    "onev": "Dunaszeg"
+  },
+  {
+    "ksh": "0821801",
+    "onev": "Ravazd"
+  },
+  {
+    "ksh": "0821865",
+    "onev": "Darnózseli"
+  },
+  {
+    "ksh": "0821917",
+    "onev": "Dör"
+  },
+  {
+    "ksh": "0821971",
+    "onev": "Tápszentmiklós"
+  },
+  {
+    "ksh": "0821980",
+    "onev": "Mihályi"
+  },
+  {
+    "ksh": "0822062",
+    "onev": "Bakonypéterd"
+  },
+  {
+    "ksh": "0822442",
+    "onev": "Edve"
+  },
+  {
+    "ksh": "0822691",
+    "onev": "Veszprémvarsány"
+  },
+  {
+    "ksh": "0822831",
+    "onev": "Petőháza"
+  },
+  {
+    "ksh": "0822886",
+    "onev": "Kisbajcs"
+  },
+  {
+    "ksh": "0823375",
+    "onev": "Hidegség"
+  },
+  {
+    "ksh": "0823481",
+    "onev": "Pásztori"
+  },
+  {
+    "ksh": "0823773",
+    "onev": "Pereszteg"
+  },
+  {
+    "ksh": "0823843",
+    "onev": "Gyóró"
+  },
+  {
+    "ksh": "0824208",
+    "onev": "Sobor"
+  },
+  {
+    "ksh": "0824305",
+    "onev": "Pannonhalma"
+  },
+  {
+    "ksh": "0824633",
+    "onev": "Koroncó"
+  },
+  {
+    "ksh": "0824721",
+    "onev": "Rábapordány"
+  },
+  {
+    "ksh": "0825335",
+    "onev": "Rábapatona"
+  },
+  {
+    "ksh": "0825584",
+    "onev": "Győr"
+  },
+  {
+    "ksh": "0825724",
+    "onev": "Sopronkövesd"
+  },
+  {
+    "ksh": "0825797",
+    "onev": "Vitnyéd"
+  },
+  {
+    "ksh": "0826347",
+    "onev": "Ebergőc"
+  },
+  {
+    "ksh": "0826444",
+    "onev": "Maglóca"
+  },
+  {
+    "ksh": "0826587",
+    "onev": "Rajka"
+  },
+  {
+    "ksh": "0826790",
+    "onev": "Halászi"
+  },
+  {
+    "ksh": "0826860",
+    "onev": "Gyarmat"
+  },
+  {
+    "ksh": "0826921",
+    "onev": "Ásványráró"
+  },
+  {
+    "ksh": "0827085",
+    "onev": "Cakóháza"
+  },
+  {
+    "ksh": "0827304",
+    "onev": "Potyond"
+  },
+  {
+    "ksh": "0827359",
+    "onev": "Mecsér"
+  },
+  {
+    "ksh": "0827739",
+    "onev": "Dunakiliti"
+  },
+  {
+    "ksh": "0828149",
+    "onev": "Mosonszolnok"
+  },
+  {
+    "ksh": "0828334",
+    "onev": "Kapuvár"
+  },
+  {
+    "ksh": "0828769",
+    "onev": "Bágyogszovát"
+  },
+  {
+    "ksh": "0828936",
+    "onev": "Bakonygyirót"
+  },
+  {
+    "ksh": "0829090",
+    "onev": "Sopronhorpács"
+  },
+  {
+    "ksh": "0829221",
+    "onev": "Jánossomorja"
+  },
+  {
+    "ksh": "0829328",
+    "onev": "Nemeskér"
+  },
+  {
+    "ksh": "0829407",
+    "onev": "Agyagosszergény"
+  },
+  {
+    "ksh": "0829805",
+    "onev": "Bezenye"
+  },
+  {
+    "ksh": "0830021",
+    "onev": "Sarród"
+  },
+  {
+    "ksh": "0830191",
+    "onev": "Csér"
+  },
+  {
+    "ksh": "0830678",
+    "onev": "Fenyőfő"
+  },
+  {
+    "ksh": "0831194",
+    "onev": "Lövő"
+  },
+  {
+    "ksh": "0831316",
+    "onev": "Győrság"
+  },
+  {
+    "ksh": "0831370",
+    "onev": "Pusztacsalád"
+  },
+  {
+    "ksh": "0831440",
+    "onev": "Fertőszéplak"
+  },
+  {
+    "ksh": "0831626",
+    "onev": "Kunsziget"
+  },
+  {
+    "ksh": "0831635",
+    "onev": "Iván"
+  },
+  {
+    "ksh": "0831787",
+    "onev": "Győrújfalu"
+  },
+  {
+    "ksh": "0831839",
+    "onev": "Újrónafő"
+  },
+  {
+    "ksh": "0832249",
+    "onev": "Árpás"
+  },
+  {
+    "ksh": "0832595",
+    "onev": "Dénesfa"
+  },
+  {
+    "ksh": "0832717",
+    "onev": "Feketeerdő"
+  },
+  {
+    "ksh": "0832939",
+    "onev": "Nagylózs"
+  },
+  {
+    "ksh": "0833251",
+    "onev": "Felpéc"
+  },
+  {
+    "ksh": "0833385",
+    "onev": "Acsalag"
+  },
+  {
+    "ksh": "0833543",
+    "onev": "Nagyszentjános"
+  },
+  {
+    "ksh": "0833668",
+    "onev": "Lébény"
+  },
+  {
+    "ksh": "0833677",
+    "onev": "Mosonszentmiklós"
+  },
+  {
+    "ksh": "0833695",
+    "onev": "Kisfalud"
+  },
+  {
+    "ksh": "0833701",
+    "onev": "Rábacsécsény"
+  },
+  {
+    "ksh": "0833710",
+    "onev": "Rábaszentmihály"
+  },
+  {
+    "ksh": "0833914",
+    "onev": "Tarjánpuszta"
+  },
+  {
+    "ksh": "0833950",
+    "onev": "Bőny"
+  },
+  {
+    "ksh": "0833969",
+    "onev": "Rétalap"
+  },
+  {
+    "ksh": "0833996",
+    "onev": "Farád"
+  },
+  {
+    "ksh": "0834351",
+    "onev": "Károlyháza"
+  },
+  {
+    "ksh": "0834412",
+    "onev": "Mosonudvar"
+  },
+  {
+    "ksh": "0900000",
+    "onev": "Hajdú-Bihar Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "0902167",
+    "onev": "Komádi"
+  },
+  {
+    "ksh": "0902307",
+    "onev": "Kaba"
+  },
+  {
+    "ksh": "0902918",
+    "onev": "Balmazújváros"
+  },
+  {
+    "ksh": "0903045",
+    "onev": "Hajdúböszörmény"
+  },
+  {
+    "ksh": "0903258",
+    "onev": "Földes"
+  },
+  {
+    "ksh": "0903319",
+    "onev": "Ártánd"
+  },
+  {
+    "ksh": "0903683",
+    "onev": "Magyarhomorog"
+  },
+  {
+    "ksh": "0904118",
+    "onev": "Hortobágy"
+  },
+  {
+    "ksh": "0904817",
+    "onev": "Zsáka"
+  },
+  {
+    "ksh": "0905175",
+    "onev": "Hajdúszoboszló"
+  },
+  {
+    "ksh": "0905573",
+    "onev": "Derecske"
+  },
+  {
+    "ksh": "0905768",
+    "onev": "Létavértes"
+  },
+  {
+    "ksh": "0906187",
+    "onev": "Nyíradony"
+  },
+  {
+    "ksh": "0906266",
+    "onev": "Hosszúpályi"
+  },
+  {
+    "ksh": "0906309",
+    "onev": "Nagyrábé"
+  },
+  {
+    "ksh": "0908907",
+    "onev": "Nagykereki"
+  },
+  {
+    "ksh": "0908943",
+    "onev": "Körösszegapáti"
+  },
+  {
+    "ksh": "0908989",
+    "onev": "Vámospércs"
+  },
+  {
+    "ksh": "0909478",
+    "onev": "Nagyhegyes"
+  },
+  {
+    "ksh": "0910162",
+    "onev": "Püspökladány"
+  },
+  {
+    "ksh": "0910393",
+    "onev": "Hajdúhadház"
+  },
+  {
+    "ksh": "0911138",
+    "onev": "Vekerd"
+  },
+  {
+    "ksh": "0911837",
+    "onev": "Pocsaj"
+  },
+  {
+    "ksh": "0911925",
+    "onev": "Újtikos"
+  },
+  {
+    "ksh": "0912450",
+    "onev": "Csökmő"
+  },
+  {
+    "ksh": "0912788",
+    "onev": "Berettyóújfalu"
+  },
+  {
+    "ksh": "0912803",
+    "onev": "Hajdúdorog"
+  },
+  {
+    "ksh": "0914003",
+    "onev": "Nyíracsád"
+  },
+  {
+    "ksh": "0914137",
+    "onev": "Bojt"
+  },
+  {
+    "ksh": "0914614",
+    "onev": "Ebes"
+  },
+  {
+    "ksh": "0914678",
+    "onev": "Darvas"
+  },
+  {
+    "ksh": "0915130",
+    "onev": "Debrecen"
+  },
+  {
+    "ksh": "0915167",
+    "onev": "Bakonszeg"
+  },
+  {
+    "ksh": "0915477",
+    "onev": "Kismarja"
+  },
+  {
+    "ksh": "0915644",
+    "onev": "Tiszacsege"
+  },
+  {
+    "ksh": "0915741",
+    "onev": "Egyek"
+  },
+  {
+    "ksh": "0916568",
+    "onev": "Görbeháza"
+  },
+  {
+    "ksh": "0916762",
+    "onev": "Váncsod"
+  },
+  {
+    "ksh": "0916993",
+    "onev": "Furta"
+  },
+  {
+    "ksh": "0917455",
+    "onev": "Kokad"
+  },
+  {
+    "ksh": "0917473",
+    "onev": "Hajdúszovát"
+  },
+  {
+    "ksh": "0918175",
+    "onev": "Gáborján"
+  },
+  {
+    "ksh": "0918467",
+    "onev": "Berekböszörmény"
+  },
+  {
+    "ksh": "0918847",
+    "onev": "Mezősas"
+  },
+  {
+    "ksh": "0919099",
+    "onev": "Szentpéterszeg"
+  },
+  {
+    "ksh": "0919691",
+    "onev": "Tetétlen"
+  },
+  {
+    "ksh": "0919956",
+    "onev": "Biharkeresztes"
+  },
+  {
+    "ksh": "0920011",
+    "onev": "Bagamér"
+  },
+  {
+    "ksh": "0920419",
+    "onev": "Újléta"
+  },
+  {
+    "ksh": "0922150",
+    "onev": "Fülöp"
+  },
+  {
+    "ksh": "0922406",
+    "onev": "Hajdúnánás"
+  },
+  {
+    "ksh": "0923117",
+    "onev": "Polgár"
+  },
+  {
+    "ksh": "0923214",
+    "onev": "Téglás"
+  },
+  {
+    "ksh": "0923393",
+    "onev": "Újiráz"
+  },
+  {
+    "ksh": "0923940",
+    "onev": "Sárrétudvari"
+  },
+  {
+    "ksh": "0924217",
+    "onev": "Mikepércs"
+  },
+  {
+    "ksh": "0924828",
+    "onev": "Biharnagybajom"
+  },
+  {
+    "ksh": "0925007",
+    "onev": "Sáránd"
+  },
+  {
+    "ksh": "0925256",
+    "onev": "Bihardancsháza"
+  },
+  {
+    "ksh": "0925469",
+    "onev": "Esztár"
+  },
+  {
+    "ksh": "0925876",
+    "onev": "Told"
+  },
+  {
+    "ksh": "0925894",
+    "onev": "Monostorpályi"
+  },
+  {
+    "ksh": "0925964",
+    "onev": "Konyár"
+  },
+  {
+    "ksh": "0926116",
+    "onev": "Sáp"
+  },
+  {
+    "ksh": "0926170",
+    "onev": "Hajdúbagos"
+  },
+  {
+    "ksh": "0926693",
+    "onev": "Báránd"
+  },
+  {
+    "ksh": "0927641",
+    "onev": "Álmosd"
+  },
+  {
+    "ksh": "0928103",
+    "onev": "Nádudvar"
+  },
+  {
+    "ksh": "0929391",
+    "onev": "Hencida"
+  },
+  {
+    "ksh": "0929887",
+    "onev": "Bihartorda"
+  },
+  {
+    "ksh": "0930845",
+    "onev": "Tiszagyulaháza"
+  },
+  {
+    "ksh": "0931033",
+    "onev": "Mezőpeterd"
+  },
+  {
+    "ksh": "0931042",
+    "onev": "Tépe"
+  },
+  {
+    "ksh": "0931097",
+    "onev": "Hajdúsámson"
+  },
+  {
+    "ksh": "0931130",
+    "onev": "Körösszakál"
+  },
+  {
+    "ksh": "0932294",
+    "onev": "Nyírábrány"
+  },
+  {
+    "ksh": "0932382",
+    "onev": "Nyírmártonfalva"
+  },
+  {
+    "ksh": "0932568",
+    "onev": "Újszentmargita"
+  },
+  {
+    "ksh": "0933437",
+    "onev": "Szerep"
+  },
+  {
+    "ksh": "0933446",
+    "onev": "Bedő"
+  },
+  {
+    "ksh": "0934014",
+    "onev": "Folyás"
+  },
+  {
+    "ksh": "0934102",
+    "onev": "Bocskaikert"
+  },
+  {
+    "ksh": "1000000",
+    "onev": "Heves Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1002963",
+    "onev": "Bükkszék"
+  },
+  {
+    "ksh": "1002981",
+    "onev": "Egerfarmos"
+  },
+  {
+    "ksh": "1003276",
+    "onev": "Füzesabony"
+  },
+  {
+    "ksh": "1003382",
+    "onev": "Szarvaskő"
+  },
+  {
+    "ksh": "1003452",
+    "onev": "Boldog"
+  },
+  {
+    "ksh": "1003513",
+    "onev": "Visznek"
+  },
+  {
+    "ksh": "1004084",
+    "onev": "Hevesvezekény"
+  },
+  {
+    "ksh": "1004145",
+    "onev": "Hort"
+  },
+  {
+    "ksh": "1004400",
+    "onev": "Bekölce"
+  },
+  {
+    "ksh": "1005236",
+    "onev": "Gyöngyös"
+  },
+  {
+    "ksh": "1005643",
+    "onev": "Szilvásvárad"
+  },
+  {
+    "ksh": "1005759",
+    "onev": "Vécs"
+  },
+  {
+    "ksh": "1005935",
+    "onev": "Karácsond"
+  },
+  {
+    "ksh": "1006345",
+    "onev": "Aldebrő"
+  },
+  {
+    "ksh": "1006503",
+    "onev": "Átány"
+  },
+  {
+    "ksh": "1007083",
+    "onev": "Tiszanána"
+  },
+  {
+    "ksh": "1007180",
+    "onev": "Sarud"
+  },
+  {
+    "ksh": "1007241",
+    "onev": "Apc"
+  },
+  {
+    "ksh": "1007436",
+    "onev": "Parád"
+  },
+  {
+    "ksh": "1007515",
+    "onev": "Domoszló"
+  },
+  {
+    "ksh": "1008323",
+    "onev": "Gyöngyöspata"
+  },
+  {
+    "ksh": "1008527",
+    "onev": "Sirok"
+  },
+  {
+    "ksh": "1008660",
+    "onev": "Demjén"
+  },
+  {
+    "ksh": "1009052",
+    "onev": "Tarnaszentmária"
+  },
+  {
+    "ksh": "1009201",
+    "onev": "Detk"
+  },
+  {
+    "ksh": "1009609",
+    "onev": "Recsk"
+  },
+  {
+    "ksh": "1009964",
+    "onev": "Tófalu"
+  },
+  {
+    "ksh": "1009982",
+    "onev": "Szűcsi"
+  },
+  {
+    "ksh": "1010074",
+    "onev": "Istenmezeje"
+  },
+  {
+    "ksh": "1010241",
+    "onev": "Hevesaranyos"
+  },
+  {
+    "ksh": "1010418",
+    "onev": "Nagyút"
+  },
+  {
+    "ksh": "1010621",
+    "onev": "Bükkszenterzsébet"
+  },
+  {
+    "ksh": "1011013",
+    "onev": "Szihalom"
+  },
+  {
+    "ksh": "1011411",
+    "onev": "Halmajugra"
+  },
+  {
+    "ksh": "1011527",
+    "onev": "Balaton"
+  },
+  {
+    "ksh": "1012070",
+    "onev": "Pétervására"
+  },
+  {
+    "ksh": "1012229",
+    "onev": "Terpes"
+  },
+  {
+    "ksh": "1012432",
+    "onev": "Fedémes"
+  },
+  {
+    "ksh": "1012502",
+    "onev": "Kisnána"
+  },
+  {
+    "ksh": "1012821",
+    "onev": "Egerbakta"
+  },
+  {
+    "ksh": "1013231",
+    "onev": "Szentdomonkos"
+  },
+  {
+    "ksh": "1013240",
+    "onev": "Tarnalelesz"
+  },
+  {
+    "ksh": "1013338",
+    "onev": "Gyöngyösoroszi"
+  },
+  {
+    "ksh": "1013523",
+    "onev": "Szúcs"
+  },
+  {
+    "ksh": "1013648",
+    "onev": "Egerszólát"
+  },
+  {
+    "ksh": "1013879",
+    "onev": "Ivád"
+  },
+  {
+    "ksh": "1014076",
+    "onev": "Tenk"
+  },
+  {
+    "ksh": "1014128",
+    "onev": "Tarnaörs"
+  },
+  {
+    "ksh": "1014526",
+    "onev": "Heves"
+  },
+  {
+    "ksh": "1014535",
+    "onev": "Kömlő"
+  },
+  {
+    "ksh": "1014580",
+    "onev": "Vámosgyörk"
+  },
+  {
+    "ksh": "1014872",
+    "onev": "Mátraderecske"
+  },
+  {
+    "ksh": "1014933",
+    "onev": "Bodony"
+  },
+  {
+    "ksh": "1015307",
+    "onev": "Kápolna"
+  },
+  {
+    "ksh": "1015796",
+    "onev": "Ludas"
+  },
+  {
+    "ksh": "1016063",
+    "onev": "Szajla"
+  },
+  {
+    "ksh": "1016090",
+    "onev": "Atkár"
+  },
+  {
+    "ksh": "1016160",
+    "onev": "Tarnaszentmiklós"
+  },
+  {
+    "ksh": "1016328",
+    "onev": "Felsőtárkány"
+  },
+  {
+    "ksh": "1016540",
+    "onev": "Markaz"
+  },
+  {
+    "ksh": "1016610",
+    "onev": "Egercsehi"
+  },
+  {
+    "ksh": "1016841",
+    "onev": "Csány"
+  },
+  {
+    "ksh": "1017163",
+    "onev": "Tarnazsadány"
+  },
+  {
+    "ksh": "1017181",
+    "onev": "Ecséd"
+  },
+  {
+    "ksh": "1017534",
+    "onev": "Gyöngyöshalász"
+  },
+  {
+    "ksh": "1017987",
+    "onev": "Andornaktálya"
+  },
+  {
+    "ksh": "1018281",
+    "onev": "Kisköre"
+  },
+  {
+    "ksh": "1018810",
+    "onev": "Noszvaj"
+  },
+  {
+    "ksh": "1019123",
+    "onev": "Gyöngyössolymos"
+  },
+  {
+    "ksh": "1019567",
+    "onev": "Pély"
+  },
+  {
+    "ksh": "1019965",
+    "onev": "Mátraballa"
+  },
+  {
+    "ksh": "1020118",
+    "onev": "Erk"
+  },
+  {
+    "ksh": "1020215",
+    "onev": "Parádsasvár"
+  },
+  {
+    "ksh": "1020242",
+    "onev": "Heréd"
+  },
+  {
+    "ksh": "1020491",
+    "onev": "Eger"
+  },
+  {
+    "ksh": "1020747",
+    "onev": "Feldebrő"
+  },
+  {
+    "ksh": "1021722",
+    "onev": "Zagyvaszántó"
+  },
+  {
+    "ksh": "1022099",
+    "onev": "Bükkszentmárton"
+  },
+  {
+    "ksh": "1022196",
+    "onev": "Poroszló"
+  },
+  {
+    "ksh": "1022309",
+    "onev": "Hatvan"
+  },
+  {
+    "ksh": "1022354",
+    "onev": "Boconád"
+  },
+  {
+    "ksh": "1022460",
+    "onev": "Kisfüzes"
+  },
+  {
+    "ksh": "1023241",
+    "onev": "Adács"
+  },
+  {
+    "ksh": "1023348",
+    "onev": "Tarnaméra"
+  },
+  {
+    "ksh": "1023445",
+    "onev": "Zaránk"
+  },
+  {
+    "ksh": "1023995",
+    "onev": "Kompolt"
+  },
+  {
+    "ksh": "1024022",
+    "onev": "Bátor"
+  },
+  {
+    "ksh": "1024147",
+    "onev": "Verpelét"
+  },
+  {
+    "ksh": "1024235",
+    "onev": "Erdőtelek"
+  },
+  {
+    "ksh": "1024554",
+    "onev": "Abasár"
+  },
+  {
+    "ksh": "1024758",
+    "onev": "Egerszalók"
+  },
+  {
+    "ksh": "1024943",
+    "onev": "Nagykökényes"
+  },
+  {
+    "ksh": "1025089",
+    "onev": "Mezőszemere"
+  },
+  {
+    "ksh": "1026019",
+    "onev": "Egerbocs"
+  },
+  {
+    "ksh": "1026879",
+    "onev": "Nagyfüged"
+  },
+  {
+    "ksh": "1027012",
+    "onev": "Váraszó"
+  },
+  {
+    "ksh": "1027216",
+    "onev": "Ostoros"
+  },
+  {
+    "ksh": "1027517",
+    "onev": "Besenyőtelek"
+  },
+  {
+    "ksh": "1027605",
+    "onev": "Nagytálya"
+  },
+  {
+    "ksh": "1027623",
+    "onev": "Újlőrincfalva"
+  },
+  {
+    "ksh": "1027650",
+    "onev": "Rózsaszentmárton"
+  },
+  {
+    "ksh": "1027696",
+    "onev": "Maklár"
+  },
+  {
+    "ksh": "1028079",
+    "onev": "Kerecsend"
+  },
+  {
+    "ksh": "1028088",
+    "onev": "Gyöngyöstarján"
+  },
+  {
+    "ksh": "1028282",
+    "onev": "Nagyvisnyó"
+  },
+  {
+    "ksh": "1028556",
+    "onev": "Erdőkövesd"
+  },
+  {
+    "ksh": "1029045",
+    "onev": "Mátraszentimre"
+  },
+  {
+    "ksh": "1029276",
+    "onev": "Novaj"
+  },
+  {
+    "ksh": "1030261",
+    "onev": "Dormánd"
+  },
+  {
+    "ksh": "1030401",
+    "onev": "Lőrinci"
+  },
+  {
+    "ksh": "1031246",
+    "onev": "Visonta"
+  },
+  {
+    "ksh": "1031282",
+    "onev": "Mikófalva"
+  },
+  {
+    "ksh": "1031486",
+    "onev": "Nagyréde"
+  },
+  {
+    "ksh": "1031565",
+    "onev": "Mónosbél"
+  },
+  {
+    "ksh": "1031662",
+    "onev": "Mezőtárkány"
+  },
+  {
+    "ksh": "1032179",
+    "onev": "Kál"
+  },
+  {
+    "ksh": "1032966",
+    "onev": "Tarnabod"
+  },
+  {
+    "ksh": "1033260",
+    "onev": "Bélapátfalva"
+  },
+  {
+    "ksh": "1033686",
+    "onev": "Petőfibánya"
+  },
+  {
+    "ksh": "1034324",
+    "onev": "Pálosvörösmart"
+  },
+  {
+    "ksh": "1034379",
+    "onev": "Kerekharaszt"
+  },
+  {
+    "ksh": "1100000",
+    "onev": "Komárom-Esztergom Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1102510",
+    "onev": "Kocs"
+  },
+  {
+    "ksh": "1104428",
+    "onev": "Ács"
+  },
+  {
+    "ksh": "1104525",
+    "onev": "Kecskéd"
+  },
+  {
+    "ksh": "1105449",
+    "onev": "Komárom"
+  },
+  {
+    "ksh": "1106521",
+    "onev": "Gyermely"
+  },
+  {
+    "ksh": "1106594",
+    "onev": "Dömös"
+  },
+  {
+    "ksh": "1106664",
+    "onev": "Ete"
+  },
+  {
+    "ksh": "1106682",
+    "onev": "Aka"
+  },
+  {
+    "ksh": "1107311",
+    "onev": "Bokod"
+  },
+  {
+    "ksh": "1107630",
+    "onev": "Kömlőd"
+  },
+  {
+    "ksh": "1108624",
+    "onev": "Bársonyos"
+  },
+  {
+    "ksh": "1108688",
+    "onev": "Süttő"
+  },
+  {
+    "ksh": "1108758",
+    "onev": "Tát"
+  },
+  {
+    "ksh": "1110490",
+    "onev": "Dorog"
+  },
+  {
+    "ksh": "1110995",
+    "onev": "Kerékteleki"
+  },
+  {
+    "ksh": "1111891",
+    "onev": "Héreg"
+  },
+  {
+    "ksh": "1114155",
+    "onev": "Tokod"
+  },
+  {
+    "ksh": "1114669",
+    "onev": "Pilismarót"
+  },
+  {
+    "ksh": "1115255",
+    "onev": "Lábatlan"
+  },
+  {
+    "ksh": "1115282",
+    "onev": "Vértessomló"
+  },
+  {
+    "ksh": "1115352",
+    "onev": "Nyergesújfalu"
+  },
+  {
+    "ksh": "1116416",
+    "onev": "Császár"
+  },
+  {
+    "ksh": "1116744",
+    "onev": "Bajna"
+  },
+  {
+    "ksh": "1117251",
+    "onev": "Várgesztes"
+  },
+  {
+    "ksh": "1117330",
+    "onev": "Kisbér"
+  },
+  {
+    "ksh": "1118139",
+    "onev": "Ácsteszér"
+  },
+  {
+    "ksh": "1118157",
+    "onev": "Tatabánya"
+  },
+  {
+    "ksh": "1118272",
+    "onev": "Csép"
+  },
+  {
+    "ksh": "1118926",
+    "onev": "Csolnok"
+  },
+  {
+    "ksh": "1118935",
+    "onev": "Tarján"
+  },
+  {
+    "ksh": "1119363",
+    "onev": "Bábolna"
+  },
+  {
+    "ksh": "1120127",
+    "onev": "Tata"
+  },
+  {
+    "ksh": "1120163",
+    "onev": "Naszály"
+  },
+  {
+    "ksh": "1120923",
+    "onev": "Kisigmánd"
+  },
+  {
+    "ksh": "1120987",
+    "onev": "Tárkány"
+  },
+  {
+    "ksh": "1121421",
+    "onev": "Szomor"
+  },
+  {
+    "ksh": "1121874",
+    "onev": "Piliscsév"
+  },
+  {
+    "ksh": "1122372",
+    "onev": "Nagyigmánd"
+  },
+  {
+    "ksh": "1122381",
+    "onev": "Bakonyszombathely"
+  },
+  {
+    "ksh": "1122619",
+    "onev": "Szomód"
+  },
+  {
+    "ksh": "1122637",
+    "onev": "Máriahalom"
+  },
+  {
+    "ksh": "1122910",
+    "onev": "Dág"
+  },
+  {
+    "ksh": "1123852",
+    "onev": "Ászár"
+  },
+  {
+    "ksh": "1124101",
+    "onev": "Dunaszentmiklós"
+  },
+  {
+    "ksh": "1124244",
+    "onev": "Bakonybánk"
+  },
+  {
+    "ksh": "1125131",
+    "onev": "Esztergom"
+  },
+  {
+    "ksh": "1125229",
+    "onev": "Bakonysárkány"
+  },
+  {
+    "ksh": "1125487",
+    "onev": "Leányvár"
+  },
+  {
+    "ksh": "1126903",
+    "onev": "Sárisáp"
+  },
+  {
+    "ksh": "1126930",
+    "onev": "Mocsa"
+  },
+  {
+    "ksh": "1127076",
+    "onev": "Nagysáp"
+  },
+  {
+    "ksh": "1127632",
+    "onev": "Úny"
+  },
+  {
+    "ksh": "1128255",
+    "onev": "Mogyorósbánya"
+  },
+  {
+    "ksh": "1129212",
+    "onev": "Baj"
+  },
+  {
+    "ksh": "1129355",
+    "onev": "Bajót"
+  },
+  {
+    "ksh": "1129577",
+    "onev": "Kesztölc"
+  },
+  {
+    "ksh": "1129629",
+    "onev": "Vértestolna"
+  },
+  {
+    "ksh": "1129638",
+    "onev": "Epöl"
+  },
+  {
+    "ksh": "1130012",
+    "onev": "Réde"
+  },
+  {
+    "ksh": "1130225",
+    "onev": "Tardos"
+  },
+  {
+    "ksh": "1130553",
+    "onev": "Környe"
+  },
+  {
+    "ksh": "1130766",
+    "onev": "Oroszlány"
+  },
+  {
+    "ksh": "1131264",
+    "onev": "Vértesszőlős"
+  },
+  {
+    "ksh": "1131422",
+    "onev": "Bana"
+  },
+  {
+    "ksh": "1131990",
+    "onev": "Súr"
+  },
+  {
+    "ksh": "1132346",
+    "onev": "Almásfüzitő"
+  },
+  {
+    "ksh": "1132586",
+    "onev": "Vérteskethely"
+  },
+  {
+    "ksh": "1133109",
+    "onev": "Csatka"
+  },
+  {
+    "ksh": "1133163",
+    "onev": "Dad"
+  },
+  {
+    "ksh": "1133491",
+    "onev": "Szárliget"
+  },
+  {
+    "ksh": "1133516",
+    "onev": "Szákszend"
+  },
+  {
+    "ksh": "1133640",
+    "onev": "Csém"
+  },
+  {
+    "ksh": "1133826",
+    "onev": "Neszmély"
+  },
+  {
+    "ksh": "1133835",
+    "onev": "Dunaalmás"
+  },
+  {
+    "ksh": "1134023",
+    "onev": "Tokodaltáró"
+  },
+  {
+    "ksh": "1134227",
+    "onev": "Annavölgy"
+  },
+  {
+    "ksh": "1200000",
+    "onev": "Nógrád Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1201508",
+    "onev": "Ipolyszög"
+  },
+  {
+    "ksh": "1201526",
+    "onev": "Somoskőújfalu"
+  },
+  {
+    "ksh": "1202389",
+    "onev": "Bercel"
+  },
+  {
+    "ksh": "1202778",
+    "onev": "Ludányhalászi"
+  },
+  {
+    "ksh": "1203249",
+    "onev": "Őrhalom"
+  },
+  {
+    "ksh": "1203328",
+    "onev": "Ipolytarnóc"
+  },
+  {
+    "ksh": "1203665",
+    "onev": "Cered"
+  },
+  {
+    "ksh": "1203841",
+    "onev": "Bokor"
+  },
+  {
+    "ksh": "1203993",
+    "onev": "Héhalom"
+  },
+  {
+    "ksh": "1204251",
+    "onev": "Ecseg"
+  },
+  {
+    "ksh": "1204330",
+    "onev": "Mátraszőlős"
+  },
+  {
+    "ksh": "1204358",
+    "onev": "Nógrád"
+  },
+  {
+    "ksh": "1204507",
+    "onev": "Szendehely"
+  },
+  {
+    "ksh": "1204844",
+    "onev": "Terény"
+  },
+  {
+    "ksh": "1204871",
+    "onev": "Litke"
+  },
+  {
+    "ksh": "1205050",
+    "onev": "Csitár"
+  },
+  {
+    "ksh": "1205324",
+    "onev": "Herencsény"
+  },
+  {
+    "ksh": "1205883",
+    "onev": "Palotás"
+  },
+  {
+    "ksh": "1205980",
+    "onev": "Egyházasgerge"
+  },
+  {
+    "ksh": "1206381",
+    "onev": "Tolmács"
+  },
+  {
+    "ksh": "1206628",
+    "onev": "Szécsény"
+  },
+  {
+    "ksh": "1206743",
+    "onev": "Diósjenő"
+  },
+  {
+    "ksh": "1207199",
+    "onev": "Patak"
+  },
+  {
+    "ksh": "1207320",
+    "onev": "Debercsény"
+  },
+  {
+    "ksh": "1207409",
+    "onev": "Pásztó"
+  },
+  {
+    "ksh": "1207621",
+    "onev": "Alsótold"
+  },
+  {
+    "ksh": "1207959",
+    "onev": "Szilaspogony"
+  },
+  {
+    "ksh": "1208156",
+    "onev": "Drégelypalánk"
+  },
+  {
+    "ksh": "1208387",
+    "onev": "Nógrádsáp"
+  },
+  {
+    "ksh": "1208642",
+    "onev": "Kálló"
+  },
+  {
+    "ksh": "1208712",
+    "onev": "Jobbágyi"
+  },
+  {
+    "ksh": "1208855",
+    "onev": "Karancskeszi"
+  },
+  {
+    "ksh": "1209034",
+    "onev": "Berkenye"
+  },
+  {
+    "ksh": "1209043",
+    "onev": "Szente"
+  },
+  {
+    "ksh": "1209797",
+    "onev": "Nézsa"
+  },
+  {
+    "ksh": "1209894",
+    "onev": "Borsosberény"
+  },
+  {
+    "ksh": "1210199",
+    "onev": "Szarvasgede"
+  },
+  {
+    "ksh": "1210320",
+    "onev": "Vizslás"
+  },
+  {
+    "ksh": "1211590",
+    "onev": "Piliny"
+  },
+  {
+    "ksh": "1211846",
+    "onev": "Kétbodony"
+  },
+  {
+    "ksh": "1212016",
+    "onev": "Becske"
+  },
+  {
+    "ksh": "1212131",
+    "onev": "Nógrádmegyer"
+  },
+  {
+    "ksh": "1212195",
+    "onev": "Romhány"
+  },
+  {
+    "ksh": "1212511",
+    "onev": "Dejtár"
+  },
+  {
+    "ksh": "1212520",
+    "onev": "Ságújfalu"
+  },
+  {
+    "ksh": "1213204",
+    "onev": "Hont"
+  },
+  {
+    "ksh": "1213222",
+    "onev": "Mihálygerge"
+  },
+  {
+    "ksh": "1213657",
+    "onev": "Balassagyarmat"
+  },
+  {
+    "ksh": "1213718",
+    "onev": "Horpács"
+  },
+  {
+    "ksh": "1213754",
+    "onev": "Szanda"
+  },
+  {
+    "ksh": "1213842",
+    "onev": "Kozárd"
+  },
+  {
+    "ksh": "1214234",
+    "onev": "Buják"
+  },
+  {
+    "ksh": "1214641",
+    "onev": "Márkháza"
+  },
+  {
+    "ksh": "1214881",
+    "onev": "Sóshartyán"
+  },
+  {
+    "ksh": "1215325",
+    "onev": "Szátok"
+  },
+  {
+    "ksh": "1215370",
+    "onev": "Etes"
+  },
+  {
+    "ksh": "1216391",
+    "onev": "Nagybárkány"
+  },
+  {
+    "ksh": "1216425",
+    "onev": "Alsópetény"
+  },
+  {
+    "ksh": "1216878",
+    "onev": "Hugyag"
+  },
+  {
+    "ksh": "1217659",
+    "onev": "Egyházasdengeleg"
+  },
+  {
+    "ksh": "1217862",
+    "onev": "Pusztaberki"
+  },
+  {
+    "ksh": "1218494",
+    "onev": "Garáb"
+  },
+  {
+    "ksh": "1218625",
+    "onev": "Karancsalja"
+  },
+  {
+    "ksh": "1218786",
+    "onev": "Szügy"
+  },
+  {
+    "ksh": "1219044",
+    "onev": "Szurdokpüspöki"
+  },
+  {
+    "ksh": "1219318",
+    "onev": "Ősagárd"
+  },
+  {
+    "ksh": "1219372",
+    "onev": "Mátranovák"
+  },
+  {
+    "ksh": "1219451",
+    "onev": "Kutasó"
+  },
+  {
+    "ksh": "1219497",
+    "onev": "Nógrádsipek"
+  },
+  {
+    "ksh": "1219798",
+    "onev": "Szalmatercs"
+  },
+  {
+    "ksh": "1220048",
+    "onev": "Bárna"
+  },
+  {
+    "ksh": "1220075",
+    "onev": "Mátramindszent"
+  },
+  {
+    "ksh": "1220145",
+    "onev": "Csesztve"
+  },
+  {
+    "ksh": "1220190",
+    "onev": "Lucfalva"
+  },
+  {
+    "ksh": "1221041",
+    "onev": "Karancslapujtő"
+  },
+  {
+    "ksh": "1221102",
+    "onev": "Nagylóc"
+  },
+  {
+    "ksh": "1221582",
+    "onev": "Érsekvadkert"
+  },
+  {
+    "ksh": "1221634",
+    "onev": "Szirák"
+  },
+  {
+    "ksh": "1221661",
+    "onev": "Zabar"
+  },
+  {
+    "ksh": "1221795",
+    "onev": "Erdőtarcsa"
+  },
+  {
+    "ksh": "1221935",
+    "onev": "Cserháthaláp"
+  },
+  {
+    "ksh": "1222594",
+    "onev": "Cserhátsurány"
+  },
+  {
+    "ksh": "1222655",
+    "onev": "Erdőkürt"
+  },
+  {
+    "ksh": "1223047",
+    "onev": "Szécsénke"
+  },
+  {
+    "ksh": "1223825",
+    "onev": "Rétság"
+  },
+  {
+    "ksh": "1223986",
+    "onev": "Nagyoroszi"
+  },
+  {
+    "ksh": "1224174",
+    "onev": "Tereske"
+  },
+  {
+    "ksh": "1224323",
+    "onev": "Felsőpetény"
+  },
+  {
+    "ksh": "1224332",
+    "onev": "Mátraszele"
+  },
+  {
+    "ksh": "1224341",
+    "onev": "Bánk"
+  },
+  {
+    "ksh": "1224439",
+    "onev": "Dorogháza"
+  },
+  {
+    "ksh": "1224572",
+    "onev": "Sámsonháza"
+  },
+  {
+    "ksh": "1225496",
+    "onev": "Endrefalva"
+  },
+  {
+    "ksh": "1225548",
+    "onev": "Karancsberény"
+  },
+  {
+    "ksh": "1225663",
+    "onev": "Galgaguta"
+  },
+  {
+    "ksh": "1225788",
+    "onev": "Salgótarján"
+  },
+  {
+    "ksh": "1226295",
+    "onev": "Kisbárkány"
+  },
+  {
+    "ksh": "1226833",
+    "onev": "Iliny"
+  },
+  {
+    "ksh": "1226897",
+    "onev": "Karancsság"
+  },
+  {
+    "ksh": "1226967",
+    "onev": "Magyargéc"
+  },
+  {
+    "ksh": "1227243",
+    "onev": "Kisbágyon"
+  },
+  {
+    "ksh": "1227340",
+    "onev": "Nógrádszakál"
+  },
+  {
+    "ksh": "1227580",
+    "onev": "Nemti"
+  },
+  {
+    "ksh": "1227915",
+    "onev": "Mohora"
+  },
+  {
+    "ksh": "1228194",
+    "onev": "Szuha"
+  },
+  {
+    "ksh": "1228389",
+    "onev": "Kazár"
+  },
+  {
+    "ksh": "1228884",
+    "onev": "Rimóc"
+  },
+  {
+    "ksh": "1229319",
+    "onev": "Ipolyvece"
+  },
+  {
+    "ksh": "1229425",
+    "onev": "Nőtincs"
+  },
+  {
+    "ksh": "1229498",
+    "onev": "Varsány"
+  },
+  {
+    "ksh": "1229832",
+    "onev": "Nógrádmarcal"
+  },
+  {
+    "ksh": "1230100",
+    "onev": "Mátraverebély"
+  },
+  {
+    "ksh": "1230270",
+    "onev": "Csécse"
+  },
+  {
+    "ksh": "1230395",
+    "onev": "Legénd"
+  },
+  {
+    "ksh": "1230915",
+    "onev": "Vanyarc"
+  },
+  {
+    "ksh": "1231413",
+    "onev": "Keszeg"
+  },
+  {
+    "ksh": "1232300",
+    "onev": "Nógrádkövesd"
+  },
+  {
+    "ksh": "1232319",
+    "onev": "Cserhátszentiván"
+  },
+  {
+    "ksh": "1232407",
+    "onev": "Magyarnándor"
+  },
+  {
+    "ksh": "1232896",
+    "onev": "Tar"
+  },
+  {
+    "ksh": "1232911",
+    "onev": "Bér"
+  },
+  {
+    "ksh": "1233011",
+    "onev": "Szécsényfelfalu"
+  },
+  {
+    "ksh": "1233206",
+    "onev": "Kisecset"
+  },
+  {
+    "ksh": "1233242",
+    "onev": "Hollókő"
+  },
+  {
+    "ksh": "1233312",
+    "onev": "Felsőtold"
+  },
+  {
+    "ksh": "1233400",
+    "onev": "Kishartyán"
+  },
+  {
+    "ksh": "1233525",
+    "onev": "Mátraterenye"
+  },
+  {
+    "ksh": "1233534",
+    "onev": "Bátonyterenye"
+  },
+  {
+    "ksh": "1233880",
+    "onev": "Patvarc"
+  },
+  {
+    "ksh": "1234281",
+    "onev": "Nagykeresztúr"
+  },
+  {
+    "ksh": "1234360",
+    "onev": "Rákóczibánya"
+  },
+  {
+    "ksh": "1300000",
+    "onev": "Pest Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1302370",
+    "onev": "Rád"
+  },
+  {
+    "ksh": "1302769",
+    "onev": "Tápiószőlős"
+  },
+  {
+    "ksh": "1303300",
+    "onev": "Iklad"
+  },
+  {
+    "ksh": "1303407",
+    "onev": "Budajenő"
+  },
+  {
+    "ksh": "1303692",
+    "onev": "Mende"
+  },
+  {
+    "ksh": "1304057",
+    "onev": "Pécel"
+  },
+  {
+    "ksh": "1304075",
+    "onev": "Ócsa"
+  },
+  {
+    "ksh": "1304154",
+    "onev": "Tárnok"
+  },
+  {
+    "ksh": "1304181",
+    "onev": "Perőcsény"
+  },
+  {
+    "ksh": "1304303",
+    "onev": "Püspökszilágy"
+  },
+  {
+    "ksh": "1304394",
+    "onev": "Makád"
+  },
+  {
+    "ksh": "1304570",
+    "onev": "Márianosztra"
+  },
+  {
+    "ksh": "1304808",
+    "onev": "Domony"
+  },
+  {
+    "ksh": "1304905",
+    "onev": "Pócsmegyer"
+  },
+  {
+    "ksh": "1304978",
+    "onev": "Ipolytölgyes"
+  },
+  {
+    "ksh": "1305184",
+    "onev": "Csemő"
+  },
+  {
+    "ksh": "1305227",
+    "onev": "Kisnémedi"
+  },
+  {
+    "ksh": "1305281",
+    "onev": "Örkény"
+  },
+  {
+    "ksh": "1305290",
+    "onev": "Pilisszántó"
+  },
+  {
+    "ksh": "1305698",
+    "onev": "Váckisújfalu"
+  },
+  {
+    "ksh": "1305917",
+    "onev": "Vácduka"
+  },
+  {
+    "ksh": "1306035",
+    "onev": "Felsőpakony"
+  },
+  {
+    "ksh": "1306293",
+    "onev": "Újhartyán"
+  },
+  {
+    "ksh": "1306372",
+    "onev": "Pomáz"
+  },
+  {
+    "ksh": "1306822",
+    "onev": "Csobánka"
+  },
+  {
+    "ksh": "1306840",
+    "onev": "Sóskút"
+  },
+  {
+    "ksh": "1306859",
+    "onev": "Törökbálint"
+  },
+  {
+    "ksh": "1306947",
+    "onev": "Szokolya"
+  },
+  {
+    "ksh": "1307108",
+    "onev": "Tinnye"
+  },
+  {
+    "ksh": "1307144",
+    "onev": "Piliscsaba"
+  },
+  {
+    "ksh": "1307384",
+    "onev": "Solymár"
+  },
+  {
+    "ksh": "1307542",
+    "onev": "Szentlőrinckáta"
+  },
+  {
+    "ksh": "1307807",
+    "onev": "Isaszeg"
+  },
+  {
+    "ksh": "1307870",
+    "onev": "Szigetcsép"
+  },
+  {
+    "ksh": "1308280",
+    "onev": "Telki"
+  },
+  {
+    "ksh": "1308332",
+    "onev": "Táborfalva"
+  },
+  {
+    "ksh": "1308457",
+    "onev": "Pilisszentlászló"
+  },
+  {
+    "ksh": "1308545",
+    "onev": "Őrbottyán"
+  },
+  {
+    "ksh": "1308891",
+    "onev": "Biatorbágy"
+  },
+  {
+    "ksh": "1309104",
+    "onev": "Vácszentlászló"
+  },
+  {
+    "ksh": "1309122",
+    "onev": "Farmos"
+  },
+  {
+    "ksh": "1309131",
+    "onev": "Bag"
+  },
+  {
+    "ksh": "1309140",
+    "onev": "Lórév"
+  },
+  {
+    "ksh": "1309247",
+    "onev": "Dabas"
+  },
+  {
+    "ksh": "1309405",
+    "onev": "Tápióság"
+  },
+  {
+    "ksh": "1309441",
+    "onev": "Gomba"
+  },
+  {
+    "ksh": "1309584",
+    "onev": "Dunaharaszti"
+  },
+  {
+    "ksh": "1309593",
+    "onev": "Tura"
+  },
+  {
+    "ksh": "1309690",
+    "onev": "Halásztelek"
+  },
+  {
+    "ksh": "1309821",
+    "onev": "Pilis"
+  },
+  {
+    "ksh": "1309849",
+    "onev": "Hernád"
+  },
+  {
+    "ksh": "1309973",
+    "onev": "Délegyháza"
+  },
+  {
+    "ksh": "1309991",
+    "onev": "Nagykovácsi"
+  },
+  {
+    "ksh": "1310108",
+    "onev": "Áporka"
+  },
+  {
+    "ksh": "1310551",
+    "onev": "Monor"
+  },
+  {
+    "ksh": "1310737",
+    "onev": "Vámosmikola"
+  },
+  {
+    "ksh": "1310755",
+    "onev": "Majosháza"
+  },
+  {
+    "ksh": "1310816",
+    "onev": "Kiskunlacháza"
+  },
+  {
+    "ksh": "1310922",
+    "onev": "Maglód"
+  },
+  {
+    "ksh": "1311004",
+    "onev": "Jászkarajenő"
+  },
+  {
+    "ksh": "1311341",
+    "onev": "Cegléd"
+  },
+  {
+    "ksh": "1311396",
+    "onev": "Pilisszentiván"
+  },
+  {
+    "ksh": "1311934",
+    "onev": "Üröm"
+  },
+  {
+    "ksh": "1312052",
+    "onev": "Budakeszi"
+  },
+  {
+    "ksh": "1312690",
+    "onev": "Sződ"
+  },
+  {
+    "ksh": "1312894",
+    "onev": "Üllő"
+  },
+  {
+    "ksh": "1313277",
+    "onev": "Szigethalom"
+  },
+  {
+    "ksh": "1313295",
+    "onev": "Galgagyörk"
+  },
+  {
+    "ksh": "1313435",
+    "onev": "Nagykáta"
+  },
+  {
+    "ksh": "1313480",
+    "onev": "Erdőkertes"
+  },
+  {
+    "ksh": "1313949",
+    "onev": "Hévízgyörk"
+  },
+  {
+    "ksh": "1314146",
+    "onev": "Tápiószele"
+  },
+  {
+    "ksh": "1314340",
+    "onev": "Pilisvörösvár"
+  },
+  {
+    "ksh": "1314571",
+    "onev": "Tápiószentmárton"
+  },
+  {
+    "ksh": "1314775",
+    "onev": "Nagybörzsöny"
+  },
+  {
+    "ksh": "1314960",
+    "onev": "Zebegény"
+  },
+  {
+    "ksh": "1315015",
+    "onev": "Tápióbicske"
+  },
+  {
+    "ksh": "1315024",
+    "onev": "Páty"
+  },
+  {
+    "ksh": "1315185",
+    "onev": "Szigetszentmárton"
+  },
+  {
+    "ksh": "1315440",
+    "onev": "Szentendre"
+  },
+  {
+    "ksh": "1315583",
+    "onev": "Pusztazámor"
+  },
+  {
+    "ksh": "1316188",
+    "onev": "Aszód"
+  },
+  {
+    "ksh": "1317260",
+    "onev": "Ráckeve"
+  },
+  {
+    "ksh": "1317303",
+    "onev": "Tápiógyörgye"
+  },
+  {
+    "ksh": "1317312",
+    "onev": "Százhalombatta"
+  },
+  {
+    "ksh": "1317598",
+    "onev": "Valkó"
+  },
+  {
+    "ksh": "1317668",
+    "onev": "Vácrátót"
+  },
+  {
+    "ksh": "1317783",
+    "onev": "Mogyoród"
+  },
+  {
+    "ksh": "1317808",
+    "onev": "Újszilvás"
+  },
+  {
+    "ksh": "1318342",
+    "onev": "Veresegyház"
+  },
+  {
+    "ksh": "1318397",
+    "onev": "Dány"
+  },
+  {
+    "ksh": "1318476",
+    "onev": "Csévharaszt"
+  },
+  {
+    "ksh": "1318573",
+    "onev": "Acsa"
+  },
+  {
+    "ksh": "1318616",
+    "onev": "Dunakeszi"
+  },
+  {
+    "ksh": "1318689",
+    "onev": "Penc"
+  },
+  {
+    "ksh": "1318731",
+    "onev": "Pilisszentkereszt"
+  },
+  {
+    "ksh": "1318777",
+    "onev": "Bernecebaráti"
+  },
+  {
+    "ksh": "1319248",
+    "onev": "Tésa"
+  },
+  {
+    "ksh": "1319503",
+    "onev": "Galgahévíz"
+  },
+  {
+    "ksh": "1319682",
+    "onev": "Újlengyel"
+  },
+  {
+    "ksh": "1319716",
+    "onev": "Nagykőrös"
+  },
+  {
+    "ksh": "1319886",
+    "onev": "Váchartyán"
+  },
+  {
+    "ksh": "1320066",
+    "onev": "Nyársapát"
+  },
+  {
+    "ksh": "1320534",
+    "onev": "Dunavarsány"
+  },
+  {
+    "ksh": "1320640",
+    "onev": "Ceglédbercel"
+  },
+  {
+    "ksh": "1321388",
+    "onev": "Püspökhatvan"
+  },
+  {
+    "ksh": "1321458",
+    "onev": "Szada"
+  },
+  {
+    "ksh": "1321467",
+    "onev": "Tóalmás"
+  },
+  {
+    "ksh": "1321713",
+    "onev": "Sülysáp"
+  },
+  {
+    "ksh": "1321847",
+    "onev": "Péteri"
+  },
+  {
+    "ksh": "1322008",
+    "onev": "Törtel"
+  },
+  {
+    "ksh": "1322035",
+    "onev": "Zsámbok"
+  },
+  {
+    "ksh": "1322114",
+    "onev": "Szigetújfalu"
+  },
+  {
+    "ksh": "1322248",
+    "onev": "Pánd"
+  },
+  {
+    "ksh": "1322345",
+    "onev": "Kemence"
+  },
+  {
+    "ksh": "1322488",
+    "onev": "Verseg"
+  },
+  {
+    "ksh": "1322585",
+    "onev": "Vasad"
+  },
+  {
+    "ksh": "1322682",
+    "onev": "Letkés"
+  },
+  {
+    "ksh": "1322804",
+    "onev": "Csömör"
+  },
+  {
+    "ksh": "1323038",
+    "onev": "Nyáregyháza"
+  },
+  {
+    "ksh": "1323083",
+    "onev": "Pusztavacs"
+  },
+  {
+    "ksh": "1323199",
+    "onev": "Alsónémedi"
+  },
+  {
+    "ksh": "1323278",
+    "onev": "Budaörs"
+  },
+  {
+    "ksh": "1323409",
+    "onev": "Nagytarcsa"
+  },
+  {
+    "ksh": "1323463",
+    "onev": "Budakalász"
+  },
+  {
+    "ksh": "1323649",
+    "onev": "Göd"
+  },
+  {
+    "ksh": "1324013",
+    "onev": "Diósd"
+  },
+  {
+    "ksh": "1324466",
+    "onev": "Mikebuda"
+  },
+  {
+    "ksh": "1324518",
+    "onev": "Ecser"
+  },
+  {
+    "ksh": "1324527",
+    "onev": "Tök"
+  },
+  {
+    "ksh": "1324679",
+    "onev": "Kóspallag"
+  },
+  {
+    "ksh": "1324916",
+    "onev": "Szob"
+  },
+  {
+    "ksh": "1324934",
+    "onev": "Vác"
+  },
+  {
+    "ksh": "1325034",
+    "onev": "Zsámbék"
+  },
+  {
+    "ksh": "1325098",
+    "onev": "Bénye"
+  },
+  {
+    "ksh": "1325362",
+    "onev": "Dunabogdány"
+  },
+  {
+    "ksh": "1325627",
+    "onev": "Gyál"
+  },
+  {
+    "ksh": "1326213",
+    "onev": "Szigetmonostor"
+  },
+  {
+    "ksh": "1326259",
+    "onev": "Szigetbecse"
+  },
+  {
+    "ksh": "1326815",
+    "onev": "Vecsés"
+  },
+  {
+    "ksh": "1326985",
+    "onev": "Csővár"
+  },
+  {
+    "ksh": "1327128",
+    "onev": "Galgamácsa"
+  },
+  {
+    "ksh": "1327386",
+    "onev": "Tatárszentgyörgy"
+  },
+  {
+    "ksh": "1327687",
+    "onev": "Kosd"
+  },
+  {
+    "ksh": "1327827",
+    "onev": "Káva"
+  },
+  {
+    "ksh": "1327872",
+    "onev": "Abony"
+  },
+  {
+    "ksh": "1328097",
+    "onev": "Ipolydamásd"
+  },
+  {
+    "ksh": "1328185",
+    "onev": "Perbál"
+  },
+  {
+    "ksh": "1328413",
+    "onev": "Visegrád"
+  },
+  {
+    "ksh": "1328644",
+    "onev": "Úri"
+  },
+  {
+    "ksh": "1328653",
+    "onev": "Szentmártonkáta"
+  },
+  {
+    "ksh": "1328866",
+    "onev": "Sződliget"
+  },
+  {
+    "ksh": "1328954",
+    "onev": "Szigetszentmiklós"
+  },
+  {
+    "ksh": "1329601",
+    "onev": "Pilisborosjenő"
+  },
+  {
+    "ksh": "1329647",
+    "onev": "Dömsöd"
+  },
+  {
+    "ksh": "1329735",
+    "onev": "Gyömrő"
+  },
+  {
+    "ksh": "1329823",
+    "onev": "Tököl"
+  },
+  {
+    "ksh": "1329850",
+    "onev": "Kisoroszi"
+  },
+  {
+    "ksh": "1330331",
+    "onev": "Vácegres"
+  },
+  {
+    "ksh": "1330696",
+    "onev": "Kartal"
+  },
+  {
+    "ksh": "1330720",
+    "onev": "Taksony"
+  },
+  {
+    "ksh": "1330809",
+    "onev": "Leányfalu"
+  },
+  {
+    "ksh": "1330988",
+    "onev": "Érd"
+  },
+  {
+    "ksh": "1331361",
+    "onev": "Kóka"
+  },
+  {
+    "ksh": "1331653",
+    "onev": "Albertirsa"
+  },
+  {
+    "ksh": "1331732",
+    "onev": "Nagymaros"
+  },
+  {
+    "ksh": "1331796",
+    "onev": "Tápiószecső"
+  },
+  {
+    "ksh": "1331811",
+    "onev": "Dánszentmiklós"
+  },
+  {
+    "ksh": "1331963",
+    "onev": "Tahitótfalu"
+  },
+  {
+    "ksh": "1332027",
+    "onev": "Bugyi"
+  },
+  {
+    "ksh": "1332106",
+    "onev": "Inárcs"
+  },
+  {
+    "ksh": "1332230",
+    "onev": "Kakucs"
+  },
+  {
+    "ksh": "1332559",
+    "onev": "Gödöllő"
+  },
+  {
+    "ksh": "1332610",
+    "onev": "Fót"
+  },
+  {
+    "ksh": "1332771",
+    "onev": "Kocsér"
+  },
+  {
+    "ksh": "1332975",
+    "onev": "Kőröstetétlen"
+  },
+  {
+    "ksh": "1333118",
+    "onev": "Csomád"
+  },
+  {
+    "ksh": "1333552",
+    "onev": "Herceghalom"
+  },
+  {
+    "ksh": "1333561",
+    "onev": "Apaj"
+  },
+  {
+    "ksh": "1333729",
+    "onev": "Verőce"
+  },
+  {
+    "ksh": "1333738",
+    "onev": "Kismaros"
+  },
+  {
+    "ksh": "1334148",
+    "onev": "Pilisjászfalu"
+  },
+  {
+    "ksh": "1334157",
+    "onev": "Kistarcsa"
+  },
+  {
+    "ksh": "1334166",
+    "onev": "Kerepes"
+  },
+  {
+    "ksh": "1334315",
+    "onev": "Remeteszőlős"
+  },
+  {
+    "ksh": "1334333",
+    "onev": "Csörög"
+  },
+  {
+    "ksh": "1334397",
+    "onev": "Monorierdő"
+  },
+  {
+    "ksh": "1400000",
+    "onev": "Somogy Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1402051",
+    "onev": "Sávoly"
+  },
+  {
+    "ksh": "1402477",
+    "onev": "Csombárd"
+  },
+  {
+    "ksh": "1403203",
+    "onev": "Nyim"
+  },
+  {
+    "ksh": "1403416",
+    "onev": "Somogyszil"
+  },
+  {
+    "ksh": "1403489",
+    "onev": "Edde"
+  },
+  {
+    "ksh": "1403559",
+    "onev": "Balatonvilágos"
+  },
+  {
+    "ksh": "1403735",
+    "onev": "Bárdudvarnok"
+  },
+  {
+    "ksh": "1403799",
+    "onev": "Csákány"
+  },
+  {
+    "ksh": "1404127",
+    "onev": "Som"
+  },
+  {
+    "ksh": "1404598",
+    "onev": "Kereki"
+  },
+  {
+    "ksh": "1404826",
+    "onev": "Kisgyalán"
+  },
+  {
+    "ksh": "1404835",
+    "onev": "Somogyzsitfa"
+  },
+  {
+    "ksh": "1404853",
+    "onev": "Somogyudvarhely"
+  },
+  {
+    "ksh": "1404932",
+    "onev": "Taszár"
+  },
+  {
+    "ksh": "1405078",
+    "onev": "Rinyabesenyő"
+  },
+  {
+    "ksh": "1405193",
+    "onev": "Szorosad"
+  },
+  {
+    "ksh": "1405263",
+    "onev": "Karád"
+  },
+  {
+    "ksh": "1405272",
+    "onev": "Kánya"
+  },
+  {
+    "ksh": "1405351",
+    "onev": "Kára"
+  },
+  {
+    "ksh": "1405500",
+    "onev": "Somogyaracs"
+  },
+  {
+    "ksh": "1405810",
+    "onev": "Szőkedencs"
+  },
+  {
+    "ksh": "1405971",
+    "onev": "Csokonyavisonta"
+  },
+  {
+    "ksh": "1406008",
+    "onev": "Zamárdi"
+  },
+  {
+    "ksh": "1406080",
+    "onev": "Ádánd"
+  },
+  {
+    "ksh": "1406105",
+    "onev": "Kálmáncsa"
+  },
+  {
+    "ksh": "1406141",
+    "onev": "Patalom"
+  },
+  {
+    "ksh": "1406211",
+    "onev": "Hollád"
+  },
+  {
+    "ksh": "1406424",
+    "onev": "Kaposszerdahely"
+  },
+  {
+    "ksh": "1406451",
+    "onev": "Gamás"
+  },
+  {
+    "ksh": "1406585",
+    "onev": "Gálosfa"
+  },
+  {
+    "ksh": "1406600",
+    "onev": "Somogyszentpál"
+  },
+  {
+    "ksh": "1406877",
+    "onev": "Visz"
+  },
+  {
+    "ksh": "1406910",
+    "onev": "Bélavár"
+  },
+  {
+    "ksh": "1407056",
+    "onev": "Öreglak"
+  },
+  {
+    "ksh": "1407117",
+    "onev": "Balatonföldvár"
+  },
+  {
+    "ksh": "1407205",
+    "onev": "Újvárfalva"
+  },
+  {
+    "ksh": "1407375",
+    "onev": "Balatonkeresztúr"
+  },
+  {
+    "ksh": "1407913",
+    "onev": "Nemesdéd"
+  },
+  {
+    "ksh": "1408040",
+    "onev": "Csoma"
+  },
+  {
+    "ksh": "1408183",
+    "onev": "Vése"
+  },
+  {
+    "ksh": "1408411",
+    "onev": "Kastélyosdombó"
+  },
+  {
+    "ksh": "1408590",
+    "onev": "Tab"
+  },
+  {
+    "ksh": "1408703",
+    "onev": "Büssü"
+  },
+  {
+    "ksh": "1408837",
+    "onev": "Háromfa"
+  },
+  {
+    "ksh": "1409098",
+    "onev": "Kaposfő"
+  },
+  {
+    "ksh": "1409177",
+    "onev": "Gige"
+  },
+  {
+    "ksh": "1409274",
+    "onev": "Varászló"
+  },
+  {
+    "ksh": "1409645",
+    "onev": "Vörs"
+  },
+  {
+    "ksh": "1409858",
+    "onev": "Komlósd"
+  },
+  {
+    "ksh": "1409928",
+    "onev": "Hetes"
+  },
+  {
+    "ksh": "1409946",
+    "onev": "Hencse"
+  },
+  {
+    "ksh": "1410010",
+    "onev": "Lulla"
+  },
+  {
+    "ksh": "1410153",
+    "onev": "Torvaj"
+  },
+  {
+    "ksh": "1410427",
+    "onev": "Magyaratád"
+  },
+  {
+    "ksh": "1410506",
+    "onev": "Bodrog"
+  },
+  {
+    "ksh": "1410603",
+    "onev": "Csurgónagymarton"
+  },
+  {
+    "ksh": "1410861",
+    "onev": "Ecseny"
+  },
+  {
+    "ksh": "1410959",
+    "onev": "Nikla"
+  },
+  {
+    "ksh": "1410986",
+    "onev": "Szulok"
+  },
+  {
+    "ksh": "1411040",
+    "onev": "Lakócsa"
+  },
+  {
+    "ksh": "1411101",
+    "onev": "Szőlősgyörök"
+  },
+  {
+    "ksh": "1411174",
+    "onev": "Kéthely"
+  },
+  {
+    "ksh": "1411192",
+    "onev": "Igal"
+  },
+  {
+    "ksh": "1411466",
+    "onev": "Zala"
+  },
+  {
+    "ksh": "1411484",
+    "onev": "Somogycsicsó"
+  },
+  {
+    "ksh": "1411509",
+    "onev": "Szenta"
+  },
+  {
+    "ksh": "1411828",
+    "onev": "Porrog"
+  },
+  {
+    "ksh": "1411916",
+    "onev": "Balatonőszöd"
+  },
+  {
+    "ksh": "1412168",
+    "onev": "Patca"
+  },
+  {
+    "ksh": "1412663",
+    "onev": "Kaposkeresztúr"
+  },
+  {
+    "ksh": "1412876",
+    "onev": "Somogymeggyes"
+  },
+  {
+    "ksh": "1412973",
+    "onev": "Szentgáloskér"
+  },
+  {
+    "ksh": "1413611",
+    "onev": "Drávagárdony"
+  },
+  {
+    "ksh": "1413693",
+    "onev": "Táska"
+  },
+  {
+    "ksh": "1413745",
+    "onev": "Kőkút"
+  },
+  {
+    "ksh": "1413781",
+    "onev": "Kiskorpád"
+  },
+  {
+    "ksh": "1413790",
+    "onev": "Polány"
+  },
+  {
+    "ksh": "1413824",
+    "onev": "Somodor"
+  },
+  {
+    "ksh": "1413930",
+    "onev": "Porrogszentkirály"
+  },
+  {
+    "ksh": "1413985",
+    "onev": "Felsőmocsolád"
+  },
+  {
+    "ksh": "1413994",
+    "onev": "Bolhás"
+  },
+  {
+    "ksh": "1414012",
+    "onev": "Őrtilos"
+  },
+  {
+    "ksh": "1414386",
+    "onev": "Kercseliget"
+  },
+  {
+    "ksh": "1414395",
+    "onev": "Bakháza"
+  },
+  {
+    "ksh": "1414562",
+    "onev": "Balatonmáriafürdő"
+  },
+  {
+    "ksh": "1414599",
+    "onev": "Görgeteg"
+  },
+  {
+    "ksh": "1414623",
+    "onev": "Zákány"
+  },
+  {
+    "ksh": "1414632",
+    "onev": "Fonyód"
+  },
+  {
+    "ksh": "1414854",
+    "onev": "Szabadi"
+  },
+  {
+    "ksh": "1414863",
+    "onev": "Látrány"
+  },
+  {
+    "ksh": "1414942",
+    "onev": "Ságvár"
+  },
+  {
+    "ksh": "1415103",
+    "onev": "Szenna"
+  },
+  {
+    "ksh": "1415194",
+    "onev": "Szólád"
+  },
+  {
+    "ksh": "1415510",
+    "onev": "Kőröshegy"
+  },
+  {
+    "ksh": "1415592",
+    "onev": "Patosfa"
+  },
+  {
+    "ksh": "1415626",
+    "onev": "Somogysámson"
+  },
+  {
+    "ksh": "1415732",
+    "onev": "Kaposújlak"
+  },
+  {
+    "ksh": "1415884",
+    "onev": "Drávatamási"
+  },
+  {
+    "ksh": "1415909",
+    "onev": "Nágocs"
+  },
+  {
+    "ksh": "1415927",
+    "onev": "Jákó"
+  },
+  {
+    "ksh": "1415981",
+    "onev": "Somogydöröcske"
+  },
+  {
+    "ksh": "1416106",
+    "onev": "Mesztegnyő"
+  },
+  {
+    "ksh": "1416258",
+    "onev": "Lad"
+  },
+  {
+    "ksh": "1416407",
+    "onev": "Tótújfalu"
+  },
+  {
+    "ksh": "1416470",
+    "onev": "Balatonújlak"
+  },
+  {
+    "ksh": "1416601",
+    "onev": "Balatonszabadi"
+  },
+  {
+    "ksh": "1416726",
+    "onev": "Hedrehely"
+  },
+  {
+    "ksh": "1416735",
+    "onev": "Tarany"
+  },
+  {
+    "ksh": "1416823",
+    "onev": "Ordacsehi"
+  },
+  {
+    "ksh": "1417127",
+    "onev": "Beleg"
+  },
+  {
+    "ksh": "1417279",
+    "onev": "Juta"
+  },
+  {
+    "ksh": "1417358",
+    "onev": "Buzsák"
+  },
+  {
+    "ksh": "1417446",
+    "onev": "Kelevíz"
+  },
+  {
+    "ksh": "1417491",
+    "onev": "Zselicszentpál"
+  },
+  {
+    "ksh": "1417561",
+    "onev": "Nemesvid"
+  },
+  {
+    "ksh": "1417631",
+    "onev": "Siófok"
+  },
+  {
+    "ksh": "1417844",
+    "onev": "Tikos"
+  },
+  {
+    "ksh": "1417941",
+    "onev": "Nagyatád"
+  },
+  {
+    "ksh": "1418078",
+    "onev": "Somogyfajsz"
+  },
+  {
+    "ksh": "1418120",
+    "onev": "Bolhó"
+  },
+  {
+    "ksh": "1418148",
+    "onev": "Kötcse"
+  },
+  {
+    "ksh": "1418227",
+    "onev": "Kaposmérő"
+  },
+  {
+    "ksh": "1418500",
+    "onev": "Marcali"
+  },
+  {
+    "ksh": "1418546",
+    "onev": "Somogyszob"
+  },
+  {
+    "ksh": "1418607",
+    "onev": "Szegerdő"
+  },
+  {
+    "ksh": "1418634",
+    "onev": "Hács"
+  },
+  {
+    "ksh": "1419017",
+    "onev": "Visnye"
+  },
+  {
+    "ksh": "1419026",
+    "onev": "Pusztakovácsi"
+  },
+  {
+    "ksh": "1419053",
+    "onev": "Kisasszond"
+  },
+  {
+    "ksh": "1419150",
+    "onev": "Homokszentgyörgy"
+  },
+  {
+    "ksh": "1419442",
+    "onev": "Somogyvár"
+  },
+  {
+    "ksh": "1419460",
+    "onev": "Balatonendréd"
+  },
+  {
+    "ksh": "1419619",
+    "onev": "Iharos"
+  },
+  {
+    "ksh": "1419770",
+    "onev": "Osztopán"
+  },
+  {
+    "ksh": "1420057",
+    "onev": "Somogyegres"
+  },
+  {
+    "ksh": "1420093",
+    "onev": "Törökkoppány"
+  },
+  {
+    "ksh": "1420321",
+    "onev": "Rinyaújnép"
+  },
+  {
+    "ksh": "1420330",
+    "onev": "Somogygeszti"
+  },
+  {
+    "ksh": "1420473",
+    "onev": "Kaposvár"
+  },
+  {
+    "ksh": "1420598",
+    "onev": "Nagycsepely"
+  },
+  {
+    "ksh": "1420622",
+    "onev": "Rinyaújlak"
+  },
+  {
+    "ksh": "1420710",
+    "onev": "Bedegkér"
+  },
+  {
+    "ksh": "1420729",
+    "onev": "Balatonfenyves"
+  },
+  {
+    "ksh": "1420905",
+    "onev": "Mike"
+  },
+  {
+    "ksh": "1421315",
+    "onev": "Csurgó"
+  },
+  {
+    "ksh": "1421324",
+    "onev": "Balatonszentgyörgy"
+  },
+  {
+    "ksh": "1421333",
+    "onev": "Istvándi"
+  },
+  {
+    "ksh": "1421449",
+    "onev": "Nagyberki"
+  },
+  {
+    "ksh": "1421652",
+    "onev": "Nagybajom"
+  },
+  {
+    "ksh": "1421856",
+    "onev": "Somogyvámos"
+  },
+  {
+    "ksh": "1422026",
+    "onev": "Fonó"
+  },
+  {
+    "ksh": "1422673",
+    "onev": "Bonnya"
+  },
+  {
+    "ksh": "1422707",
+    "onev": "Főnyed"
+  },
+  {
+    "ksh": "1422822",
+    "onev": "Balatonszemes"
+  },
+  {
+    "ksh": "1423092",
+    "onev": "Siójut"
+  },
+  {
+    "ksh": "1423311",
+    "onev": "Pusztaszemes"
+  },
+  {
+    "ksh": "1423630",
+    "onev": "Mernye"
+  },
+  {
+    "ksh": "1423904",
+    "onev": "Gyugy"
+  },
+  {
+    "ksh": "1423968",
+    "onev": "Teleki"
+  },
+  {
+    "ksh": "1424110",
+    "onev": "Zselickislak"
+  },
+  {
+    "ksh": "1424314",
+    "onev": "Csököly"
+  },
+  {
+    "ksh": "1424387",
+    "onev": "Kisbajom"
+  },
+  {
+    "ksh": "1424457",
+    "onev": "Bálványos"
+  },
+  {
+    "ksh": "1424493",
+    "onev": "Kisbárapáti"
+  },
+  {
+    "ksh": "1424536",
+    "onev": "Orci"
+  },
+  {
+    "ksh": "1424615",
+    "onev": "Tapsony"
+  },
+  {
+    "ksh": "1424846",
+    "onev": "Heresznye"
+  },
+  {
+    "ksh": "1424907",
+    "onev": "Balatonszárszó"
+  },
+  {
+    "ksh": "1425043",
+    "onev": "Somogybükkösd"
+  },
+  {
+    "ksh": "1425371",
+    "onev": "Magyaregres"
+  },
+  {
+    "ksh": "1425511",
+    "onev": "Nemeskisfalud"
+  },
+  {
+    "ksh": "1425520",
+    "onev": "Nagyszakácsi"
+  },
+  {
+    "ksh": "1425681",
+    "onev": "Cserénfa"
+  },
+  {
+    "ksh": "1425706",
+    "onev": "Szentbalázs"
+  },
+  {
+    "ksh": "1425830",
+    "onev": "Hajmás"
+  },
+  {
+    "ksh": "1425867",
+    "onev": "Kaposhomok"
+  },
+  {
+    "ksh": "1426222",
+    "onev": "Gadány"
+  },
+  {
+    "ksh": "1426277",
+    "onev": "Bőszénfa"
+  },
+  {
+    "ksh": "1426301",
+    "onev": "Inke"
+  },
+  {
+    "ksh": "1426392",
+    "onev": "Pamuk"
+  },
+  {
+    "ksh": "1426453",
+    "onev": "Kadarkút"
+  },
+  {
+    "ksh": "1426532",
+    "onev": "Böhönye"
+  },
+  {
+    "ksh": "1426675",
+    "onev": "Lengyeltóti"
+  },
+  {
+    "ksh": "1426754",
+    "onev": "Rinyaszentkirály"
+  },
+  {
+    "ksh": "1426781",
+    "onev": "Várda"
+  },
+  {
+    "ksh": "1426842",
+    "onev": "Zselickisfalud"
+  },
+  {
+    "ksh": "1426888",
+    "onev": "Kazsok"
+  },
+  {
+    "ksh": "1427270",
+    "onev": "Csömend"
+  },
+  {
+    "ksh": "1427368",
+    "onev": "Segesd"
+  },
+  {
+    "ksh": "1427377",
+    "onev": "Balatonberény"
+  },
+  {
+    "ksh": "1427535",
+    "onev": "Somogysimonyi"
+  },
+  {
+    "ksh": "1427553",
+    "onev": "Pogányszentpéter"
+  },
+  {
+    "ksh": "1427614",
+    "onev": "Zimány"
+  },
+  {
+    "ksh": "1427784",
+    "onev": "Iharosberény"
+  },
+  {
+    "ksh": "1428264",
+    "onev": "Gadács"
+  },
+  {
+    "ksh": "1428291",
+    "onev": "Lábod"
+  },
+  {
+    "ksh": "1428316",
+    "onev": "Bábonymegyer"
+  },
+  {
+    "ksh": "1428361",
+    "onev": "Potony"
+  },
+  {
+    "ksh": "1428510",
+    "onev": "Porrogszentpál"
+  },
+  {
+    "ksh": "1428574",
+    "onev": "Szabás"
+  },
+  {
+    "ksh": "1428714",
+    "onev": "Andocs"
+  },
+  {
+    "ksh": "1428723",
+    "onev": "Somogysárd"
+  },
+  {
+    "ksh": "1428811",
+    "onev": "Kaposgyarmat"
+  },
+  {
+    "ksh": "1428857",
+    "onev": "Kutas"
+  },
+  {
+    "ksh": "1428963",
+    "onev": "Somogyjád"
+  },
+  {
+    "ksh": "1429063",
+    "onev": "Nagyberény"
+  },
+  {
+    "ksh": "1429197",
+    "onev": "Péterhida"
+  },
+  {
+    "ksh": "1429780",
+    "onev": "Vízvár"
+  },
+  {
+    "ksh": "1430119",
+    "onev": "Berzence"
+  },
+  {
+    "ksh": "1430146",
+    "onev": "Szenyér"
+  },
+  {
+    "ksh": "1430474",
+    "onev": "Babócsa"
+  },
+  {
+    "ksh": "1430571",
+    "onev": "Gölle"
+  },
+  {
+    "ksh": "1430580",
+    "onev": "Somogyacsa"
+  },
+  {
+    "ksh": "1430775",
+    "onev": "Hosszúvíz"
+  },
+  {
+    "ksh": "1430827",
+    "onev": "Kisberény"
+  },
+  {
+    "ksh": "1430854",
+    "onev": "Mezőcsokonya"
+  },
+  {
+    "ksh": "1430863",
+    "onev": "Ráksi"
+  },
+  {
+    "ksh": "1430960",
+    "onev": "Gyékényes"
+  },
+  {
+    "ksh": "1431121",
+    "onev": "Sántos"
+  },
+  {
+    "ksh": "1431219",
+    "onev": "Somogyaszaló"
+  },
+  {
+    "ksh": "1431343",
+    "onev": "Mosdós"
+  },
+  {
+    "ksh": "1431352",
+    "onev": "Darány"
+  },
+  {
+    "ksh": "1431644",
+    "onev": "Fiad"
+  },
+  {
+    "ksh": "1432115",
+    "onev": "Ötvöskónyi"
+  },
+  {
+    "ksh": "1432133",
+    "onev": "Sérsekszőlős"
+  },
+  {
+    "ksh": "1432337",
+    "onev": "Baté"
+  },
+  {
+    "ksh": "1432355",
+    "onev": "Libickozma"
+  },
+  {
+    "ksh": "1432416",
+    "onev": "Tengőd"
+  },
+  {
+    "ksh": "1432461",
+    "onev": "Szilvásszentmárton"
+  },
+  {
+    "ksh": "1432470",
+    "onev": "Somogybabod"
+  },
+  {
+    "ksh": "1432601",
+    "onev": "Somogytúr"
+  },
+  {
+    "ksh": "1432674",
+    "onev": "Rinyakovácsi"
+  },
+  {
+    "ksh": "1432780",
+    "onev": "Simonfa"
+  },
+  {
+    "ksh": "1432799",
+    "onev": "Barcs"
+  },
+  {
+    "ksh": "1432805",
+    "onev": "Nagykorpád"
+  },
+  {
+    "ksh": "1432841",
+    "onev": "Szentborbás"
+  },
+  {
+    "ksh": "1433057",
+    "onev": "Zics"
+  },
+  {
+    "ksh": "1433376",
+    "onev": "Miklósi"
+  },
+  {
+    "ksh": "1433394",
+    "onev": "Kapoly"
+  },
+  {
+    "ksh": "1433853",
+    "onev": "Balatonboglár"
+  },
+  {
+    "ksh": "1433862",
+    "onev": "Balatonlelle"
+  },
+  {
+    "ksh": "1434041",
+    "onev": "Pálmajor"
+  },
+  {
+    "ksh": "1434184",
+    "onev": "Alsóbogát"
+  },
+  {
+    "ksh": "1434193",
+    "onev": "Kaszó"
+  },
+  {
+    "ksh": "1434236",
+    "onev": "Szántód"
+  },
+  {
+    "ksh": "1434403",
+    "onev": "Zákányfalu"
+  },
+  {
+    "ksh": "1500000",
+    "onev": "Szabolcs-Szatmár-Bereg Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1502088",
+    "onev": "Mánd"
+  },
+  {
+    "ksh": "1502325",
+    "onev": "Baktalórántháza"
+  },
+  {
+    "ksh": "1502671",
+    "onev": "Kántorjánosi"
+  },
+  {
+    "ksh": "1502945",
+    "onev": "Biri"
+  },
+  {
+    "ksh": "1502990",
+    "onev": "Bátorliget"
+  },
+  {
+    "ksh": "1503391",
+    "onev": "Piricse"
+  },
+  {
+    "ksh": "1503586",
+    "onev": "Szabolcsveresmart"
+  },
+  {
+    "ksh": "1503629",
+    "onev": "Géberjén"
+  },
+  {
+    "ksh": "1503647",
+    "onev": "Döge"
+  },
+  {
+    "ksh": "1503850",
+    "onev": "Tiszabercel"
+  },
+  {
+    "ksh": "1503878",
+    "onev": "Nyírpilis"
+  },
+  {
+    "ksh": "1504312",
+    "onev": "Tarpa"
+  },
+  {
+    "ksh": "1504446",
+    "onev": "Tiszakerecseny"
+  },
+  {
+    "ksh": "1504491",
+    "onev": "Sényő"
+  },
+  {
+    "ksh": "1504613",
+    "onev": "Gelénes"
+  },
+  {
+    "ksh": "1504710",
+    "onev": "Nagyar"
+  },
+  {
+    "ksh": "1504774",
+    "onev": "Szakoly"
+  },
+  {
+    "ksh": "1504996",
+    "onev": "Garbolc"
+  },
+  {
+    "ksh": "1505041",
+    "onev": "Nyírderzs"
+  },
+  {
+    "ksh": "1505616",
+    "onev": "Hetefejércse"
+  },
+  {
+    "ksh": "1505670",
+    "onev": "Gégény"
+  },
+  {
+    "ksh": "1505801",
+    "onev": "Gávavencsellő"
+  },
+  {
+    "ksh": "1506275",
+    "onev": "Zajta"
+  },
+  {
+    "ksh": "1506433",
+    "onev": "Tiszadada"
+  },
+  {
+    "ksh": "1506488",
+    "onev": "Nagyecsed"
+  },
+  {
+    "ksh": "1506938",
+    "onev": "Vállaj"
+  },
+  {
+    "ksh": "1507445",
+    "onev": "Kocsord"
+  },
+  {
+    "ksh": "1507463",
+    "onev": "Mérk"
+  },
+  {
+    "ksh": "1507472",
+    "onev": "Berkesz"
+  },
+  {
+    "ksh": "1507597",
+    "onev": "Tiszavasvári"
+  },
+  {
+    "ksh": "1507676",
+    "onev": "Gyulaháza"
+  },
+  {
+    "ksh": "1507843",
+    "onev": "Jánkmajtis"
+  },
+  {
+    "ksh": "1507904",
+    "onev": "Nyírcsaholy"
+  },
+  {
+    "ksh": "1507995",
+    "onev": "Lövőpetri"
+  },
+  {
+    "ksh": "1508420",
+    "onev": "Napkor"
+  },
+  {
+    "ksh": "1508509",
+    "onev": "Kishódos"
+  },
+  {
+    "ksh": "1508554",
+    "onev": "Tiszakanyár"
+  },
+  {
+    "ksh": "1508776",
+    "onev": "Ajak"
+  },
+  {
+    "ksh": "1508794",
+    "onev": "Tiszakóród"
+  },
+  {
+    "ksh": "1508934",
+    "onev": "Vámosoroszi"
+  },
+  {
+    "ksh": "1508952",
+    "onev": "Tiborszállás"
+  },
+  {
+    "ksh": "1508998",
+    "onev": "Túrricse"
+  },
+  {
+    "ksh": "1509025",
+    "onev": "Őr"
+  },
+  {
+    "ksh": "1509061",
+    "onev": "Rápolt"
+  },
+  {
+    "ksh": "1509113",
+    "onev": "Tiszaeszlár"
+  },
+  {
+    "ksh": "1509238",
+    "onev": "Nyírgyulaj"
+  },
+  {
+    "ksh": "1509256",
+    "onev": "Nyírtét"
+  },
+  {
+    "ksh": "1509265",
+    "onev": "Kisvárda"
+  },
+  {
+    "ksh": "1509353",
+    "onev": "Aranyosapáti"
+  },
+  {
+    "ksh": "1509423",
+    "onev": "Tiszaadony"
+  },
+  {
+    "ksh": "1509654",
+    "onev": "Ilk"
+  },
+  {
+    "ksh": "1509681",
+    "onev": "Cégénydányád"
+  },
+  {
+    "ksh": "1509715",
+    "onev": "Császló"
+  },
+  {
+    "ksh": "1509751",
+    "onev": "Kisszekeres"
+  },
+  {
+    "ksh": "1509919",
+    "onev": "Tuzsér"
+  },
+  {
+    "ksh": "1510117",
+    "onev": "Újkenéz"
+  },
+  {
+    "ksh": "1510126",
+    "onev": "Győrtelek"
+  },
+  {
+    "ksh": "1510205",
+    "onev": "Tiszarád"
+  },
+  {
+    "ksh": "1510436",
+    "onev": "Szamossályi"
+  },
+  {
+    "ksh": "1510791",
+    "onev": "Fülesd"
+  },
+  {
+    "ksh": "1510807",
+    "onev": "Nyírparasznya"
+  },
+  {
+    "ksh": "1510834",
+    "onev": "Olcsvaapáti"
+  },
+  {
+    "ksh": "1510852",
+    "onev": "Érpatak"
+  },
+  {
+    "ksh": "1511095",
+    "onev": "Nyírlövő"
+  },
+  {
+    "ksh": "1511129",
+    "onev": "Olcsva"
+  },
+  {
+    "ksh": "1511244",
+    "onev": "Pócspetri"
+  },
+  {
+    "ksh": "1511271",
+    "onev": "Nyírlugos"
+  },
+  {
+    "ksh": "1511299",
+    "onev": "Bököny"
+  },
+  {
+    "ksh": "1511907",
+    "onev": "Tiszamogyorós"
+  },
+  {
+    "ksh": "1512061",
+    "onev": "Hermánszeg"
+  },
+  {
+    "ksh": "1512098",
+    "onev": "Nyírtura"
+  },
+  {
+    "ksh": "1512186",
+    "onev": "Pátroha"
+  },
+  {
+    "ksh": "1512274",
+    "onev": "Nyírmada"
+  },
+  {
+    "ksh": "1512593",
+    "onev": "Tiszadob"
+  },
+  {
+    "ksh": "1512672",
+    "onev": "Kisvarsány"
+  },
+  {
+    "ksh": "1512928",
+    "onev": "Csaholc"
+  },
+  {
+    "ksh": "1513000",
+    "onev": "Gemzse"
+  },
+  {
+    "ksh": "1513019",
+    "onev": "Hodász"
+  },
+  {
+    "ksh": "1513037",
+    "onev": "Zsurk"
+  },
+  {
+    "ksh": "1513046",
+    "onev": "Szamosszeg"
+  },
+  {
+    "ksh": "1513143",
+    "onev": "Jéke"
+  },
+  {
+    "ksh": "1513213",
+    "onev": "Tunyogmatolcs"
+  },
+  {
+    "ksh": "1513541",
+    "onev": "Tiszaszalka"
+  },
+  {
+    "ksh": "1513550",
+    "onev": "Nyírtelek"
+  },
+  {
+    "ksh": "1513602",
+    "onev": "Túristvándi"
+  },
+  {
+    "ksh": "1513639",
+    "onev": "Besenyőd"
+  },
+  {
+    "ksh": "1513727",
+    "onev": "Gacsály"
+  },
+  {
+    "ksh": "1513860",
+    "onev": "Pusztadobos"
+  },
+  {
+    "ksh": "1514359",
+    "onev": "Kékcse"
+  },
+  {
+    "ksh": "1514377",
+    "onev": "Fülpösdaróc"
+  },
+  {
+    "ksh": "1514447",
+    "onev": "Tiszatelek"
+  },
+  {
+    "ksh": "1514508",
+    "onev": "Dombrád"
+  },
+  {
+    "ksh": "1514696",
+    "onev": "Nyíribrony"
+  },
+  {
+    "ksh": "1514739",
+    "onev": "Rakamaz"
+  },
+  {
+    "ksh": "1514845",
+    "onev": "Nyírbátor"
+  },
+  {
+    "ksh": "1515802",
+    "onev": "Nyírbéltek"
+  },
+  {
+    "ksh": "1515963",
+    "onev": "Balsa"
+  },
+  {
+    "ksh": "1516036",
+    "onev": "Kisnamény"
+  },
+  {
+    "ksh": "1516203",
+    "onev": "Záhony"
+  },
+  {
+    "ksh": "1516300",
+    "onev": "Szamoskér"
+  },
+  {
+    "ksh": "1516522",
+    "onev": "Nyírvasvári"
+  },
+  {
+    "ksh": "1516629",
+    "onev": "Magy"
+  },
+  {
+    "ksh": "1516665",
+    "onev": "Kölcse"
+  },
+  {
+    "ksh": "1516957",
+    "onev": "Tornyospálca"
+  },
+  {
+    "ksh": "1517075",
+    "onev": "Jánd"
+  },
+  {
+    "ksh": "1517084",
+    "onev": "Penészlek"
+  },
+  {
+    "ksh": "1517206",
+    "onev": "Nyíregyháza"
+  },
+  {
+    "ksh": "1517215",
+    "onev": "Porcsalma"
+  },
+  {
+    "ksh": "1517224",
+    "onev": "Petneháza"
+  },
+  {
+    "ksh": "1517428",
+    "onev": "Rozsály"
+  },
+  {
+    "ksh": "1517589",
+    "onev": "Jármi"
+  },
+  {
+    "ksh": "1517756",
+    "onev": "Demecser"
+  },
+  {
+    "ksh": "1517817",
+    "onev": "Tiszabecs"
+  },
+  {
+    "ksh": "1517826",
+    "onev": "Mándok"
+  },
+  {
+    "ksh": "1518005",
+    "onev": "Szamosangyalos"
+  },
+  {
+    "ksh": "1518290",
+    "onev": "Nyírkarász"
+  },
+  {
+    "ksh": "1518324",
+    "onev": "Vásárosnamény"
+  },
+  {
+    "ksh": "1518528",
+    "onev": "Eperjeske"
+  },
+  {
+    "ksh": "1518591",
+    "onev": "Vaja"
+  },
+  {
+    "ksh": "1518795",
+    "onev": "Darnó"
+  },
+  {
+    "ksh": "1518874",
+    "onev": "Mátészalka"
+  },
+  {
+    "ksh": "1518971",
+    "onev": "Fehérgyarmat"
+  },
+  {
+    "ksh": "1519169",
+    "onev": "Szabolcs"
+  },
+  {
+    "ksh": "1519211",
+    "onev": "Nábrád"
+  },
+  {
+    "ksh": "1519424",
+    "onev": "Kisar"
+  },
+  {
+    "ksh": "1519558",
+    "onev": "Gyügye"
+  },
+  {
+    "ksh": "1519655",
+    "onev": "Máriapócs"
+  },
+  {
+    "ksh": "1519707",
+    "onev": "Buj"
+  },
+  {
+    "ksh": "1519992",
+    "onev": "Kemecse"
+  },
+  {
+    "ksh": "1520172",
+    "onev": "Tiszabezdéd"
+  },
+  {
+    "ksh": "1520260",
+    "onev": "Tivadar"
+  },
+  {
+    "ksh": "1520303",
+    "onev": "Apagy"
+  },
+  {
+    "ksh": "1520668",
+    "onev": "Mátyus"
+  },
+  {
+    "ksh": "1520677",
+    "onev": "Beregsurány"
+  },
+  {
+    "ksh": "1521227",
+    "onev": "Beszterec"
+  },
+  {
+    "ksh": "1521290",
+    "onev": "Laskod"
+  },
+  {
+    "ksh": "1521485",
+    "onev": "Nagydobos"
+  },
+  {
+    "ksh": "1521573",
+    "onev": "Rétközberencs"
+  },
+  {
+    "ksh": "1522017",
+    "onev": "Szamosbecs"
+  },
+  {
+    "ksh": "1522053",
+    "onev": "Szabolcsbáka"
+  },
+  {
+    "ksh": "1522239",
+    "onev": "Botpalád"
+  },
+  {
+    "ksh": "1522284",
+    "onev": "Ófehértó"
+  },
+  {
+    "ksh": "1522336",
+    "onev": "Komlódtótfalu"
+  },
+  {
+    "ksh": "1522415",
+    "onev": "Fényeslitke"
+  },
+  {
+    "ksh": "1522743",
+    "onev": "Nagycserkesz"
+  },
+  {
+    "ksh": "1523250",
+    "onev": "Fábiánháza"
+  },
+  {
+    "ksh": "1523269",
+    "onev": "Nyírmeggyes"
+  },
+  {
+    "ksh": "1523524",
+    "onev": "Tiszalök"
+  },
+  {
+    "ksh": "1523612",
+    "onev": "Kömörő"
+  },
+  {
+    "ksh": "1523685",
+    "onev": "Pátyod"
+  },
+  {
+    "ksh": "1523728",
+    "onev": "Kótaj"
+  },
+  {
+    "ksh": "1523889",
+    "onev": "Sonkád"
+  },
+  {
+    "ksh": "1524095",
+    "onev": "Csengersima"
+  },
+  {
+    "ksh": "1524448",
+    "onev": "Tiszacsécse"
+  },
+  {
+    "ksh": "1524475",
+    "onev": "Timár"
+  },
+  {
+    "ksh": "1524581",
+    "onev": "Rohod"
+  },
+  {
+    "ksh": "1524785",
+    "onev": "Nagykálló"
+  },
+  {
+    "ksh": "1525441",
+    "onev": "Benk"
+  },
+  {
+    "ksh": "1525636",
+    "onev": "Ibrány"
+  },
+  {
+    "ksh": "1525928",
+    "onev": "Nyírkércs"
+  },
+  {
+    "ksh": "1525973",
+    "onev": "Nyírcsászári"
+  },
+  {
+    "ksh": "1526091",
+    "onev": "Lónya"
+  },
+  {
+    "ksh": "1526107",
+    "onev": "Csegöld"
+  },
+  {
+    "ksh": "1526365",
+    "onev": "Nyírmihálydi"
+  },
+  {
+    "ksh": "1526480",
+    "onev": "Barabás"
+  },
+  {
+    "ksh": "1526550",
+    "onev": "Ömböly"
+  },
+  {
+    "ksh": "1526611",
+    "onev": "Újfehértó"
+  },
+  {
+    "ksh": "1526851",
+    "onev": "Csengerújfalu"
+  },
+  {
+    "ksh": "1526958",
+    "onev": "Balkány"
+  },
+  {
+    "ksh": "1526976",
+    "onev": "Nagyhódos"
+  },
+  {
+    "ksh": "1527100",
+    "onev": "Vasmegyer"
+  },
+  {
+    "ksh": "1527119",
+    "onev": "Nemesborzova"
+  },
+  {
+    "ksh": "1527146",
+    "onev": "Komoró"
+  },
+  {
+    "ksh": "1527155",
+    "onev": "Nagyhalász"
+  },
+  {
+    "ksh": "1527225",
+    "onev": "Kálmánháza"
+  },
+  {
+    "ksh": "1527252",
+    "onev": "Tiszanagyfalu"
+  },
+  {
+    "ksh": "1527261",
+    "onev": "Tisztaberek"
+  },
+  {
+    "ksh": "1527322",
+    "onev": "Vámosatya"
+  },
+  {
+    "ksh": "1527544",
+    "onev": "Tiszaszentmárton"
+  },
+  {
+    "ksh": "1527748",
+    "onev": "Pap"
+  },
+  {
+    "ksh": "1527924",
+    "onev": "Ópályi"
+  },
+  {
+    "ksh": "1527988",
+    "onev": "Nagyszekeres"
+  },
+  {
+    "ksh": "1528060",
+    "onev": "Nyírtass"
+  },
+  {
+    "ksh": "1528246",
+    "onev": "Beregdaróc"
+  },
+  {
+    "ksh": "1528431",
+    "onev": "Kék"
+  },
+  {
+    "ksh": "1528440",
+    "onev": "Nyírgelse"
+  },
+  {
+    "ksh": "1528477",
+    "onev": "Kisléta"
+  },
+  {
+    "ksh": "1528750",
+    "onev": "Zsarolyán"
+  },
+  {
+    "ksh": "1528802",
+    "onev": "Nyírbogdány"
+  },
+  {
+    "ksh": "1528893",
+    "onev": "Geszteréd"
+  },
+  {
+    "ksh": "1528945",
+    "onev": "Győröcske"
+  },
+  {
+    "ksh": "1528981",
+    "onev": "Ura"
+  },
+  {
+    "ksh": "1529300",
+    "onev": "Kispalád"
+  },
+  {
+    "ksh": "1529416",
+    "onev": "Csaroda"
+  },
+  {
+    "ksh": "1529443",
+    "onev": "Gulács"
+  },
+  {
+    "ksh": "1529559",
+    "onev": "Panyola"
+  },
+  {
+    "ksh": "1529799",
+    "onev": "Méhtelek"
+  },
+  {
+    "ksh": "1529911",
+    "onev": "Tákos"
+  },
+  {
+    "ksh": "1529975",
+    "onev": "Anarcs"
+  },
+  {
+    "ksh": "1529984",
+    "onev": "Magosliget"
+  },
+  {
+    "ksh": "1530085",
+    "onev": "Szamostatárfalva"
+  },
+  {
+    "ksh": "1530641",
+    "onev": "Csenger"
+  },
+  {
+    "ksh": "1530979",
+    "onev": "Levelek"
+  },
+  {
+    "ksh": "1531088",
+    "onev": "Székely"
+  },
+  {
+    "ksh": "1531158",
+    "onev": "Nyírbogát"
+  },
+  {
+    "ksh": "1531237",
+    "onev": "Szatmárcseke"
+  },
+  {
+    "ksh": "1531273",
+    "onev": "Szamosújlak"
+  },
+  {
+    "ksh": "1531398",
+    "onev": "Tyukod"
+  },
+  {
+    "ksh": "1531404",
+    "onev": "Kállósemjén"
+  },
+  {
+    "ksh": "1531477",
+    "onev": "Nyírjákó"
+  },
+  {
+    "ksh": "1531750",
+    "onev": "Milota"
+  },
+  {
+    "ksh": "1531769",
+    "onev": "Ököritófülpös"
+  },
+  {
+    "ksh": "1531820",
+    "onev": "Uszka"
+  },
+  {
+    "ksh": "1531857",
+    "onev": "Ramocsaháza"
+  },
+  {
+    "ksh": "1531972",
+    "onev": "Paszab"
+  },
+  {
+    "ksh": "1532328",
+    "onev": "Encsencs"
+  },
+  {
+    "ksh": "1532452",
+    "onev": "Nyírkáta"
+  },
+  {
+    "ksh": "1532577",
+    "onev": "Papos"
+  },
+  {
+    "ksh": "1532656",
+    "onev": "Mezőladány"
+  },
+  {
+    "ksh": "1532692",
+    "onev": "Penyige"
+  },
+  {
+    "ksh": "1532869",
+    "onev": "Kérsemjén"
+  },
+  {
+    "ksh": "1533145",
+    "onev": "Nyírpazony"
+  },
+  {
+    "ksh": "1533224",
+    "onev": "Márokpapi"
+  },
+  {
+    "ksh": "1533358",
+    "onev": "Terem"
+  },
+  {
+    "ksh": "1533659",
+    "onev": "Újdombrád"
+  },
+  {
+    "ksh": "1533747",
+    "onev": "Tiszavid"
+  },
+  {
+    "ksh": "1533774",
+    "onev": "Gyüre"
+  },
+  {
+    "ksh": "1533783",
+    "onev": "Nagyvarsány"
+  },
+  {
+    "ksh": "1534388",
+    "onev": "Szorgalmatos"
+  },
+  {
+    "ksh": "1600000",
+    "onev": "Jász-Nagykun-Szolnok Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1602626",
+    "onev": "Martfű"
+  },
+  {
+    "ksh": "1603373",
+    "onev": "Tiszapüspöki"
+  },
+  {
+    "ksh": "1604260",
+    "onev": "Mezőtúr"
+  },
+  {
+    "ksh": "1604923",
+    "onev": "Karcag"
+  },
+  {
+    "ksh": "1605254",
+    "onev": "Kuncsorba"
+  },
+  {
+    "ksh": "1605777",
+    "onev": "Szászberek"
+  },
+  {
+    "ksh": "1605795",
+    "onev": "Cserkeszőlő"
+  },
+  {
+    "ksh": "1605874",
+    "onev": "Szajol"
+  },
+  {
+    "ksh": "1606318",
+    "onev": "Nagyrév"
+  },
+  {
+    "ksh": "1607418",
+    "onev": "Kengyel"
+  },
+  {
+    "ksh": "1607490",
+    "onev": "Tószeg"
+  },
+  {
+    "ksh": "1607852",
+    "onev": "Tiszaszőlős"
+  },
+  {
+    "ksh": "1609557",
+    "onev": "Tomajmonostora"
+  },
+  {
+    "ksh": "1609627",
+    "onev": "Tiszatenyő"
+  },
+  {
+    "ksh": "1610773",
+    "onev": "Tiszabő"
+  },
+  {
+    "ksh": "1611235",
+    "onev": "Kőtelek"
+  },
+  {
+    "ksh": "1611305",
+    "onev": "Besenyszög"
+  },
+  {
+    "ksh": "1612423",
+    "onev": "Rákócziújfalu"
+  },
+  {
+    "ksh": "1612441",
+    "onev": "Abádszalók"
+  },
+  {
+    "ksh": "1613170",
+    "onev": "Csépa"
+  },
+  {
+    "ksh": "1613514",
+    "onev": "Jászszentandrás"
+  },
+  {
+    "ksh": "1613815",
+    "onev": "Tiszaföldvár"
+  },
+  {
+    "ksh": "1614207",
+    "onev": "Rákóczifalva"
+  },
+  {
+    "ksh": "1614836",
+    "onev": "Zagyvarékas"
+  },
+  {
+    "ksh": "1615246",
+    "onev": "Pusztamonostor"
+  },
+  {
+    "ksh": "1615291",
+    "onev": "Újszász"
+  },
+  {
+    "ksh": "1615574",
+    "onev": "Nagykörű"
+  },
+  {
+    "ksh": "1615787",
+    "onev": "Tiszaörs"
+  },
+  {
+    "ksh": "1615811",
+    "onev": "Jászboldogháza"
+  },
+  {
+    "ksh": "1616230",
+    "onev": "Tiszaderzs"
+  },
+  {
+    "ksh": "1616647",
+    "onev": "Fegyvernek"
+  },
+  {
+    "ksh": "1617145",
+    "onev": "Kenderes"
+  },
+  {
+    "ksh": "1617695",
+    "onev": "Tiszasüly"
+  },
+  {
+    "ksh": "1617978",
+    "onev": "Jászdózsa"
+  },
+  {
+    "ksh": "1618209",
+    "onev": "Jászberény"
+  },
+  {
+    "ksh": "1619813",
+    "onev": "Kétpó"
+  },
+  {
+    "ksh": "1620181",
+    "onev": "Tiszaroff"
+  },
+  {
+    "ksh": "1620428",
+    "onev": "Szelevény"
+  },
+  {
+    "ksh": "1620446",
+    "onev": "Tiszainoka"
+  },
+  {
+    "ksh": "1621111",
+    "onev": "Jászladány"
+  },
+  {
+    "ksh": "1621157",
+    "onev": "Vezseny"
+  },
+  {
+    "ksh": "1621494",
+    "onev": "Tiszasas"
+  },
+  {
+    "ksh": "1621689",
+    "onev": "Nagyiván"
+  },
+  {
+    "ksh": "1622105",
+    "onev": "Jászárokszállás"
+  },
+  {
+    "ksh": "1622202",
+    "onev": "Jászapáti"
+  },
+  {
+    "ksh": "1622567",
+    "onev": "Kunhegyes"
+  },
+  {
+    "ksh": "1622770",
+    "onev": "Tiszabura"
+  },
+  {
+    "ksh": "1622789",
+    "onev": "Tiszaszentimre"
+  },
+  {
+    "ksh": "1622798",
+    "onev": "Jászkisér"
+  },
+  {
+    "ksh": "1622859",
+    "onev": "Jánoshida"
+  },
+  {
+    "ksh": "1622929",
+    "onev": "Jászágó"
+  },
+  {
+    "ksh": "1622938",
+    "onev": "Cibakháza"
+  },
+  {
+    "ksh": "1623135",
+    "onev": "Jásztelek"
+  },
+  {
+    "ksh": "1623171",
+    "onev": "Kunmadaras"
+  },
+  {
+    "ksh": "1623339",
+    "onev": "Jászfényszaru"
+  },
+  {
+    "ksh": "1623579",
+    "onev": "Jászfelsőszentgyörgy"
+  },
+  {
+    "ksh": "1624086",
+    "onev": "Jászivány"
+  },
+  {
+    "ksh": "1625186",
+    "onev": "Jászjákóhalma"
+  },
+  {
+    "ksh": "1625265",
+    "onev": "Alattyán"
+  },
+  {
+    "ksh": "1625919",
+    "onev": "Kisújszállás"
+  },
+  {
+    "ksh": "1626286",
+    "onev": "Mezőhék"
+  },
+  {
+    "ksh": "1627313",
+    "onev": "Törökszentmiklós"
+  },
+  {
+    "ksh": "1627854",
+    "onev": "Szolnok"
+  },
+  {
+    "ksh": "1628006",
+    "onev": "Öcsöd"
+  },
+  {
+    "ksh": "1628228",
+    "onev": "Túrkeve"
+  },
+  {
+    "ksh": "1628699",
+    "onev": "Tiszaigar"
+  },
+  {
+    "ksh": "1629346",
+    "onev": "Tiszajenő"
+  },
+  {
+    "ksh": "1629382",
+    "onev": "Örményes"
+  },
+  {
+    "ksh": "1629726",
+    "onev": "Tiszafüred"
+  },
+  {
+    "ksh": "1630234",
+    "onev": "Mesterszállás"
+  },
+  {
+    "ksh": "1630304",
+    "onev": "Tiszagyenda"
+  },
+  {
+    "ksh": "1630386",
+    "onev": "Tiszakürt"
+  },
+  {
+    "ksh": "1630711",
+    "onev": "Jászalsószentgyörgy"
+  },
+  {
+    "ksh": "1631866",
+    "onev": "Tiszavárkony"
+  },
+  {
+    "ksh": "1632504",
+    "onev": "Kunszentmárton"
+  },
+  {
+    "ksh": "1634005",
+    "onev": "Berekfürdő"
+  },
+  {
+    "ksh": "1634050",
+    "onev": "Hunyadfalva"
+  },
+  {
+    "ksh": "1634175",
+    "onev": "Csataszög"
+  },
+  {
+    "ksh": "1700000",
+    "onev": "Tolna Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1702033",
+    "onev": "Kakasd"
+  },
+  {
+    "ksh": "1702565",
+    "onev": "Döbrököz"
+  },
+  {
+    "ksh": "1702796",
+    "onev": "Nak"
+  },
+  {
+    "ksh": "1702811",
+    "onev": "Miszla"
+  },
+  {
+    "ksh": "1703425",
+    "onev": "Bogyiszló"
+  },
+  {
+    "ksh": "1703869",
+    "onev": "Kistormás"
+  },
+  {
+    "ksh": "1704464",
+    "onev": "Szakály"
+  },
+  {
+    "ksh": "1704701",
+    "onev": "Iregszemcse"
+  },
+  {
+    "ksh": "1704747",
+    "onev": "Sárpilis"
+  },
+  {
+    "ksh": "1704862",
+    "onev": "Paks"
+  },
+  {
+    "ksh": "1705661",
+    "onev": "Ozora"
+  },
+  {
+    "ksh": "1705731",
+    "onev": "Gerjen"
+  },
+  {
+    "ksh": "1706017",
+    "onev": "Magyarkeszi"
+  },
+  {
+    "ksh": "1706497",
+    "onev": "Bonyhád"
+  },
+  {
+    "ksh": "1706512",
+    "onev": "Kismányok"
+  },
+  {
+    "ksh": "1706558",
+    "onev": "Bölcske"
+  },
+  {
+    "ksh": "1706637",
+    "onev": "Varsád"
+  },
+  {
+    "ksh": "1706761",
+    "onev": "Nagyszékely"
+  },
+  {
+    "ksh": "1706901",
+    "onev": "Tengelic"
+  },
+  {
+    "ksh": "1707029",
+    "onev": "Mucsi"
+  },
+  {
+    "ksh": "1707685",
+    "onev": "Dombóvár"
+  },
+  {
+    "ksh": "1708448",
+    "onev": "Értény"
+  },
+  {
+    "ksh": "1708864",
+    "onev": "Bátaszék"
+  },
+  {
+    "ksh": "1708961",
+    "onev": "Őcsény"
+  },
+  {
+    "ksh": "1709326",
+    "onev": "Jágónak"
+  },
+  {
+    "ksh": "1709371",
+    "onev": "Pálfa"
+  },
+  {
+    "ksh": "1709414",
+    "onev": "Várdomb"
+  },
+  {
+    "ksh": "1709539",
+    "onev": "Dunaszentgyörgy"
+  },
+  {
+    "ksh": "1709618",
+    "onev": "Pári"
+  },
+  {
+    "ksh": "1710083",
+    "onev": "Szakcs"
+  },
+  {
+    "ksh": "1710463",
+    "onev": "Kölesd"
+  },
+  {
+    "ksh": "1711031",
+    "onev": "Tolnanémedi"
+  },
+  {
+    "ksh": "1711563",
+    "onev": "Alsónyék"
+  },
+  {
+    "ksh": "1711688",
+    "onev": "Diósberény"
+  },
+  {
+    "ksh": "1711712",
+    "onev": "Báta"
+  },
+  {
+    "ksh": "1711970",
+    "onev": "Bikács"
+  },
+  {
+    "ksh": "1711998",
+    "onev": "Csibrák"
+  },
+  {
+    "ksh": "1712326",
+    "onev": "Györköny"
+  },
+  {
+    "ksh": "1713620",
+    "onev": "Mucsfa"
+  },
+  {
+    "ksh": "1713709",
+    "onev": "Nagyszokoly"
+  },
+  {
+    "ksh": "1714030",
+    "onev": "Nagymányok"
+  },
+  {
+    "ksh": "1714100",
+    "onev": "Kajdacs"
+  },
+  {
+    "ksh": "1714164",
+    "onev": "Harc"
+  },
+  {
+    "ksh": "1714304",
+    "onev": "Závod"
+  },
+  {
+    "ksh": "1714605",
+    "onev": "Lápafő"
+  },
+  {
+    "ksh": "1714711",
+    "onev": "Szálka"
+  },
+  {
+    "ksh": "1714818",
+    "onev": "Bonyhádvarasd"
+  },
+  {
+    "ksh": "1715006",
+    "onev": "Németkér"
+  },
+  {
+    "ksh": "1715316",
+    "onev": "Szakadát"
+  },
+  {
+    "ksh": "1715459",
+    "onev": "Regöly"
+  },
+  {
+    "ksh": "1715820",
+    "onev": "Felsőnána"
+  },
+  {
+    "ksh": "1716452",
+    "onev": "Nagyvejke"
+  },
+  {
+    "ksh": "1716814",
+    "onev": "Szedres"
+  },
+  {
+    "ksh": "1717640",
+    "onev": "Keszőhidegkút"
+  },
+  {
+    "ksh": "1717710",
+    "onev": "Kisdorog"
+  },
+  {
+    "ksh": "1717914",
+    "onev": "Felsőnyék"
+  },
+  {
+    "ksh": "1717950",
+    "onev": "Fürged"
+  },
+  {
+    "ksh": "1718263",
+    "onev": "Szárazd"
+  },
+  {
+    "ksh": "1718388",
+    "onev": "Nagydorog"
+  },
+  {
+    "ksh": "1718917",
+    "onev": "Murga"
+  },
+  {
+    "ksh": "1718962",
+    "onev": "Kaposszekcső"
+  },
+  {
+    "ksh": "1718980",
+    "onev": "Fadd"
+  },
+  {
+    "ksh": "1719202",
+    "onev": "Dúzs"
+  },
+  {
+    "ksh": "1719284",
+    "onev": "Cikó"
+  },
+  {
+    "ksh": "1719585",
+    "onev": "Pincehely"
+  },
+  {
+    "ksh": "1719938",
+    "onev": "Pusztahencse"
+  },
+  {
+    "ksh": "1720507",
+    "onev": "Kurd"
+  },
+  {
+    "ksh": "1720561",
+    "onev": "Újireg"
+  },
+  {
+    "ksh": "1720701",
+    "onev": "Mórágy"
+  },
+  {
+    "ksh": "1720783",
+    "onev": "Simontornya"
+  },
+  {
+    "ksh": "1720817",
+    "onev": "Sárszentlőrinc"
+  },
+  {
+    "ksh": "1721184",
+    "onev": "Koppányszántó"
+  },
+  {
+    "ksh": "1721360",
+    "onev": "Udvari"
+  },
+  {
+    "ksh": "1721625",
+    "onev": "Zomba"
+  },
+  {
+    "ksh": "1721731",
+    "onev": "Kéty"
+  },
+  {
+    "ksh": "1722433",
+    "onev": "Kocsola"
+  },
+  {
+    "ksh": "1722761",
+    "onev": "Szekszárd"
+  },
+  {
+    "ksh": "1723296",
+    "onev": "Kapospula"
+  },
+  {
+    "ksh": "1723791",
+    "onev": "Kalaznó"
+  },
+  {
+    "ksh": "1724192",
+    "onev": "Fácánkert"
+  },
+  {
+    "ksh": "1724411",
+    "onev": "Lengyel"
+  },
+  {
+    "ksh": "1724563",
+    "onev": "Tamási"
+  },
+  {
+    "ksh": "1724989",
+    "onev": "Decs"
+  },
+  {
+    "ksh": "1725274",
+    "onev": "Tolna"
+  },
+  {
+    "ksh": "1725539",
+    "onev": "Györe"
+  },
+  {
+    "ksh": "1725645",
+    "onev": "Sióagárd"
+  },
+  {
+    "ksh": "1726055",
+    "onev": "Hőgyész"
+  },
+  {
+    "ksh": "1726125",
+    "onev": "Aparhant"
+  },
+  {
+    "ksh": "1726727",
+    "onev": "Grábóc"
+  },
+  {
+    "ksh": "1727182",
+    "onev": "Nagykónyi"
+  },
+  {
+    "ksh": "1727711",
+    "onev": "Izmény"
+  },
+  {
+    "ksh": "1727766",
+    "onev": "Kisszékely"
+  },
+  {
+    "ksh": "1728662",
+    "onev": "Belecska"
+  },
+  {
+    "ksh": "1728909",
+    "onev": "Bátaapáti"
+  },
+  {
+    "ksh": "1729124",
+    "onev": "Várong"
+  },
+  {
+    "ksh": "1729230",
+    "onev": "Dalmand"
+  },
+  {
+    "ksh": "1729337",
+    "onev": "Madocsa"
+  },
+  {
+    "ksh": "1729665",
+    "onev": "Alsónána"
+  },
+  {
+    "ksh": "1730094",
+    "onev": "Csikóstőttős"
+  },
+  {
+    "ksh": "1730289",
+    "onev": "Gyönk"
+  },
+  {
+    "ksh": "1730359",
+    "onev": "Gyulaj"
+  },
+  {
+    "ksh": "1730562",
+    "onev": "Medina"
+  },
+  {
+    "ksh": "1731185",
+    "onev": "Kisvejke"
+  },
+  {
+    "ksh": "1731459",
+    "onev": "Tevel"
+  },
+  {
+    "ksh": "1731501",
+    "onev": "Dunaföldvár"
+  },
+  {
+    "ksh": "1732735",
+    "onev": "Attala"
+  },
+  {
+    "ksh": "1732850",
+    "onev": "Váralja"
+  },
+  {
+    "ksh": "1733349",
+    "onev": "Mőcsény"
+  },
+  {
+    "ksh": "1733570",
+    "onev": "Pörböly"
+  },
+  {
+    "ksh": "1800000",
+    "onev": "Vas Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1802042",
+    "onev": "Narda"
+  },
+  {
+    "ksh": "1802246",
+    "onev": "Vát"
+  },
+  {
+    "ksh": "1802431",
+    "onev": "Bük"
+  },
+  {
+    "ksh": "1802440",
+    "onev": "Szatta"
+  },
+  {
+    "ksh": "1802501",
+    "onev": "Kisunyom"
+  },
+  {
+    "ksh": "1802574",
+    "onev": "Kenéz"
+  },
+  {
+    "ksh": "1802839",
+    "onev": "Nemeskocs"
+  },
+  {
+    "ksh": "1802884",
+    "onev": "Vasalja"
+  },
+  {
+    "ksh": "1802927",
+    "onev": "Duka"
+  },
+  {
+    "ksh": "1803009",
+    "onev": "Szombathely"
+  },
+  {
+    "ksh": "1803036",
+    "onev": "Döröske"
+  },
+  {
+    "ksh": "1803090",
+    "onev": "Borgáta"
+  },
+  {
+    "ksh": "1803142",
+    "onev": "Vönöck"
+  },
+  {
+    "ksh": "1803197",
+    "onev": "Rábahídvég"
+  },
+  {
+    "ksh": "1803221",
+    "onev": "Magyarlak"
+  },
+  {
+    "ksh": "1803294",
+    "onev": "Molnaszecsőd"
+  },
+  {
+    "ksh": "1803674",
+    "onev": "Nemeskeresztúr"
+  },
+  {
+    "ksh": "1803911",
+    "onev": "Csákánydoroszló"
+  },
+  {
+    "ksh": "1804190",
+    "onev": "Köcsk"
+  },
+  {
+    "ksh": "1804224",
+    "onev": "Csörötnek"
+  },
+  {
+    "ksh": "1804640",
+    "onev": "Kám"
+  },
+  {
+    "ksh": "1804695",
+    "onev": "Vasvár"
+  },
+  {
+    "ksh": "1805023",
+    "onev": "Bozsok"
+  },
+  {
+    "ksh": "1805102",
+    "onev": "Balogunyom"
+  },
+  {
+    "ksh": "1805166",
+    "onev": "Tömörd"
+  },
+  {
+    "ksh": "1805476",
+    "onev": "Bő"
+  },
+  {
+    "ksh": "1805713",
+    "onev": "Harasztifalu"
+  },
+  {
+    "ksh": "1805740",
+    "onev": "Kőszegdoroszló"
+  },
+  {
+    "ksh": "1805953",
+    "onev": "Kissomlyó"
+  },
+  {
+    "ksh": "1806248",
+    "onev": "Pinkamindszent"
+  },
+  {
+    "ksh": "1806390",
+    "onev": "Bozzai"
+  },
+  {
+    "ksh": "1806406",
+    "onev": "Jákfa"
+  },
+  {
+    "ksh": "1806716",
+    "onev": "Nádasd"
+  },
+  {
+    "ksh": "1807162",
+    "onev": "Pácsony"
+  },
+  {
+    "ksh": "1807171",
+    "onev": "Sorkifalud"
+  },
+  {
+    "ksh": "1807214",
+    "onev": "Acsád"
+  },
+  {
+    "ksh": "1807278",
+    "onev": "Püspökmolnári"
+  },
+  {
+    "ksh": "1807296",
+    "onev": "Bögöte"
+  },
+  {
+    "ksh": "1807551",
+    "onev": "Rádóckölked"
+  },
+  {
+    "ksh": "1807667",
+    "onev": "Oszkó"
+  },
+  {
+    "ksh": "1807940",
+    "onev": "Viszák"
+  },
+  {
+    "ksh": "1807977",
+    "onev": "Ispánk"
+  },
+  {
+    "ksh": "1808013",
+    "onev": "Felsőjánosfa"
+  },
+  {
+    "ksh": "1808226",
+    "onev": "Hegyhátszentpéter"
+  },
+  {
+    "ksh": "1808271",
+    "onev": "Cák"
+  },
+  {
+    "ksh": "1808873",
+    "onev": "Apátistvánfalva"
+  },
+  {
+    "ksh": "1808882",
+    "onev": "Peresznye"
+  },
+  {
+    "ksh": "1809070",
+    "onev": "Csénye"
+  },
+  {
+    "ksh": "1809195",
+    "onev": "Vásárosmiske"
+  },
+  {
+    "ksh": "1809229",
+    "onev": "Tokorcs"
+  },
+  {
+    "ksh": "1809283",
+    "onev": "Nagygeresd"
+  },
+  {
+    "ksh": "1809672",
+    "onev": "Nemesrempehollós"
+  },
+  {
+    "ksh": "1809724",
+    "onev": "Győrvár"
+  },
+  {
+    "ksh": "1809788",
+    "onev": "Sárfimizdó"
+  },
+  {
+    "ksh": "1809876",
+    "onev": "Chernelházadamonya"
+  },
+  {
+    "ksh": "1809937",
+    "onev": "Kenyeri"
+  },
+  {
+    "ksh": "1810223",
+    "onev": "Szalafő"
+  },
+  {
+    "ksh": "1810232",
+    "onev": "Egyházashetye"
+  },
+  {
+    "ksh": "1810278",
+    "onev": "Sé"
+  },
+  {
+    "ksh": "1810311",
+    "onev": "Pusztacsó"
+  },
+  {
+    "ksh": "1810384",
+    "onev": "Bejcgyertyános"
+  },
+  {
+    "ksh": "1810579",
+    "onev": "Sajtoskál"
+  },
+  {
+    "ksh": "1810597",
+    "onev": "Rum"
+  },
+  {
+    "ksh": "1810630",
+    "onev": "Őriszentpéter"
+  },
+  {
+    "ksh": "1810676",
+    "onev": "Halogy"
+  },
+  {
+    "ksh": "1810843",
+    "onev": "Nick"
+  },
+  {
+    "ksh": "1810913",
+    "onev": "Karakó"
+  },
+  {
+    "ksh": "1811147",
+    "onev": "Kisrákos"
+  },
+  {
+    "ksh": "1811156",
+    "onev": "Gór"
+  },
+  {
+    "ksh": "1811387",
+    "onev": "Ikervár"
+  },
+  {
+    "ksh": "1811572",
+    "onev": "Petőmihályfa"
+  },
+  {
+    "ksh": "1811633",
+    "onev": "Vasszentmihály"
+  },
+  {
+    "ksh": "1811651",
+    "onev": "Bögöt"
+  },
+  {
+    "ksh": "1811679",
+    "onev": "Jánosháza"
+  },
+  {
+    "ksh": "1811943",
+    "onev": "Gyöngyösfalu"
+  },
+  {
+    "ksh": "1812043",
+    "onev": "Ölbő"
+  },
+  {
+    "ksh": "1812104",
+    "onev": "Vasszilvágy"
+  },
+  {
+    "ksh": "1812140",
+    "onev": "Csepreg"
+  },
+  {
+    "ksh": "1812247",
+    "onev": "Kemenesmagasi"
+  },
+  {
+    "ksh": "1812292",
+    "onev": "Zsennye"
+  },
+  {
+    "ksh": "1812317",
+    "onev": "Andrásfa"
+  },
+  {
+    "ksh": "1812335",
+    "onev": "Tompaládony"
+  },
+  {
+    "ksh": "1812724",
+    "onev": "Csehimindszent"
+  },
+  {
+    "ksh": "1812733",
+    "onev": "Horvátlövő"
+  },
+  {
+    "ksh": "1813028",
+    "onev": "Kondorfa"
+  },
+  {
+    "ksh": "1813426",
+    "onev": "Kemenesmihályfa"
+  },
+  {
+    "ksh": "1813453",
+    "onev": "Őrimagyarósd"
+  },
+  {
+    "ksh": "1813532",
+    "onev": "Körmend"
+  },
+  {
+    "ksh": "1813587",
+    "onev": "Felsőcsatár"
+  },
+  {
+    "ksh": "1813684",
+    "onev": "Perenye"
+  },
+  {
+    "ksh": "1813958",
+    "onev": "Ják"
+  },
+  {
+    "ksh": "1814021",
+    "onev": "Lukácsháza"
+  },
+  {
+    "ksh": "1814067",
+    "onev": "Pápoc"
+  },
+  {
+    "ksh": "1814809",
+    "onev": "Mersevát"
+  },
+  {
+    "ksh": "1814988",
+    "onev": "Pecöl"
+  },
+  {
+    "ksh": "1814997",
+    "onev": "Hegyháthodász"
+  },
+  {
+    "ksh": "1815060",
+    "onev": "Nagymizdó"
+  },
+  {
+    "ksh": "1815334",
+    "onev": "Vasegerszeg"
+  },
+  {
+    "ksh": "1815486",
+    "onev": "Kiszsidány"
+  },
+  {
+    "ksh": "1815671",
+    "onev": "Pósfa"
+  },
+  {
+    "ksh": "1815723",
+    "onev": "Mesteri"
+  },
+  {
+    "ksh": "1815990",
+    "onev": "Daraboshegy"
+  },
+  {
+    "ksh": "1816151",
+    "onev": "Dozmat"
+  },
+  {
+    "ksh": "1816212",
+    "onev": "Tanakajd"
+  },
+  {
+    "ksh": "1816504",
+    "onev": "Szaknyér"
+  },
+  {
+    "ksh": "1816832",
+    "onev": "Kőszeg"
+  },
+  {
+    "ksh": "1816887",
+    "onev": "Horvátzsidány"
+  },
+  {
+    "ksh": "1816911",
+    "onev": "Kemeneskápolna"
+  },
+  {
+    "ksh": "1817020",
+    "onev": "Bajánsenye"
+  },
+  {
+    "ksh": "1817093",
+    "onev": "Orfalu"
+  },
+  {
+    "ksh": "1817288",
+    "onev": "Magyarszecsőd"
+  },
+  {
+    "ksh": "1817367",
+    "onev": "Nárai"
+  },
+  {
+    "ksh": "1817729",
+    "onev": "Szarvaskend"
+  },
+  {
+    "ksh": "1817996",
+    "onev": "Rábatöttös"
+  },
+  {
+    "ksh": "1818032",
+    "onev": "Hegyhátszentjakab"
+  },
+  {
+    "ksh": "1818430",
+    "onev": "Velemér"
+  },
+  {
+    "ksh": "1818883",
+    "onev": "Salköveskút"
+  },
+  {
+    "ksh": "1819345",
+    "onev": "Kétvölgy"
+  },
+  {
+    "ksh": "1819488",
+    "onev": "Csehi"
+  },
+  {
+    "ksh": "1819521",
+    "onev": "Szőce"
+  },
+  {
+    "ksh": "1819743",
+    "onev": "Olaszfa"
+  },
+  {
+    "ksh": "1819761",
+    "onev": "Kerkáskápolna"
+  },
+  {
+    "ksh": "1820084",
+    "onev": "Kemenesszentmárton"
+  },
+  {
+    "ksh": "1820109",
+    "onev": "Kőszegszerdahely"
+  },
+  {
+    "ksh": "1820349",
+    "onev": "Vashosszúfalu"
+  },
+  {
+    "ksh": "1820367",
+    "onev": "Pornóapáti"
+  },
+  {
+    "ksh": "1820394",
+    "onev": "Vasasszonyfa"
+  },
+  {
+    "ksh": "1820695",
+    "onev": "Döbörhegy"
+  },
+  {
+    "ksh": "1820880",
+    "onev": "Hosszúpereszteg"
+  },
+  {
+    "ksh": "1820932",
+    "onev": "Szakonyfalu"
+  },
+  {
+    "ksh": "1820996",
+    "onev": "Kemenespálfa"
+  },
+  {
+    "ksh": "1821254",
+    "onev": "Szentpéterfa"
+  },
+  {
+    "ksh": "1821306",
+    "onev": "Sárvár"
+  },
+  {
+    "ksh": "1821537",
+    "onev": "Uraiújfalu"
+  },
+  {
+    "ksh": "1821643",
+    "onev": "Zsédeny"
+  },
+  {
+    "ksh": "1821838",
+    "onev": "Hegyhátszentmárton"
+  },
+  {
+    "ksh": "1822044",
+    "onev": "Ólmod"
+  },
+  {
+    "ksh": "1822318",
+    "onev": "Nyőgér"
+  },
+  {
+    "ksh": "1822390",
+    "onev": "Csönge"
+  },
+  {
+    "ksh": "1822549",
+    "onev": "Alsószölnök"
+  },
+  {
+    "ksh": "1822716",
+    "onev": "Kemestaródfa"
+  },
+  {
+    "ksh": "1822725",
+    "onev": "Alsóújlak"
+  },
+  {
+    "ksh": "1822983",
+    "onev": "Sótony"
+  },
+  {
+    "ksh": "1823108",
+    "onev": "Pankasz"
+  },
+  {
+    "ksh": "1823287",
+    "onev": "Felsőszölnök"
+  },
+  {
+    "ksh": "1823320",
+    "onev": "Nemescsó"
+  },
+  {
+    "ksh": "1823816",
+    "onev": "Csempeszkopács"
+  },
+  {
+    "ksh": "1823861",
+    "onev": "Rátót"
+  },
+  {
+    "ksh": "1824059",
+    "onev": "Nemeskolta"
+  },
+  {
+    "ksh": "1824183",
+    "onev": "Gencsapáti"
+  },
+  {
+    "ksh": "1824484",
+    "onev": "Kemenessömjén"
+  },
+  {
+    "ksh": "1824509",
+    "onev": "Nemesbőd"
+  },
+  {
+    "ksh": "1824800",
+    "onev": "Söpte"
+  },
+  {
+    "ksh": "1824837",
+    "onev": "Nagytilaj"
+  },
+  {
+    "ksh": "1825423",
+    "onev": "Magyarszombatfa"
+  },
+  {
+    "ksh": "1825760",
+    "onev": "Meggyeskovácsi"
+  },
+  {
+    "ksh": "1825946",
+    "onev": "Egyházasrádóc"
+  },
+  {
+    "ksh": "1825982",
+    "onev": "Vassurány"
+  },
+  {
+    "ksh": "1826000",
+    "onev": "Velem"
+  },
+  {
+    "ksh": "1826046",
+    "onev": "Kőszegpaty"
+  },
+  {
+    "ksh": "1826064",
+    "onev": "Csipkerek"
+  },
+  {
+    "ksh": "1826073",
+    "onev": "Rábapaty"
+  },
+  {
+    "ksh": "1826143",
+    "onev": "Nagysimonyi"
+  },
+  {
+    "ksh": "1826152",
+    "onev": "Gérce"
+  },
+  {
+    "ksh": "1826240",
+    "onev": "Nemesládony"
+  },
+  {
+    "ksh": "1826426",
+    "onev": "Vép"
+  },
+  {
+    "ksh": "1826596",
+    "onev": "Kercaszomor"
+  },
+  {
+    "ksh": "1826620",
+    "onev": "Katafa"
+  },
+  {
+    "ksh": "1826736",
+    "onev": "Rábagyarmat"
+  },
+  {
+    "ksh": "1826763",
+    "onev": "Simaság"
+  },
+  {
+    "ksh": "1826772",
+    "onev": "Csánig"
+  },
+  {
+    "ksh": "1826806",
+    "onev": "Rönök"
+  },
+  {
+    "ksh": "1827030",
+    "onev": "Gyanógeregye"
+  },
+  {
+    "ksh": "1827094",
+    "onev": "Celldömölk"
+  },
+  {
+    "ksh": "1827289",
+    "onev": "Magyarnádalja"
+  },
+  {
+    "ksh": "1827793",
+    "onev": "Szergény"
+  },
+  {
+    "ksh": "1827960",
+    "onev": "Sorkikápolna"
+  },
+  {
+    "ksh": "1827997",
+    "onev": "Szemenye"
+  },
+  {
+    "ksh": "1828626",
+    "onev": "Répceszentgyörgy"
+  },
+  {
+    "ksh": "1828796",
+    "onev": "Egervölgy"
+  },
+  {
+    "ksh": "1829081",
+    "onev": "Lócs"
+  },
+  {
+    "ksh": "1829203",
+    "onev": "Boba"
+  },
+  {
+    "ksh": "1829373",
+    "onev": "Vasszécseny"
+  },
+  {
+    "ksh": "1829452",
+    "onev": "Halastó"
+  },
+  {
+    "ksh": "1829504",
+    "onev": "Iklanberény"
+  },
+  {
+    "ksh": "1829568",
+    "onev": "Telekes"
+  },
+  {
+    "ksh": "1829692",
+    "onev": "Sorokpolány"
+  },
+  {
+    "ksh": "1829841",
+    "onev": "Felsőmarác"
+  },
+  {
+    "ksh": "1829869",
+    "onev": "Nagyrákos"
+  },
+  {
+    "ksh": "1829878",
+    "onev": "Torony"
+  },
+  {
+    "ksh": "1829896",
+    "onev": "Porpác"
+  },
+  {
+    "ksh": "1829957",
+    "onev": "Káld"
+  },
+  {
+    "ksh": "1830216",
+    "onev": "Hegyhátsál"
+  },
+  {
+    "ksh": "1830429",
+    "onev": "Egyházashollós"
+  },
+  {
+    "ksh": "1830599",
+    "onev": "Mikosszéplak"
+  },
+  {
+    "ksh": "1830702",
+    "onev": "Vaskeresztes"
+  },
+  {
+    "ksh": "1830748",
+    "onev": "Sitke"
+  },
+  {
+    "ksh": "1830872",
+    "onev": "Megyehíd"
+  },
+  {
+    "ksh": "1830881",
+    "onev": "Répcelak"
+  },
+  {
+    "ksh": "1830906",
+    "onev": "Gasztony"
+  },
+  {
+    "ksh": "1830942",
+    "onev": "Gersekarát"
+  },
+  {
+    "ksh": "1831051",
+    "onev": "Vámoscsalád"
+  },
+  {
+    "ksh": "1831556",
+    "onev": "Nemesmedves"
+  },
+  {
+    "ksh": "1831583",
+    "onev": "Szentgotthárd"
+  },
+  {
+    "ksh": "1831680",
+    "onev": "Ivánc"
+  },
+  {
+    "ksh": "1831875",
+    "onev": "Mesterháza"
+  },
+  {
+    "ksh": "1832036",
+    "onev": "Keléd"
+  },
+  {
+    "ksh": "1832045",
+    "onev": "Táplánszentkereszt"
+  },
+  {
+    "ksh": "1832124",
+    "onev": "Bérbaltavár"
+  },
+  {
+    "ksh": "1832188",
+    "onev": "Hegyfalu"
+  },
+  {
+    "ksh": "1832629",
+    "onev": "Ostffyasszonyfa"
+  },
+  {
+    "ksh": "1832832",
+    "onev": "Meszlen"
+  },
+  {
+    "ksh": "1832920",
+    "onev": "Nagykölked"
+  },
+  {
+    "ksh": "1832984",
+    "onev": "Bucsu"
+  },
+  {
+    "ksh": "1833172",
+    "onev": "Szeleste"
+  },
+  {
+    "ksh": "1834087",
+    "onev": "Tormásliget"
+  },
+  {
+    "ksh": "1900000",
+    "onev": "Veszprém Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "1902185",
+    "onev": "Csopak"
+  },
+  {
+    "ksh": "1902194",
+    "onev": "Nemesvámos"
+  },
+  {
+    "ksh": "1902219",
+    "onev": "Balatonfűzfő"
+  },
+  {
+    "ksh": "1902422",
+    "onev": "Hegyesd"
+  },
+  {
+    "ksh": "1902714",
+    "onev": "Tótvázsony"
+  },
+  {
+    "ksh": "1902787",
+    "onev": "Nemesgulács"
+  },
+  {
+    "ksh": "1902936",
+    "onev": "Dudar"
+  },
+  {
+    "ksh": "1903072",
+    "onev": "Balatoncsicsó"
+  },
+  {
+    "ksh": "1903267",
+    "onev": "Badacsonytördemic"
+  },
+  {
+    "ksh": "1903568",
+    "onev": "Szentantalfa"
+  },
+  {
+    "ksh": "1903601",
+    "onev": "Sóly"
+  },
+  {
+    "ksh": "1903610",
+    "onev": "Malomsok"
+  },
+  {
+    "ksh": "1903638",
+    "onev": "Balatonhenye"
+  },
+  {
+    "ksh": "1903948",
+    "onev": "Raposka"
+  },
+  {
+    "ksh": "1904066",
+    "onev": "Küngös"
+  },
+  {
+    "ksh": "1904288",
+    "onev": "Kispirit"
+  },
+  {
+    "ksh": "1904321",
+    "onev": "Bodorfa"
+  },
+  {
+    "ksh": "1904534",
+    "onev": "Mindszentkálla"
+  },
+  {
+    "ksh": "1904552",
+    "onev": "Litér"
+  },
+  {
+    "ksh": "1904561",
+    "onev": "Ábrahámhegy"
+  },
+  {
+    "ksh": "1904631",
+    "onev": "Tüskevár"
+  },
+  {
+    "ksh": "1904668",
+    "onev": "Mihályháza"
+  },
+  {
+    "ksh": "1904765",
+    "onev": "Borszörcsök"
+  },
+  {
+    "ksh": "1904987",
+    "onev": "Megyer"
+  },
+  {
+    "ksh": "1905087",
+    "onev": "Lovászpatona"
+  },
+  {
+    "ksh": "1905148",
+    "onev": "Balatonkenese"
+  },
+  {
+    "ksh": "1905157",
+    "onev": "Somlójenő"
+  },
+  {
+    "ksh": "1905388",
+    "onev": "Sümegprága"
+  },
+  {
+    "ksh": "1905421",
+    "onev": "Királyszentistván"
+  },
+  {
+    "ksh": "1905555",
+    "onev": "Nemeshany"
+  },
+  {
+    "ksh": "1905564",
+    "onev": "Lovas"
+  },
+  {
+    "ksh": "1905625",
+    "onev": "Révfülöp"
+  },
+  {
+    "ksh": "1905634",
+    "onev": "Káptalantóti"
+  },
+  {
+    "ksh": "1905652",
+    "onev": "Nemesgörzsöny"
+  },
+  {
+    "ksh": "1905838",
+    "onev": "Balatonalmádi"
+  },
+  {
+    "ksh": "1906327",
+    "onev": "Bakonypölöske"
+  },
+  {
+    "ksh": "1906363",
+    "onev": "Dörgicse"
+  },
+  {
+    "ksh": "1906673",
+    "onev": "Ajka"
+  },
+  {
+    "ksh": "1907065",
+    "onev": "Városlőd"
+  },
+  {
+    "ksh": "1907092",
+    "onev": "Szentbékkálla"
+  },
+  {
+    "ksh": "1907250",
+    "onev": "Hosztót"
+  },
+  {
+    "ksh": "1907287",
+    "onev": "Bakonykoppány"
+  },
+  {
+    "ksh": "1907302",
+    "onev": "Adásztevel"
+  },
+  {
+    "ksh": "1907339",
+    "onev": "Aszófő"
+  },
+  {
+    "ksh": "1907348",
+    "onev": "Papkeszi"
+  },
+  {
+    "ksh": "1907427",
+    "onev": "Bazsi"
+  },
+  {
+    "ksh": "1907898",
+    "onev": "Halimba"
+  },
+  {
+    "ksh": "1907922",
+    "onev": "Szentgál"
+  },
+  {
+    "ksh": "1907931",
+    "onev": "Kisapáti"
+  },
+  {
+    "ksh": "1908262",
+    "onev": "Nagygyimót"
+  },
+  {
+    "ksh": "1908749",
+    "onev": "Karakószörcsök"
+  },
+  {
+    "ksh": "1909292",
+    "onev": "Gecse"
+  },
+  {
+    "ksh": "1909502",
+    "onev": "Vid"
+  },
+  {
+    "ksh": "1909520",
+    "onev": "Gyulakeszi"
+  },
+  {
+    "ksh": "1909733",
+    "onev": "Vigántpetend"
+  },
+  {
+    "ksh": "1910001",
+    "onev": "Nagydém"
+  },
+  {
+    "ksh": "1910065",
+    "onev": "Szentimrefalva"
+  },
+  {
+    "ksh": "1910092",
+    "onev": "Örvényes"
+  },
+  {
+    "ksh": "1910250",
+    "onev": "Farkasgyepű"
+  },
+  {
+    "ksh": "1910409",
+    "onev": "Németbánya"
+  },
+  {
+    "ksh": "1910445",
+    "onev": "Egyházaskesző"
+  },
+  {
+    "ksh": "1910870",
+    "onev": "Doba"
+  },
+  {
+    "ksh": "1911420",
+    "onev": "Pula"
+  },
+  {
+    "ksh": "1911439",
+    "onev": "Várpalota"
+  },
+  {
+    "ksh": "1911545",
+    "onev": "Szentjakabfa"
+  },
+  {
+    "ksh": "1911703",
+    "onev": "Vöröstó"
+  },
+  {
+    "ksh": "1911767",
+    "onev": "Veszprém"
+  },
+  {
+    "ksh": "1911855",
+    "onev": "Pápakovácsi"
+  },
+  {
+    "ksh": "1912238",
+    "onev": "Balatonederics"
+  },
+  {
+    "ksh": "1912478",
+    "onev": "Kemenesszentpéter"
+  },
+  {
+    "ksh": "1912654",
+    "onev": "Zalahaláp"
+  },
+  {
+    "ksh": "1912742",
+    "onev": "Ganna"
+  },
+  {
+    "ksh": "1913125",
+    "onev": "Takácsi"
+  },
+  {
+    "ksh": "1913772",
+    "onev": "Sáska"
+  },
+  {
+    "ksh": "1914173",
+    "onev": "Bánd"
+  },
+  {
+    "ksh": "1914243",
+    "onev": "Somlóvecse"
+  },
+  {
+    "ksh": "1914270",
+    "onev": "Káptalanfa"
+  },
+  {
+    "ksh": "1914553",
+    "onev": "Kapolcs"
+  },
+  {
+    "ksh": "1914757",
+    "onev": "Noszlop"
+  },
+  {
+    "ksh": "1915088",
+    "onev": "Hetyefő"
+  },
+  {
+    "ksh": "1915361",
+    "onev": "Hajmáskér"
+  },
+  {
+    "ksh": "1915547",
+    "onev": "Pénzesgyőr"
+  },
+  {
+    "ksh": "1915565",
+    "onev": "Balatonudvari"
+  },
+  {
+    "ksh": "1915705",
+    "onev": "Vilonya"
+  },
+  {
+    "ksh": "1915778",
+    "onev": "Barnag"
+  },
+  {
+    "ksh": "1916072",
+    "onev": "Csajág"
+  },
+  {
+    "ksh": "1916142",
+    "onev": "Külsővat"
+  },
+  {
+    "ksh": "1916267",
+    "onev": "Szentkirályszabadja"
+  },
+  {
+    "ksh": "1916489",
+    "onev": "Szápár"
+  },
+  {
+    "ksh": "1916595",
+    "onev": "Oroszi"
+  },
+  {
+    "ksh": "1916656",
+    "onev": "Vászoly"
+  },
+  {
+    "ksh": "1916692",
+    "onev": "Szőc"
+  },
+  {
+    "ksh": "1916717",
+    "onev": "Gic"
+  },
+  {
+    "ksh": "1917011",
+    "onev": "Paloznak"
+  },
+  {
+    "ksh": "1917039",
+    "onev": "Tagyon"
+  },
+  {
+    "ksh": "1917154",
+    "onev": "Balatonszepezd"
+  },
+  {
+    "ksh": "1917172",
+    "onev": "Dabronc"
+  },
+  {
+    "ksh": "1917321",
+    "onev": "Taliándörögd"
+  },
+  {
+    "ksh": "1917437",
+    "onev": "Jásd"
+  },
+  {
+    "ksh": "1917570",
+    "onev": "Lesencefalu"
+  },
+  {
+    "ksh": "1917871",
+    "onev": "Lesencetomaj"
+  },
+  {
+    "ksh": "1918193",
+    "onev": "Gógánfa"
+  },
+  {
+    "ksh": "1918856",
+    "onev": "Lókút"
+  },
+  {
+    "ksh": "1919141",
+    "onev": "Kamond"
+  },
+  {
+    "ksh": "1919196",
+    "onev": "Nagyvázsony"
+  },
+  {
+    "ksh": "1919336",
+    "onev": "Veszprémgalsa"
+  },
+  {
+    "ksh": "1919734",
+    "onev": "Kemeneshőgyész"
+  },
+  {
+    "ksh": "1919868",
+    "onev": "Pápadereske"
+  },
+  {
+    "ksh": "1920154",
+    "onev": "Dáka"
+  },
+  {
+    "ksh": "1920251",
+    "onev": "Csehbánya"
+  },
+  {
+    "ksh": "1920437",
+    "onev": "Magyarpolány"
+  },
+  {
+    "ksh": "1920570",
+    "onev": "Tés"
+  },
+  {
+    "ksh": "1920756",
+    "onev": "Hidegkút"
+  },
+  {
+    "ksh": "1920826",
+    "onev": "Zánka"
+  },
+  {
+    "ksh": "1920853",
+    "onev": "Úrkút"
+  },
+  {
+    "ksh": "1921175",
+    "onev": "Balatonfüred"
+  },
+  {
+    "ksh": "1921403",
+    "onev": "Nagypirit"
+  },
+  {
+    "ksh": "1921430",
+    "onev": "Veszprémfajsz"
+  },
+  {
+    "ksh": "1921607",
+    "onev": "Pápasalamon"
+  },
+  {
+    "ksh": "1921759",
+    "onev": "Nemesszalók"
+  },
+  {
+    "ksh": "1921777",
+    "onev": "Vanyola"
+  },
+  {
+    "ksh": "1921962",
+    "onev": "Lesenceistvánd"
+  },
+  {
+    "ksh": "1922220",
+    "onev": "Marcaltő"
+  },
+  {
+    "ksh": "1922327",
+    "onev": "Badacsonytomaj"
+  },
+  {
+    "ksh": "1922451",
+    "onev": "Pécsely"
+  },
+  {
+    "ksh": "1922512",
+    "onev": "Monoszló"
+  },
+  {
+    "ksh": "1922813",
+    "onev": "Bakonyszentkirály"
+  },
+  {
+    "ksh": "1922901",
+    "onev": "Béb"
+  },
+  {
+    "ksh": "1923001",
+    "onev": "Kisszőlős"
+  },
+  {
+    "ksh": "1923010",
+    "onev": "Ukk"
+  },
+  {
+    "ksh": "1923180",
+    "onev": "Nagyesztergár"
+  },
+  {
+    "ksh": "1923454",
+    "onev": "Kővágóörs"
+  },
+  {
+    "ksh": "1923515",
+    "onev": "Porva"
+  },
+  {
+    "ksh": "1923551",
+    "onev": "Nagyacsád"
+  },
+  {
+    "ksh": "1923560",
+    "onev": "Mezőlak"
+  },
+  {
+    "ksh": "1923597",
+    "onev": "Zalaszegvár"
+  },
+  {
+    "ksh": "1923658",
+    "onev": "Herend"
+  },
+  {
+    "ksh": "1923700",
+    "onev": "Kiscsősz"
+  },
+  {
+    "ksh": "1923746",
+    "onev": "Bakonybél"
+  },
+  {
+    "ksh": "1923913",
+    "onev": "Óbudavár"
+  },
+  {
+    "ksh": "1923922",
+    "onev": "Bakonyszentiván"
+  },
+  {
+    "ksh": "1924004",
+    "onev": "Nyirád"
+  },
+  {
+    "ksh": "1924040",
+    "onev": "Monostorapáti"
+  },
+  {
+    "ksh": "1924068",
+    "onev": "Ősi"
+  },
+  {
+    "ksh": "1924129",
+    "onev": "Bakonytamási"
+  },
+  {
+    "ksh": "1924369",
+    "onev": "Felsőörs"
+  },
+  {
+    "ksh": "1924642",
+    "onev": "Csesznek"
+  },
+  {
+    "ksh": "1924651",
+    "onev": "Vinár"
+  },
+  {
+    "ksh": "1924767",
+    "onev": "Ugod"
+  },
+  {
+    "ksh": "1924891",
+    "onev": "Szigliget"
+  },
+  {
+    "ksh": "1925201",
+    "onev": "Nagytevel"
+  },
+  {
+    "ksh": "1925308",
+    "onev": "Balatonakali"
+  },
+  {
+    "ksh": "1925450",
+    "onev": "Öskü"
+  },
+  {
+    "ksh": "1925566",
+    "onev": "Hárskút"
+  },
+  {
+    "ksh": "1925593",
+    "onev": "Sümeg"
+  },
+  {
+    "ksh": "1925654",
+    "onev": "Kerta"
+  },
+  {
+    "ksh": "1925779",
+    "onev": "Somlószőlős"
+  },
+  {
+    "ksh": "1925803",
+    "onev": "Hegymagas"
+  },
+  {
+    "ksh": "1925849",
+    "onev": "Rigács"
+  },
+  {
+    "ksh": "1925858",
+    "onev": "Köveskál"
+  },
+  {
+    "ksh": "1925991",
+    "onev": "Bakonynána"
+  },
+  {
+    "ksh": "1926037",
+    "onev": "Kékkút"
+  },
+  {
+    "ksh": "1926204",
+    "onev": "Várkesző"
+  },
+  {
+    "ksh": "1926374",
+    "onev": "Magyargencs"
+  },
+  {
+    "ksh": "1926417",
+    "onev": "Bakonyszücs"
+  },
+  {
+    "ksh": "1926499",
+    "onev": "Zirc"
+  },
+  {
+    "ksh": "1926514",
+    "onev": "Olaszfalu"
+  },
+  {
+    "ksh": "1926523",
+    "onev": "Nóráp"
+  },
+  {
+    "ksh": "1926541",
+    "onev": "Kup"
+  },
+  {
+    "ksh": "1926569",
+    "onev": "Somlóvásárhely"
+  },
+  {
+    "ksh": "1926648",
+    "onev": "Vaszar"
+  },
+  {
+    "ksh": "1927058",
+    "onev": "Békás"
+  },
+  {
+    "ksh": "1927137",
+    "onev": "Mencshely"
+  },
+  {
+    "ksh": "1927207",
+    "onev": "Zalagyömörő"
+  },
+  {
+    "ksh": "1927818",
+    "onev": "Homokbödöge"
+  },
+  {
+    "ksh": "1927979",
+    "onev": "Nagyalásony"
+  },
+  {
+    "ksh": "1928015",
+    "onev": "Iszkáz"
+  },
+  {
+    "ksh": "1928112",
+    "onev": "Öcs"
+  },
+  {
+    "ksh": "1928237",
+    "onev": "Dabrony"
+  },
+  {
+    "ksh": "1928370",
+    "onev": "Apácatorna"
+  },
+  {
+    "ksh": "1928422",
+    "onev": "Nemesvita"
+  },
+  {
+    "ksh": "1928501",
+    "onev": "Balatonszőlős"
+  },
+  {
+    "ksh": "1928671",
+    "onev": "Gyepükaján"
+  },
+  {
+    "ksh": "1928972",
+    "onev": "Pusztamiske"
+  },
+  {
+    "ksh": "1929009",
+    "onev": "Nyárád"
+  },
+  {
+    "ksh": "1929072",
+    "onev": "Kisberzseny"
+  },
+  {
+    "ksh": "1929294",
+    "onev": "Marcalgergelyi"
+  },
+  {
+    "ksh": "1929434",
+    "onev": "Tapolca"
+  },
+  {
+    "ksh": "1929461",
+    "onev": "Balatonfőkajár"
+  },
+  {
+    "ksh": "1929470",
+    "onev": "Döbrönte"
+  },
+  {
+    "ksh": "1929513",
+    "onev": "Bakonyjákó"
+  },
+  {
+    "ksh": "1929902",
+    "onev": "Bakonyság"
+  },
+  {
+    "ksh": "1929993",
+    "onev": "Zalaerdőd"
+  },
+  {
+    "ksh": "1930173",
+    "onev": "Kislőd"
+  },
+  {
+    "ksh": "1930182",
+    "onev": "Kolontár"
+  },
+  {
+    "ksh": "1930252",
+    "onev": "Borzavár"
+  },
+  {
+    "ksh": "1930410",
+    "onev": "Bakonyoszlop"
+  },
+  {
+    "ksh": "1930465",
+    "onev": "Tihany"
+  },
+  {
+    "ksh": "1930526",
+    "onev": "Alsóörs"
+  },
+  {
+    "ksh": "1930793",
+    "onev": "Salföld"
+  },
+  {
+    "ksh": "1930924",
+    "onev": "Csabrendek"
+  },
+  {
+    "ksh": "1931255",
+    "onev": "Pápateszér"
+  },
+  {
+    "ksh": "1931307",
+    "onev": "Adorjánháza"
+  },
+  {
+    "ksh": "1931699",
+    "onev": "Csetény"
+  },
+  {
+    "ksh": "1931945",
+    "onev": "Pápa"
+  },
+  {
+    "ksh": "1932212",
+    "onev": "Márkó"
+  },
+  {
+    "ksh": "1932276",
+    "onev": "Devecser"
+  },
+  {
+    "ksh": "1932814",
+    "onev": "Csögle"
+  },
+  {
+    "ksh": "1932878",
+    "onev": "Csót"
+  },
+  {
+    "ksh": "1933039",
+    "onev": "Zalameggyes"
+  },
+  {
+    "ksh": "1933127",
+    "onev": "Berhida"
+  },
+  {
+    "ksh": "1933844",
+    "onev": "Balatonrendes"
+  },
+  {
+    "ksh": "1933871",
+    "onev": "Egeralja"
+  },
+  {
+    "ksh": "1933941",
+    "onev": "Eplény"
+  },
+  {
+    "ksh": "1934218",
+    "onev": "Uzsa"
+  },
+  {
+    "ksh": "1934254",
+    "onev": "Pétfürdő"
+  },
+  {
+    "ksh": "1934421",
+    "onev": "Balatonakarattya"
+  },
+  {
+    "ksh": "2000000",
+    "onev": "Zala Vármegyei Önkormányzat"
+  },
+  {
+    "ksh": "2002097",
+    "onev": "Gutorfölde"
+  },
+  {
+    "ksh": "2002103",
+    "onev": "Maróc"
+  },
+  {
+    "ksh": "2002130",
+    "onev": "Mihályfa"
+  },
+  {
+    "ksh": "2002404",
+    "onev": "Surd"
+  },
+  {
+    "ksh": "2002486",
+    "onev": "Zalacséb"
+  },
+  {
+    "ksh": "2002529",
+    "onev": "Várfölde"
+  },
+  {
+    "ksh": "2002583",
+    "onev": "Csesztreg"
+  },
+  {
+    "ksh": "2002608",
+    "onev": "Zalaszentiván"
+  },
+  {
+    "ksh": "2002644",
+    "onev": "Alibánfa"
+  },
+  {
+    "ksh": "2002662",
+    "onev": "Milejszeg"
+  },
+  {
+    "ksh": "2002909",
+    "onev": "Magyarszentmiklós"
+  },
+  {
+    "ksh": "2002972",
+    "onev": "Zalasárszeg"
+  },
+  {
+    "ksh": "2003054",
+    "onev": "Lickóvadamos"
+  },
+  {
+    "ksh": "2003124",
+    "onev": "Szentkozmadombja"
+  },
+  {
+    "ksh": "2003188",
+    "onev": "Iborfia"
+  },
+  {
+    "ksh": "2003355",
+    "onev": "Nova"
+  },
+  {
+    "ksh": "2003434",
+    "onev": "Lasztonya"
+  },
+  {
+    "ksh": "2003726",
+    "onev": "Zebecke"
+  },
+  {
+    "ksh": "2003814",
+    "onev": "Hévíz"
+  },
+  {
+    "ksh": "2004002",
+    "onev": "Zalacsány"
+  },
+  {
+    "ksh": "2004163",
+    "onev": "Bödeháza"
+  },
+  {
+    "ksh": "2004455",
+    "onev": "Nagylengyel"
+  },
+  {
+    "ksh": "2004473",
+    "onev": "Kányavár"
+  },
+  {
+    "ksh": "2004738",
+    "onev": "Bak"
+  },
+  {
+    "ksh": "2004756",
+    "onev": "Misefa"
+  },
+  {
+    "ksh": "2004950",
+    "onev": "Ortaháza"
+  },
+  {
+    "ksh": "2004969",
+    "onev": "Tormafölde"
+  },
+  {
+    "ksh": "2005218",
+    "onev": "Nagygörbő"
+  },
+  {
+    "ksh": "2005342",
+    "onev": "Tófej"
+  },
+  {
+    "ksh": "2005537",
+    "onev": "Kallósd"
+  },
+  {
+    "ksh": "2005704",
+    "onev": "Pethőhenye"
+  },
+  {
+    "ksh": "2006071",
+    "onev": "Keménfa"
+  },
+  {
+    "ksh": "2006132",
+    "onev": "Csapi"
+  },
+  {
+    "ksh": "2006169",
+    "onev": "Nemesapáti"
+  },
+  {
+    "ksh": "2006178",
+    "onev": "Eszteregnye"
+  },
+  {
+    "ksh": "2006530",
+    "onev": "Pusztamagyaród"
+  },
+  {
+    "ksh": "2006549",
+    "onev": "Vindornyalak"
+  },
+  {
+    "ksh": "2006567",
+    "onev": "Sormás"
+  },
+  {
+    "ksh": "2007135",
+    "onev": "Cserszegtomaj"
+  },
+  {
+    "ksh": "2007232",
+    "onev": "Zalaszentlászló"
+  },
+  {
+    "ksh": "2007579",
+    "onev": "Zalabaksa"
+  },
+  {
+    "ksh": "2007658",
+    "onev": "Nemeshetés"
+  },
+  {
+    "ksh": "2007700",
+    "onev": "Szepetnek"
+  },
+  {
+    "ksh": "2007782",
+    "onev": "Döbröce"
+  },
+  {
+    "ksh": "2007968",
+    "onev": "Murarátka"
+  },
+  {
+    "ksh": "2007986",
+    "onev": "Bucsuta"
+  },
+  {
+    "ksh": "2008059",
+    "onev": "Nemesszentandrás"
+  },
+  {
+    "ksh": "2008068",
+    "onev": "Gellénháza"
+  },
+  {
+    "ksh": "2008101",
+    "onev": "Sárhida"
+  },
+  {
+    "ksh": "2008369",
+    "onev": "Vöckönd"
+  },
+  {
+    "ksh": "2008439",
+    "onev": "Bánokszentgyörgy"
+  },
+  {
+    "ksh": "2008615",
+    "onev": "Szentliszló"
+  },
+  {
+    "ksh": "2008767",
+    "onev": "Alsószenterzsébet"
+  },
+  {
+    "ksh": "2008828",
+    "onev": "Teskánd"
+  },
+  {
+    "ksh": "2008916",
+    "onev": "Magyarföld"
+  },
+  {
+    "ksh": "2009089",
+    "onev": "Gelsesziget"
+  },
+  {
+    "ksh": "2009168",
+    "onev": "Belezna"
+  },
+  {
+    "ksh": "2009380",
+    "onev": "Zalaújlak"
+  },
+  {
+    "ksh": "2009575",
+    "onev": "Kerkaszentkirály"
+  },
+  {
+    "ksh": "2009812",
+    "onev": "Kisgörbő"
+  },
+  {
+    "ksh": "2009867",
+    "onev": "Pölöske"
+  },
+  {
+    "ksh": "2010056",
+    "onev": "Borsfa"
+  },
+  {
+    "ksh": "2010269",
+    "onev": "Hahót"
+  },
+  {
+    "ksh": "2010302",
+    "onev": "Vasboldogasszony"
+  },
+  {
+    "ksh": "2010348",
+    "onev": "Zalakomár"
+  },
+  {
+    "ksh": "2010649",
+    "onev": "Csertalakos"
+  },
+  {
+    "ksh": "2010685",
+    "onev": "Vállus"
+  },
+  {
+    "ksh": "2010782",
+    "onev": "Boncodfölde"
+  },
+  {
+    "ksh": "2010889",
+    "onev": "Lispeszentadorján"
+  },
+  {
+    "ksh": "2010931",
+    "onev": "Hagyárosbörönd"
+  },
+  {
+    "ksh": "2011059",
+    "onev": "Baglad"
+  },
+  {
+    "ksh": "2011165",
+    "onev": "Szentpéterúr"
+  },
+  {
+    "ksh": "2011208",
+    "onev": "Hosszúvölgy"
+  },
+  {
+    "ksh": "2011475",
+    "onev": "Lendvajakabfa"
+  },
+  {
+    "ksh": "2011554",
+    "onev": "Szécsisziget"
+  },
+  {
+    "ksh": "2011642",
+    "onev": "Felsőpáhok"
+  },
+  {
+    "ksh": "2011785",
+    "onev": "Zalakaros"
+  },
+  {
+    "ksh": "2011800",
+    "onev": "Vindornyaszőlős"
+  },
+  {
+    "ksh": "2012089",
+    "onev": "Gelse"
+  },
+  {
+    "ksh": "2012122",
+    "onev": "Letenye"
+  },
+  {
+    "ksh": "2012496",
+    "onev": "Zalaistvánd"
+  },
+  {
+    "ksh": "2012539",
+    "onev": "Gyűrűs"
+  },
+  {
+    "ksh": "2012575",
+    "onev": "Lenti"
+  },
+  {
+    "ksh": "2012609",
+    "onev": "Türje"
+  },
+  {
+    "ksh": "2012760",
+    "onev": "Nagybakónak"
+  },
+  {
+    "ksh": "2012830",
+    "onev": "Bezeréd"
+  },
+  {
+    "ksh": "2012919",
+    "onev": "Vonyarcvashegy"
+  },
+  {
+    "ksh": "2012946",
+    "onev": "Garabonc"
+  },
+  {
+    "ksh": "2012991",
+    "onev": "Galambok"
+  },
+  {
+    "ksh": "2013055",
+    "onev": "Kissziget"
+  },
+  {
+    "ksh": "2013064",
+    "onev": "Magyarszerdahely"
+  },
+  {
+    "ksh": "2013082",
+    "onev": "Kozmadombja"
+  },
+  {
+    "ksh": "2013091",
+    "onev": "Zalaszentmárton"
+  },
+  {
+    "ksh": "2013301",
+    "onev": "Zalaszentlőrinc"
+  },
+  {
+    "ksh": "2013569",
+    "onev": "Gosztola"
+  },
+  {
+    "ksh": "2013736",
+    "onev": "Zalavár"
+  },
+  {
+    "ksh": "2013921",
+    "onev": "Iklódbördőce"
+  },
+  {
+    "ksh": "2014085",
+    "onev": "Sénye"
+  },
+  {
+    "ksh": "2014182",
+    "onev": "Várvölgy"
+  },
+  {
+    "ksh": "2014225",
+    "onev": "Szentmargitfalva"
+  },
+  {
+    "ksh": "2014298",
+    "onev": "Ramocsa"
+  },
+  {
+    "ksh": "2014322",
+    "onev": "Vaspör"
+  },
+  {
+    "ksh": "2014720",
+    "onev": "Pálfiszeg"
+  },
+  {
+    "ksh": "2014906",
+    "onev": "Sármellék"
+  },
+  {
+    "ksh": "2014979",
+    "onev": "Nagyrécse"
+  },
+  {
+    "ksh": "2015097",
+    "onev": "Baktüttös"
+  },
+  {
+    "ksh": "2015112",
+    "onev": "Kerkafalva"
+  },
+  {
+    "ksh": "2015556",
+    "onev": "Sand"
+  },
+  {
+    "ksh": "2015769",
+    "onev": "Esztergályhorváti"
+  },
+  {
+    "ksh": "2016009",
+    "onev": "Dötk"
+  },
+  {
+    "ksh": "2016081",
+    "onev": "Kispáli"
+  },
+  {
+    "ksh": "2016249",
+    "onev": "Kiscsehi"
+  },
+  {
+    "ksh": "2016364",
+    "onev": "Kisvásárhely"
+  },
+  {
+    "ksh": "2016382",
+    "onev": "Tótszentmárton"
+  },
+  {
+    "ksh": "2016513",
+    "onev": "Nagyrada"
+  },
+  {
+    "ksh": "2016531",
+    "onev": "Fűzvölgy"
+  },
+  {
+    "ksh": "2016850",
+    "onev": "Pórszombat"
+  },
+  {
+    "ksh": "2016896",
+    "onev": "Zalaigrice"
+  },
+  {
+    "ksh": "2016920",
+    "onev": "Pusztaapáti"
+  },
+  {
+    "ksh": "2017002",
+    "onev": "Balatongyörök"
+  },
+  {
+    "ksh": "2017057",
+    "onev": "Zalavég"
+  },
+  {
+    "ksh": "2017118",
+    "onev": "Resznek"
+  },
+  {
+    "ksh": "2017400",
+    "onev": "Zalaapáti"
+  },
+  {
+    "ksh": "2017516",
+    "onev": "Gáborjánháza"
+  },
+  {
+    "ksh": "2017543",
+    "onev": "Bocfölde"
+  },
+  {
+    "ksh": "2017613",
+    "onev": "Gombosszeg"
+  },
+  {
+    "ksh": "2017853",
+    "onev": "Szilvágy"
+  },
+  {
+    "ksh": "2018023",
+    "onev": "Nemesrádó"
+  },
+  {
+    "ksh": "2018041",
+    "onev": "Karmacs"
+  },
+  {
+    "ksh": "2018096",
+    "onev": "Zalaszentjakab"
+  },
+  {
+    "ksh": "2018360",
+    "onev": "Becsvölgye"
+  },
+  {
+    "ksh": "2018421",
+    "onev": "Keszthely"
+  },
+  {
+    "ksh": "2018449",
+    "onev": "Zalaszentmihály"
+  },
+  {
+    "ksh": "2018564",
+    "onev": "Zalaszentbalázs"
+  },
+  {
+    "ksh": "2018652",
+    "onev": "Szentgyörgyvölgy"
+  },
+  {
+    "ksh": "2018698",
+    "onev": "Bázakerettye"
+  },
+  {
+    "ksh": "2018768",
+    "onev": "Zalaköveskút"
+  },
+  {
+    "ksh": "2018829",
+    "onev": "Alsórajk"
+  },
+  {
+    "ksh": "2018953",
+    "onev": "Ozmánbük"
+  },
+  {
+    "ksh": "2019080",
+    "onev": "Söjtör"
+  },
+  {
+    "ksh": "2019178",
+    "onev": "Petrikeresztúr"
+  },
+  {
+    "ksh": "2019187",
+    "onev": "Fityeház"
+  },
+  {
+    "ksh": "2019479",
+    "onev": "Kustánszeg"
+  },
+  {
+    "ksh": "2019512",
+    "onev": "Alsónemesapáti"
+  },
+  {
+    "ksh": "2019859",
+    "onev": "Nemespátró"
+  },
+  {
+    "ksh": "2019895",
+    "onev": "Hernyék"
+  },
+  {
+    "ksh": "2019929",
+    "onev": "Bókaháza"
+  },
+  {
+    "ksh": "2020039",
+    "onev": "Gétye"
+  },
+  {
+    "ksh": "2020312",
+    "onev": "Kiskutas"
+  },
+  {
+    "ksh": "2020543",
+    "onev": "Szalapa"
+  },
+  {
+    "ksh": "2020589",
+    "onev": "Nagykapornak"
+  },
+  {
+    "ksh": "2020613",
+    "onev": "Búcsúszentlászló"
+  },
+  {
+    "ksh": "2020835",
+    "onev": "Orbányosfa"
+  },
+  {
+    "ksh": "2020941",
+    "onev": "Kistolmács"
+  },
+  {
+    "ksh": "2020950",
+    "onev": "Belsősárd"
+  },
+  {
+    "ksh": "2021014",
+    "onev": "Molnári"
+  },
+  {
+    "ksh": "2021050",
+    "onev": "Pókaszepetk"
+  },
+  {
+    "ksh": "2021139",
+    "onev": "Börzönce"
+  },
+  {
+    "ksh": "2021263",
+    "onev": "Babosdöbréte"
+  },
+  {
+    "ksh": "2021379",
+    "onev": "Kisbucsa"
+  },
+  {
+    "ksh": "2021397",
+    "onev": "Sümegcsehi"
+  },
+  {
+    "ksh": "2021476",
+    "onev": "Felsőrajk"
+  },
+  {
+    "ksh": "2021500",
+    "onev": "Kálócfa"
+  },
+  {
+    "ksh": "2022080",
+    "onev": "Kerkakutas"
+  },
+  {
+    "ksh": "2022141",
+    "onev": "Mikekarácsonyfa"
+  },
+  {
+    "ksh": "2022178",
+    "onev": "Nagykutas"
+  },
+  {
+    "ksh": "2022497",
+    "onev": "Ormándlak"
+  },
+  {
+    "ksh": "2022877",
+    "onev": "Böde"
+  },
+  {
+    "ksh": "2022947",
+    "onev": "Zalaszabar"
+  },
+  {
+    "ksh": "2022965",
+    "onev": "Kacorlak"
+  },
+  {
+    "ksh": "2023126",
+    "onev": "Szentgyörgyvár"
+  },
+  {
+    "ksh": "2023144",
+    "onev": "Becsehely"
+  },
+  {
+    "ksh": "2023302",
+    "onev": "Gyenesdiás"
+  },
+  {
+    "ksh": "2023384",
+    "onev": "Almásháza"
+  },
+  {
+    "ksh": "2023436",
+    "onev": "Csatár"
+  },
+  {
+    "ksh": "2023834",
+    "onev": "Zalaháshágy"
+  },
+  {
+    "ksh": "2023898",
+    "onev": "Rezi"
+  },
+  {
+    "ksh": "2024138",
+    "onev": "Rigyác"
+  },
+  {
+    "ksh": "2024262",
+    "onev": "Egeraracsa"
+  },
+  {
+    "ksh": "2024271",
+    "onev": "Pakod"
+  },
+  {
+    "ksh": "2024280",
+    "onev": "Zalabér"
+  },
+  {
+    "ksh": "2024590",
+    "onev": "Zajk"
+  },
+  {
+    "ksh": "2024660",
+    "onev": "Pötréte"
+  },
+  {
+    "ksh": "2024703",
+    "onev": "Tekenye"
+  },
+  {
+    "ksh": "2024776",
+    "onev": "Padár"
+  },
+  {
+    "ksh": "2024864",
+    "onev": "Batyk"
+  },
+  {
+    "ksh": "2024873",
+    "onev": "Homokkomárom"
+  },
+  {
+    "ksh": "2025025",
+    "onev": "Liszó"
+  },
+  {
+    "ksh": "2025052",
+    "onev": "Orosztony"
+  },
+  {
+    "ksh": "2025113",
+    "onev": "Tótszerdahely"
+  },
+  {
+    "ksh": "2025210",
+    "onev": "Murakeresztúr"
+  },
+  {
+    "ksh": "2025353",
+    "onev": "Kemendollár"
+  },
+  {
+    "ksh": "2025414",
+    "onev": "Németfalu"
+  },
+  {
+    "ksh": "2025478",
+    "onev": "Oltárc"
+  },
+  {
+    "ksh": "2025609",
+    "onev": "Nemessándorháza"
+  },
+  {
+    "ksh": "2025885",
+    "onev": "Dobri"
+  },
+  {
+    "ksh": "2026161",
+    "onev": "Szijártóháza"
+  },
+  {
+    "ksh": "2026268",
+    "onev": "Valkonya"
+  },
+  {
+    "ksh": "2026462",
+    "onev": "Balatonmagyaród"
+  },
+  {
+    "ksh": "2026639",
+    "onev": "Pusztaszentlászló"
+  },
+  {
+    "ksh": "2027447",
+    "onev": "Barlahida"
+  },
+  {
+    "ksh": "2027465",
+    "onev": "Pusztaederics"
+  },
+  {
+    "ksh": "2027483",
+    "onev": "Lendvadedes"
+  },
+  {
+    "ksh": "2027492",
+    "onev": "Csöde"
+  },
+  {
+    "ksh": "2027526",
+    "onev": "Miháld"
+  },
+  {
+    "ksh": "2027562",
+    "onev": "Zalaszombatfa"
+  },
+  {
+    "ksh": "2027720",
+    "onev": "Salomvár"
+  },
+  {
+    "ksh": "2027775",
+    "onev": "Óhíd"
+  },
+  {
+    "ksh": "2027951",
+    "onev": "Tilaj"
+  },
+  {
+    "ksh": "2028167",
+    "onev": "Lovászi"
+  },
+  {
+    "ksh": "2028200",
+    "onev": "Ligetfalva"
+  },
+  {
+    "ksh": "2028325",
+    "onev": "Hottó"
+  },
+  {
+    "ksh": "2028468",
+    "onev": "Nagypáli"
+  },
+  {
+    "ksh": "2028495",
+    "onev": "Zalaboldogfa"
+  },
+  {
+    "ksh": "2028778",
+    "onev": "Dióskál"
+  },
+  {
+    "ksh": "2029160",
+    "onev": "Páka"
+  },
+  {
+    "ksh": "2029364",
+    "onev": "Csömödér"
+  },
+  {
+    "ksh": "2029489",
+    "onev": "Kerkabarabás"
+  },
+  {
+    "ksh": "2029656",
+    "onev": "Pat"
+  },
+  {
+    "ksh": "2029683",
+    "onev": "Zalatárnok"
+  },
+  {
+    "ksh": "2029771",
+    "onev": "Gősfa"
+  },
+  {
+    "ksh": "2030067",
+    "onev": "Szentpéterfölde"
+  },
+  {
+    "ksh": "2030313",
+    "onev": "Zalalövő"
+  },
+  {
+    "ksh": "2030368",
+    "onev": "Bagod"
+  },
+  {
+    "ksh": "2030757",
+    "onev": "Petrivente"
+  },
+  {
+    "ksh": "2030890",
+    "onev": "Felsőszenterzsébet"
+  },
+  {
+    "ksh": "2030933",
+    "onev": "Nagykanizsa"
+  },
+  {
+    "ksh": "2030997",
+    "onev": "Semjénháza"
+  },
+  {
+    "ksh": "2031112",
+    "onev": "Pölöskefő"
+  },
+  {
+    "ksh": "2031149",
+    "onev": "Csonkahegyhát"
+  },
+  {
+    "ksh": "2031291",
+    "onev": "Bocska"
+  },
+  {
+    "ksh": "2031529",
+    "onev": "Kerecseny"
+  },
+  {
+    "ksh": "2031592",
+    "onev": "Rédics"
+  },
+  {
+    "ksh": "2031617",
+    "onev": "Zalamerenye"
+  },
+  {
+    "ksh": "2031741",
+    "onev": "Pacsa"
+  },
+  {
+    "ksh": "2031981",
+    "onev": "Márokföld"
+  },
+  {
+    "ksh": "2032054",
+    "onev": "Zalaegerszeg"
+  },
+  {
+    "ksh": "2032063",
+    "onev": "Kávás"
+  },
+  {
+    "ksh": "2032081",
+    "onev": "Alsópáhok"
+  },
+  {
+    "ksh": "2032142",
+    "onev": "Vindornyafok"
+  },
+  {
+    "ksh": "2032197",
+    "onev": "Újudvar"
+  },
+  {
+    "ksh": "2032221",
+    "onev": "Külsősárd"
+  },
+  {
+    "ksh": "2032267",
+    "onev": "Kilimán"
+  },
+  {
+    "ksh": "2032513",
+    "onev": "Pördefölde"
+  },
+  {
+    "ksh": "2032522",
+    "onev": "Zalaszentgrót"
+  },
+  {
+    "ksh": "2032638",
+    "onev": "Tornyiszentmiklós"
+  },
+  {
+    "ksh": "2032647",
+    "onev": "Kerkateskánd"
+  },
+  {
+    "ksh": "2032665",
+    "onev": "Nemesnép"
+  },
+  {
+    "ksh": "2032708",
+    "onev": "Dobronhegy"
+  },
+  {
+    "ksh": "2032726",
+    "onev": "Kisrécse"
+  },
+  {
+    "ksh": "2032902",
+    "onev": "Kehidakustány"
+  },
+  {
+    "ksh": "2032948",
+    "onev": "Nemesbük"
+  },
+  {
+    "ksh": "2033136",
+    "onev": "Zalaszentgyörgy"
+  },
+  {
+    "ksh": "2033288",
+    "onev": "Zalaszántó"
+  },
+  {
+    "ksh": "2033428",
+    "onev": "Egervár"
+  },
+  {
+    "ksh": "2033792",
+    "onev": "Lakhegy"
+  },
+  {
+    "ksh": "2033978",
+    "onev": "Csörnyeföld"
+  },
+  {
+    "ksh": "2033987",
+    "onev": "Muraszemenye"
+  }
+];
+
+// Rekordok száma: 3197
