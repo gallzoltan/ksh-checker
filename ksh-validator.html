@@ -208,7 +208,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Beágyazott CSV adat (Base64 kódolva a fájlméret csökkentésére)
+        // Beágyazott CSV adat (alapértelmezett önkormányzati adatok)
         const EMBEDDED_CSV_DATA = `"ksh";"onev"
 "0102112";Budapest XVII. Kerület
 "0103179";Budapest II. Kerület
@@ -3410,14 +3410,18 @@
 `;
 
         // Adatstruktúra
-        let dataMap = new Map(); // ksh -> onev
-        let reverseMap = new Map(); // onev lowercase -> ksh
+        let dataMap = new Map(); // ksh -> onev (lowercase values pre-computed)
         let allData = [];
 
         // LocalStorage kulcsok
         const STORAGE_KEY = 'onkormany_data';
         const STORAGE_TIMESTAMP = 'onkormany_timestamp';
         const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 óra
+        const SEARCH_DEBOUNCE_MS = 250; // Debounce delay
+        const MAX_SEARCH_RESULTS = 100; // Maximum results to display
+
+        // Debounce timer
+        let searchDebounceTimer = null;
 
         // Inicializálás
         document.addEventListener('DOMContentLoaded', function() {
@@ -3464,9 +3468,19 @@
                 if (cachedData) {
                     try {
                         const parsed = JSON.parse(cachedData);
-                        allData = parsed;
-                        processData(allData);
-                        updateStatus(`Cached adatok betöltve (${allData.length} rekord)`, 'success');
+
+                        // Check if cached data is in new format (Map entries)
+                        if (Array.isArray(parsed) && parsed.length > 0 && Array.isArray(parsed[0])) {
+                            // New format: array of [key, value] entries
+                            dataMap = new Map(parsed);
+                            allData = Array.from(dataMap, ([ksh, data]) => ({ ksh, onev: data.original }));
+                        } else {
+                            // Old format: fallback for compatibility
+                            allData = parsed;
+                            processData(allData);
+                        }
+
+                        updateStatus(`Cached adatok betöltve (${dataMap.size} rekord)`, 'success');
                         showMainContent();
                         return true;
                     } catch (e) {
@@ -3479,7 +3493,9 @@
 
         function saveToCache(data) {
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                // Save Map entries directly for faster loading (no need to reprocess)
+                const mapEntries = Array.from(dataMap.entries());
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(mapEntries));
                 localStorage.setItem(STORAGE_TIMESTAMP, new Date().getTime().toString());
             } catch (e) {
                 console.error('Cache mentési hiba:', e);
@@ -3538,15 +3554,18 @@
 
         function processData(data) {
             dataMap.clear();
-            reverseMap.clear();
 
             data.forEach(row => {
                 const ksh = row.ksh ? row.ksh.trim() : '';
                 const onev = row.onev ? row.onev.trim() : '';
 
                 if (ksh && onev) {
-                    dataMap.set(ksh, onev);
-                    reverseMap.set(onev.toLowerCase(), ksh);
+                    // Store object with pre-computed lowercase values for fast searching
+                    dataMap.set(ksh, {
+                        original: onev,
+                        lower: onev.toLowerCase(),
+                        kshLower: ksh.toLowerCase()
+                    });
                 }
             });
 
@@ -3554,9 +3573,18 @@
         }
 
         function handleSearch(event) {
-            const searchTerm = event.target.value.trim().toLowerCase();
-            const resultsBody = document.getElementById('searchResults');
+            // Clear previous timer
+            if (searchDebounceTimer) {
+                clearTimeout(searchDebounceTimer);
+            }
 
+            // Debounce search
+            searchDebounceTimer = setTimeout(() => {
+                performSearch(event.target.value.trim().toLowerCase());
+            }, SEARCH_DEBOUNCE_MS);
+        }
+
+        function performSearch(searchTerm) {
             if (!searchTerm || dataMap.size === 0) {
                 displaySearchResults([]);
                 return;
@@ -3564,11 +3592,15 @@
 
             const results = [];
 
-            // Keresés KSH kód alapján
-            for (let [ksh, onev] of dataMap) {
-                if (ksh.toLowerCase().includes(searchTerm) ||
-                    onev.toLowerCase().includes(searchTerm)) {
-                    results.push({ ksh, onev });
+            // Optimized search with early termination
+            for (let [ksh, data] of dataMap) {
+                if (data.kshLower.includes(searchTerm) || data.lower.includes(searchTerm)) {
+                    results.push({ ksh, onev: data.original });
+
+                    // Early termination if we have enough results
+                    if (results.length >= MAX_SEARCH_RESULTS) {
+                        break;
+                    }
                 }
             }
 
@@ -3585,29 +3617,39 @@
                 return;
             }
 
-            // Limitáljuk az eredményeket (max 100)
-            const displayResults = results.slice(0, 100);
+            // Limitáljuk az eredményeket (már a keresésben limitáltuk, de biztonsági check)
+            const displayResults = results.slice(0, MAX_SEARCH_RESULTS);
 
-            resultsBody.innerHTML = displayResults.map(item => {
-                let kshDisplay = item.ksh;
-                let onevDisplay = item.onev;
+            // Create regex once, outside the loop
+            const regex = searchTerm ? new RegExp(`(${escapeRegex(searchTerm)})`, 'gi') : null;
+
+            // Use DocumentFragment for better performance
+            const fragment = document.createDocumentFragment();
+
+            displayResults.forEach(item => {
+                const tr = document.createElement('tr');
+                const tdKsh = document.createElement('td');
+                const tdOnev = document.createElement('td');
 
                 // Highlighting
-                if (searchTerm) {
-                    const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
-                    kshDisplay = kshDisplay.replace(regex, '<span class="highlight">$1</span>');
-                    onevDisplay = onevDisplay.replace(regex, '<span class="highlight">$1</span>');
+                if (regex) {
+                    tdKsh.innerHTML = item.ksh.replace(regex, '<span class="highlight">$1</span>');
+                    tdOnev.innerHTML = item.onev.replace(regex, '<span class="highlight">$1</span>');
+                } else {
+                    tdKsh.textContent = item.ksh;
+                    tdOnev.textContent = item.onev;
                 }
 
-                return `
-                    <tr>
-                        <td>${kshDisplay}</td>
-                        <td>${onevDisplay}</td>
-                    </tr>
-                `;
-            }).join('');
+                tr.appendChild(tdKsh);
+                tr.appendChild(tdOnev);
+                fragment.appendChild(tr);
+            });
 
-            statsDiv.innerHTML = `Találatok száma: <strong>${results.length}</strong>${results.length > 100 ? ' (első 100 megjelenítve)' : ''}`;
+            // Clear and append in one operation
+            resultsBody.innerHTML = '';
+            resultsBody.appendChild(fragment);
+
+            statsDiv.innerHTML = `Találatok száma: <strong>${results.length}</strong>${results.length >= MAX_SEARCH_RESULTS ? ' (első ' + MAX_SEARCH_RESULTS + ' megjelenítve)' : ''}`;
         }
 
         function handleBulkValidate() {
@@ -3631,8 +3673,9 @@
 
                 const ksh = parts[0].trim().replace(/"/g, '');
                 const onev = parts[1].trim().replace(/"/g, '');
-                const correctName = dataMap.get(ksh) || '';
-                const isValid = correctName.toLowerCase() === onev.toLowerCase();
+                const data = dataMap.get(ksh);
+                const correctName = data ? data.original : '';
+                const isValid = data ? data.lower === onev.toLowerCase() : false;
 
                 results.push({
                     index: index + 1,
@@ -3721,8 +3764,8 @@
         function showMainContent() {
             document.getElementById('mainContent').style.display = 'block';
             document.getElementById('toggleCsvBtn').style.display = 'inline-block';
-            // Automatikusan az összes adat megjelenítése
-            displaySearchResults(Array.from(dataMap.entries()).map(([ksh, onev]) => ({ ksh, onev })));
+            // Automatikusan az összes adat megjelenítése (optimized)
+            displaySearchResults(Array.from(dataMap.entries()).map(([ksh, data]) => ({ ksh, onev: data.original })));
         }
 
         function updateStatus(message, type) {
