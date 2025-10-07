@@ -36,3 +36,10 @@ fs.writeFileSync('./js/data.js', newDataJs, 'utf8');
 
 console.log(`Sikeres beágyazás! CSV méret: ${csvContent.length} karakter`);
 console.log(`A js/data.js fájl frissítve.`);
+
+// Minifikált verzió is a dist könyvtárba (ha létezik)
+const distJsDir = './dist/js';
+if (fs.existsSync(distJsDir)) {
+    fs.writeFileSync(`${distJsDir}/data.js`, newDataJs, 'utf8');
+    console.log(`A dist/js/data.js fájl is frissítve (minifikálatlan - futtasd az 'npm run build'-et a minifikáláshoz).`);
+}
