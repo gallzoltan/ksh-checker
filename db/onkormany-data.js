@@ -1,4 +1,4 @@
-// Önkormányzati KSH kódok ésnevek
+// Önkormányzati KSH kódok és nevek
 // Generálva: 2025-10-06T14:52:49.436Z
 // Forrás: t_onkorm_tech_20251006.csv
 

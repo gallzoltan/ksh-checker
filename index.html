@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Önkormányzat KSH Kód Ellenőrző</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .result-table {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .valid-row {
+            background-color: #d4edda;
+        }
+        .warning-row {
+            background-color: #fff3cd;
+        }
+        .invalid-row {
+            background-color: #f8d7da;
+        }
+        .stats {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 5px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        #bulkInput {
+            min-height: 200px;
+            font-family: monospace;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+        .badge-custom {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>
+            </svg>
+            KSH kód ellenőrző
+        </h1>
+
+        <div class="alert alert-info" id="loadStatus">
+            <strong>Állapot:</strong> <span id="statusText">CSV fájl betöltésére vár...</span>
+        </div>
+
+        <div class="mb-4" id="customCsvSection" style="display:none;">
+            <label for="csvFile" class="form-label">CSV fájl betöltése:</label>
+            <input type="file" class="form-control" id="csvFile" accept=".csv">
+            <small class="text-muted">Formátum: ksh;onev (pl: "0102112";Budapest XVII. Kerület)</small>
+        </div>
+
+        <button class="btn btn-outline-secondary btn-sm mb-3" id="toggleCsvBtn" style="display:none;">
+            📂 Egyéni CSV betöltése
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Betöltés...</span>
+            </div>
+            <p class="mt-2">CSV feldolgozása folyamatban...</p>
+        </div>
+
+        <div id="mainContent" style="display:none;">
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab">
+                        🔍 Gyors Keresés
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="bulk-tab" data-bs-toggle="tab" data-bs-target="#bulk" type="button" role="tab">
+                        📋 Tömeges Ellenőrzés
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <!-- Gyors Keresés Tab -->
+                <div class="tab-pane fade show active" id="search" role="tabpanel">
+                    <div class="search-box">
+                        <label for="searchInput" class="form-label">Keresés kód vagy név alapján:</label>
+                        <input type="text" class="form-control form-control-lg" id="searchInput"
+                               placeholder="pl: 0102112 vagy Budapest XVII">
+                        <small class="text-muted">Kezdjen el gépelni a szűréshez...</small>
+                    </div>
+
+                    <div class="stats" id="searchStats">
+                        Találatok száma: <strong>0</strong>
+                    </div>
+
+                    <div class="result-table">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 20%">KSH Kód</th>
+                                    <th style="width: 80%">Önkormányzat Név</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchResults">
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted">
+                                        Töltsön be egy CSV fájlt a kereséshez
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tömeges Ellenőrzés Tab -->
+                <div class="tab-pane fade" id="bulk" role="tabpanel">
+                    <div class="mb-3">
+                        <label for="bulkInput" class="form-label">
+                            Illesszen be Excel-ből másolt adatokat (kód + TAB + név formátumban):
+                        </label>
+                        <textarea class="form-control" id="bulkInput" rows="10"
+                                  placeholder="Példa:&#10;0102112&#9;Budapest XVII. Kerület&#10;0103179&#9;Budapest II. Kerület&#10;&#10;Másoljon Excel-ből, majd nyomja meg az 'Ellenőrzés' gombot!"></textarea>
+                        <small class="text-muted">
+                            Ctrl+C az Excelben, majd Ctrl+V ide. Minden sor egy kód-név párt tartalmaz, TAB-bal elválasztva.
+                        </small>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg mb-3" id="validateBtn">
+                        ✓ Ellenőrzés
+                    </button>
+                    <button class="btn btn-success btn-lg mb-3 ms-2" id="exportBtn" style="display:none;">
+                        📥 Eredmény Exportálása
+                    </button>
+                    <button class="btn btn-secondary btn-lg mb-3 ms-2" id="clearBtn">
+                        🗑️ Eredmény Törlése
+                    </button>
+
+                    <div class="stats" id="bulkStats" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" style="cursor:pointer;" onclick="filterResults('all')" title="Kattints a szűréshez">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" style="cursor:pointer;" onclick="filterResults('valid')" title="Kattints a szűréshez">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" style="cursor:pointer;" onclick="filterResults('invalid')" title="Kattints a szűréshez">0</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-table">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th style="width: 15%">Megadott Kód</th>
+                                    <th style="width: 35%">Megadott Név</th>
+                                    <th style="width: 35%">Helyes Név</th>
+                                    <th style="width: 10%">Státusz</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bulkResults">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">
+                                        Az eredmények itt jelennek meg
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Application JavaScript files -->
+    <script src="js/data.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/validator.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/data-processor.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
