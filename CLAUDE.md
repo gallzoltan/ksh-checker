@@ -17,11 +17,12 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 
 **Moduláris alkalmazás:**
 - `index.html` - HTML struktúra és CSS stílusok
-- `js/` könyvtár - Szeparált JavaScript modulok
+- `js/` könyvtár - Szeparált JavaScript modulok (fejlesztéshez)
+- `dist/` könyvtár - Build kimenet minifikált bundle-lel (production)
 - Bootstrap 5-öt használ a UI stílusokhoz
 - PapaParse library-t használ CSV feldolgozáshoz
 - **Nincs szükség szerverre** - működik `file://` protokollal is
-- Nincs szükség build folyamatra vagy package kezelésre
+- Terser-alapú build rendszer egyetlen minifikált bundle létrehozásához
 
 **JavaScript modulok (`js/` könyvtár) - OOP struktúra:**
 - `data.js` - Beágyazott CSV adat (auto-generált az `embed-csv.js` által)
@@ -43,18 +44,41 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 
 ## Fejlesztés
 
-**Alkalmazás futtatása:**
-Nyisd meg az `index.html` fájlt közvetlenül böngészőben - nincs szükség szerverre (működik `file://` protokollal).
+**Fejlesztői környezet (development):**
+1. Nyisd meg az `index.html` fájlt közvetlenül böngészőben
+2. Szerkeszd a `js/*.js` fájlokat
+3. Frissítsd a böngészőt a változások megtekintéséhez
+4. Nincs szükség build lépésre fejlesztés közben
 
-**Változtatások tesztelése:**
-1. Szerkeszd a megfelelő fájlt (`index.html` vagy `js/*.js`)
-2. Frissítsd a böngészőt
-3. Szükség esetén töröld a localStorage-t: DevTools → Application → Local Storage → Clear
+**Production build:**
+```bash
+# Első alkalommal: függőségek telepítése
+npm install
+
+# Minifikált bundle készítése
+npm run build
+
+# Debug build (nem minifikált, könnyebb hibakeresés)
+npm run build:debug
+```
+
+Build kimenet: `dist/index.html` és `dist/js/bundle.min.js` (működik `file://` protokollal).
 
 **Önkormányzati adatok frissítése:**
-1. Cseréld ki a CSV fájlt a `db/` könyvtárban
-2. Futtasd: `node embed-csv.js` (ez frissíti a `js/data.js` fájlt)
-3. Frissítsd a böngészőt
+```bash
+# CSV beágyazás a js/data.js fájlba
+npm run embed
+
+# Ezután futtass build-et a dist frissítéséhez
+npm run build
+```
+
+**Build rendszer részletei:**
+- `build.js` - Terser-alapú bundle készítő script
+- 7 JS fájl összefűzése helyes sorrendben (data.js → Config.js → ... → App.js)
+- Minifikálás egyetlen `bundle.min.js` fájlba (~17-20% méretcsökkenés)
+- HTML automatikus frissítése (7 script tag → 1 bundle script)
+- `--debug` flag: nem minifikált bundle hibakereséshez
 
 **JavaScript módosítások (OOP struktúra):**
 - `Config.js` - Static konstansok, cache időtartam, regex pattern-ek

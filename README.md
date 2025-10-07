@@ -4,21 +4,32 @@ Magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validáló alka
 
 ## 🚀 Gyors használat
 
+### Fejlesztői verzió (development)
 1. **Alkalmazás megnyitása:**
    - Dupla kattintás az `index.html` fájlon
    - Böngészőben megnyílik `file://` protokollal
    - **Nincs szükség szerverre!**
 
-2. **Keresés:**
-   - Gyors keresés tab: Kód vagy név alapján keresés
-   - Tömeges ellenőrzés tab: Excel adatok beillesztése validáláshoz
+### Production verzió (minifikált)
+1. **Build készítése:**
+   ```bash
+   npm install        # Első alkalommal
+   npm run build      # Minifikált bundle
+   ```
+2. **Alkalmazás futtatása:**
+   - Nyisd meg a `dist/index.html` fájlt böngészőben
+   - Minifikált JavaScript bundle (~17-20% kisebb)
+
+### Használat
+- **Gyors keresés tab:** Kód vagy név alapján keresés
+- **Tömeges ellenőrzés tab:** Excel adatok beillesztése validáláshoz
 
 ## 📁 Fájl struktúra
 
 ```
 ksh_checker/
-├── index.html              # Fő HTML fájl (UI + CSS)
-├── js/
+├── index.html              # Fő HTML fájl (UI + CSS) - development
+├── js/                     # JavaScript modulok (fejlesztéshez)
 │   ├── data.js            # Beágyazott CSV adatok (auto-generált)
 │   ├── Config.js          # Static configuration class
 │   ├── CacheManager.js    # localStorage kezelés osztály
@@ -26,19 +37,30 @@ ksh_checker/
 │   ├── Validator.js       # Validációs logika osztály
 │   ├── UIManager.js       # UI kezelés osztály
 │   └── App.js             # Fő alkalmazás osztály
+├── dist/                   # Build kimenet (production)
+│   ├── index.html         # HTML bundle scripttel
+│   └── js/
+│       └── bundle.min.js  # Minifikált JavaScript bundle
 ├── db/
 │   └── t_onkorm_tech_20251006.csv  # Referencia CSV
-└── embed-csv.js           # CSV → data.js generáló
+├── build.js               # Build script (Terser-alapú bundler)
+├── embed-csv.js           # CSV → data.js generáló
+├── package.json           # npm scripts és dependencies
+└── .gitignore             # Git ignore (node_modules, dist)
 ```
 
 ## 🔧 CSV adatok frissítése
 
 1. Cseréld ki a CSV fájlt a `db/` könyvtárban
-2. Futtasd a generáló scriptet:
+2. Generáld be a CSV-t a JavaScript fájlba:
    ```bash
-   node embed-csv.js
+   npm run embed
    ```
-3. Frissítsd a böngészőt
+3. **Development:** Frissítsd a böngészőt
+4. **Production:** Build-eld újra:
+   ```bash
+   npm run build
+   ```
 
 ## ✨ Funkciók
 
@@ -50,14 +72,38 @@ ksh_checker/
 
 ## 🛠️ Fejlesztés
 
-**Objektumorientált architektúra:**
+### Build parancsok
+
+```bash
+# Függőségek telepítése (első alkalommal)
+npm install
+
+# Production build (minifikált)
+npm run build
+
+# Debug build (nem minifikált, könnyebb hibakeresés)
+npm run build:debug
+
+# CSV beágyazás
+npm run embed
+```
+
+### Fejlesztési workflow
+
+1. **Kód módosítás:** Szerkeszd a `js/*.js` vagy `index.html` fájlokat
+2. **Tesztelés:** Nyisd meg/frissítsd az `index.html` fájlt böngészőben
+3. **Production build:** `npm run build` - létrehozza a `dist/` könyvtárat
+4. **Cache törlés (ha szükséges):** DevTools → Application → Local Storage → Clear
+
+### Objektumorientált architektúra
+
 Az alkalmazás OOP (Object-Oriented Programming) struktúrát használ:
 - **Dependency Injection:** Az `App` osztály injektálja a függőségeket
 - **Single Responsibility:** Minden osztály egy jól definiált felelősségi kört kezel
 - **Encapsulation:** Private state az osztályokon belül
 - **Separation of Concerns:** UI, adat, validáció elkülönítve
 
-**JavaScript osztályok módosítása:**
+**JavaScript osztályok:**
 - `Config.js` - Static konstansok (cache időtartam, limitek, regex-ek)
 - `CacheManager.js` - localStorage műveletek
 - `DataProcessor.js` - CSV feldolgozás, Map kezelés
@@ -65,13 +111,16 @@ Az alkalmazás OOP (Object-Oriented Programming) struktúrát használ:
 - `UIManager.js` - UI logika, DOM műveletek
 - `App.js` - Alkalmazás orchestration
 
-**HTML/CSS módosítás:**
-- `index.html` - Egyetlen fájl tartalmazza mindkettőt
+### Build rendszer
 
-**Tesztelés:**
-1. Módosítsd a kívánt fájlt
-2. Frissítsd a böngészőt (F5)
-3. Ha szükséges, töröld a cache-t: DevTools → Application → Local Storage → Clear
+- **Bundler:** `build.js` (Terser-alapú)
+- **Folyamat:**
+  1. 7 JS fájl beolvasása helyes sorrendben
+  2. Összefűzés egyetlen fájlba
+  3. Minifikálás (~17-20% méretcsökkenés)
+  4. HTML frissítése (7 script → 1 bundle)
+- **Kimenet:** `dist/index.html` + `dist/js/bundle.min.js`
+- **File:// kompatibilitás:** Működik szerver nélkül
 
 ## 📊 Validációs logika
 
@@ -87,10 +136,23 @@ Az alkalmazás többszintű fuzzy matching-et használ:
 - 🟡 **Figyelmeztető:** Kisebb eltérés (pl. római szám használat)
 - 🔴 **Hibás:** Nem egyező név vagy ismeretlen KSH kód
 
-## 📝 Megjegyzések
+## 📝 Technológiák
 
-- **Nincs szerver szükséges** - működik `file://` protokollal
-- **Nincs build folyamat** - egyszerű HTML/JS modulok
+- **Nincs szerver szükséges** - működik `file://` protokollal (development és production is)
+- **Terser-alapú build** - JavaScript minifikálás egyetlen bundle-be
 - **localStorage cache** - 24 órás cache a gyorsabb betöltésért
 - **Bootstrap 5** - modern, reszponzív UI
 - **PapaParse** - CSV feldolgozás
+- **OOP JavaScript** - osztály-alapú moduláris architektúra
+
+## 📦 Dependencies
+
+```json
+{
+  "devDependencies": {
+    "terser": "^5.36.0"
+  }
+}
+```
+
+**Runtime dependencies:** Nincs (Bootstrap és PapaParse CDN-ről töltődik)
