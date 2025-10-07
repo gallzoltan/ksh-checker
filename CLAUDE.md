@@ -23,14 +23,14 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 - **Nincs szükség szerverre** - működik `file://` protokollal is
 - Nincs szükség build folyamatra vagy package kezelésre
 
-**JavaScript modulok (`js/` könyvtár):**
+**JavaScript modulok (`js/` könyvtár) - OOP struktúra:**
 - `data.js` - Beágyazott CSV adat (auto-generált az `embed-csv.js` által)
-- `config.js` - Konstansok, regex map-ek, konfiguráció
-- `cache.js` - localStorage kezelés (mentés/betöltés)
-- `data-processor.js` - CSV feldolgozás, Map építés, fájl betöltés
-- `validator.js` - Validációs logika, fuzzy matching algoritmus
-- `ui.js` - UI funkciók (keresés, bulk validálás, export, DOM manipuláció)
-- `app.js` - Alkalmazás inicializálás, event listener regisztráció
+- `Config.js` - Static configuration class (konstansok, regex map-ek)
+- `CacheManager.js` - localStorage kezelés osztály (load/save/isValid)
+- `DataProcessor.js` - CSV feldolgozás és Map építés osztály
+- `Validator.js` - Validációs és fuzzy matching osztály
+- `UIManager.js` - UI kezelés és DOM manipuláció osztály
+- `App.js` - Fő alkalmazás osztály (dependency injection, inicializálás)
 
 **Adatstruktúra:**
 - `dataMap`: Map<ksh, {original, lower, kshLower, normalized, core}> - Elsődleges lookup optimalizált adatokkal
@@ -56,28 +56,48 @@ Nyisd meg az `index.html` fájlt közvetlenül böngészőben - nincs szükség 
 2. Futtasd: `node embed-csv.js` (ez frissíti a `js/data.js` fájlt)
 3. Frissítsd a böngészőt
 
-**JavaScript módosítások:**
-- `config.js` - Konstansok, cache időtartam, regex pattern-ek módosítása
-- `validator.js` - Validációs szabályok, fuzzy matching finomhangolása
-- `ui.js` - UI logika, megjelenítés, interakciók
-- `data-processor.js` - CSV feldolgozás logika
-- `cache.js` - localStorage kezelés
-- `app.js` - Inicializálás, event bindings
+**JavaScript módosítások (OOP struktúra):**
+- `Config.js` - Static konstansok, cache időtartam, regex pattern-ek
+- `Validator.js` - Validációs szabályok, fuzzy matching algoritmus
+- `UIManager.js` - UI logika, megjelenítés, interakciók, DOM műveletek
+- `DataProcessor.js` - CSV feldolgozás, Map kezelés
+- `CacheManager.js` - localStorage műveletek
+- `App.js` - Dependency injection, alkalmazás orchestration
 
 ## Kód szervezés
 
-**Fő funkciók:**
-- `processData(data)` - CSV adatok feldolgozása Map struktúrákba (data-processor.js:12)
-- `handleSearch(event)` - Valós idejű keresés és szűrés (ui.js:6)
-- `handleBulkValidate()` - Beillesztett Excel adatok validálása (ui.js:88)
-- `saveToCache()` / `loadFromCache()` - localStorage perzisztencia (cache.js:12, 32)
-- `fuzzyMatchNames(input, referenceData)` - Fuzzy név egyeztetés (validator.js:43)
-- `normalizeText(text)` - Szöveg normalizálás (validator.js:5)
+**Fő osztályok és metódusok:**
+- `Config` - Static configuration class
+  - `CACHE_DURATION`, `STORAGE_KEY`, `SEARCH_DEBOUNCE_MS`, `MAX_SEARCH_RESULTS`
+  - `IGNORED_WORDS_REGEX`, `ROMAN_REGEX_MAP`
+- `CacheManager` - localStorage kezelés
+  - `load()`, `save(dataMap)`, `isValid()`, `clear()`
+- `DataProcessor` - CSV feldolgozás
+  - `processData(data)` - CSV → Map konverzió
+  - `loadDefaultCSV()` - Beágyazott CSV betöltése
+  - `loadFromFile(file)` - File input kezelés
+  - `loadData(cacheManager)` - Cache-ből vagy CSV-ből
+- `Validator` - Validációs logika
+  - `normalizeText(text)` - Szöveg normalizálás
+  - `extractCoreName(text)` - Core név kinyerés
+  - `fuzzyMatchNames(input, referenceData)` - Fuzzy matching
+  - `validateEntry(ksh, onev, dataMap)` - Egy bejegyzés validálása
+- `UIManager` - UI kezelés
+  - `setupEventListeners()` - Event binding
+  - `handleSearch(event)` - Keresés debounce-szal
+  - `handleBulkValidate()` - Tömeges validálás
+  - `displaySearchResults()`, `displayBulkResults()` - Megjelenítés
+  - `handleExport()` - CSV export
+- `App` - Fő alkalmazás
+  - `constructor()` - Dependency injection
+  - `init()` - Alkalmazás inicializálás
 
-**Adatfolyam:**
-1. Oldal betöltés → `app.js` inicializáció
-2. Cache ellenőrzés → ha nincs, akkor `data.js` beágyazott CSV betöltése
-3. CSV parsing (PapaParse) → `processData()` → Map építés pre-computed mezőkkel
-4. Adatok mentése localStorage-ba időbélyeggel
-5. Keresés/validálás lekérdezések a Map-ek alapján
-6. Eredmények megjelenítése színkódolással (zöld=helyes, sárga=figyelmeztető, piros=hibás)
+**Adatfolyam (OOP):**
+1. DOMContentLoaded → `App` példány létrehozása
+2. `app.init()` → event listeners setup
+3. `dataProcessor.loadData(cacheManager)` → cache vagy CSV betöltés
+4. Cache hit: `cacheManager.load()` → Map visszaállítás
+5. Cache miss: `dataProcessor.loadDefaultCSV()` → PapaParse → `processData()` → `cacheManager.save()`
+6. `uiManager.showMainContent()` → UI megjelenítése
+7. User interakció → `uiManager` event handlerek → `validator` metódusok
+8. Eredmények megjelenítése színkódolással (zöld=helyes, sárga=figyelmeztető, piros=hibás)

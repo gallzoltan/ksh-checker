@@ -1,19 +1,44 @@
-// Application Initialization and Event Listeners
+// App Class - Main application orchestration
 
-document.addEventListener('DOMContentLoaded', function() {
-    const cacheLoaded = loadFromCache();
-    if (!cacheLoaded) {
-        // Ha nincs cache, automatikusan betöltjük a default CSV fájlt
-        loadDefaultCSV();
+class App {
+    constructor() {
+        // Initialize all managers and processors
+        this.validator = new Validator();
+        this.cacheManager = new CacheManager();
+        this.dataProcessor = new DataProcessor(this.validator);
+        this.uiManager = new UIManager(this.dataProcessor, this.validator);
     }
-    setupEventListeners();
-});
 
-function setupEventListeners() {
-    document.getElementById('csvFile').addEventListener('change', handleFileSelect);
-    document.getElementById('searchInput').addEventListener('input', handleSearch);
-    document.getElementById('validateBtn').addEventListener('click', handleBulkValidate);
-    document.getElementById('exportBtn').addEventListener('click', handleExport);
-    document.getElementById('clearBtn').addEventListener('click', handleClear);
-    document.getElementById('toggleCsvBtn').addEventListener('click', toggleCustomCsv);
+    /**
+     * Initialize the application
+     */
+    async init() {
+        // Setup event listeners
+        this.uiManager.setupEventListeners();
+
+        // Load data (from cache or default CSV)
+        this.dataProcessor.loadData(
+            this.cacheManager,
+            // onProgress callback
+            (message, type) => {
+                this.uiManager.updateStatus(message, type);
+            },
+            // onComplete callback
+            () => {
+                this.uiManager.showLoading(false);
+                this.uiManager.showMainContent();
+            },
+            // onError callback
+            (error) => {
+                this.uiManager.updateStatus(error, 'danger');
+                this.uiManager.showLoading(false);
+            }
+        );
+    }
 }
+
+// Initialize application when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    window.app = new App();
+    window.app.init();
+});

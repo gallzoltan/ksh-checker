@@ -20,12 +20,12 @@ ksh_checker/
 ├── index.html              # Fő HTML fájl (UI + CSS)
 ├── js/
 │   ├── data.js            # Beágyazott CSV adatok (auto-generált)
-│   ├── config.js          # Konfiguráció, konstansok
-│   ├── cache.js           # localStorage kezelés
-│   ├── data-processor.js  # CSV feldolgozás
-│   ├── validator.js       # Validációs logika
-│   ├── ui.js              # UI funkciók
-│   └── app.js             # Inicializálás
+│   ├── Config.js          # Static configuration class
+│   ├── CacheManager.js    # localStorage kezelés osztály
+│   ├── DataProcessor.js   # CSV feldolgozás osztály
+│   ├── Validator.js       # Validációs logika osztály
+│   ├── UIManager.js       # UI kezelés osztály
+│   └── App.js             # Fő alkalmazás osztály
 ├── db/
 │   └── t_onkorm_tech_20251006.csv  # Referencia CSV
 └── embed-csv.js           # CSV → data.js generáló
@@ -50,11 +50,20 @@ ksh_checker/
 
 ## 🛠️ Fejlesztés
 
-**JavaScript modulok módosítása:**
-- `config.js` - Konfiguráció (cache időtartam, limitekstb.)
-- `validator.js` - Validációs szabályok
-- `ui.js` - Felhasználói felület
-- `data-processor.js` - Adat feldolgozás
+**Objektumorientált architektúra:**
+Az alkalmazás OOP (Object-Oriented Programming) struktúrát használ:
+- **Dependency Injection:** Az `App` osztály injektálja a függőségeket
+- **Single Responsibility:** Minden osztály egy jól definiált felelősségi kört kezel
+- **Encapsulation:** Private state az osztályokon belül
+- **Separation of Concerns:** UI, adat, validáció elkülönítve
+
+**JavaScript osztályok módosítása:**
+- `Config.js` - Static konstansok (cache időtartam, limitek, regex-ek)
+- `CacheManager.js` - localStorage műveletek
+- `DataProcessor.js` - CSV feldolgozás, Map kezelés
+- `Validator.js` - Validációs szabályok, fuzzy matching
+- `UIManager.js` - UI logika, DOM műveletek
+- `App.js` - Alkalmazás orchestration
 
 **HTML/CSS módosítás:**
 - `index.html` - Egyetlen fájl tartalmazza mindkettőt
