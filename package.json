@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node build.js",
     "build:debug": "node build.js --debug",
-    "embed": "node embed-csv.js"
+    "embed": "node convert-csv-to-json.js",
+    "embed:csv": "node embed-csv.js"
   },
   "devDependencies": {
     "terser": "^5.36.0"

@@ -52,32 +52,26 @@ class DataProcessor {
     }
 
     /**
-     * Load default embedded CSV data
+     * Load default embedded JSON data
      * @param {Function} onProgress - Callback for progress updates
      * @param {Function} onComplete - Callback when loading is complete
      * @param {Function} onError - Callback when error occurs
      */
-    loadDefaultCSV(onProgress, onComplete, onError) {
-        if (typeof EMBEDDED_CSV_DATA === 'undefined') {
-            onError('Beágyazott CSV adat nem található!');
+    loadDefaultJSON(onProgress, onComplete, onError) {
+        if (typeof EMBEDDED_JSON_DATA === 'undefined') {
+            onError('Beágyazott JSON adat nem található!');
             return;
         }
 
         onProgress('Beágyazott adatok betöltése...', 'info');
 
-        // Parse embedded CSV data using PapaParse
-        Papa.parse(EMBEDDED_CSV_DATA, {
-            header: true,
-            delimiter: ';',
-            skipEmptyLines: true,
-            complete: (results) => {
-                this.processData(results.data);
-                onComplete();
-            },
-            error: (error) => {
-                onError('Hiba a CSV betöltése során: ' + error.message);
-            }
-        });
+        try {
+            // Process embedded JSON data directly (no parsing needed, already an array)
+            this.processData(EMBEDDED_JSON_DATA);
+            onComplete();
+        } catch (error) {
+            onError('Hiba a JSON betöltése során: ' + error.message);
+        }
     }
 
     /**
@@ -110,7 +104,7 @@ class DataProcessor {
     }
 
     /**
-     * Load data from cache or default CSV
+     * Load data from cache or default JSON
      * @param {CacheManager} cacheManager - Cache manager instance
      * @param {Function} onProgress - Callback for progress updates
      * @param {Function} onComplete - Callback when loading is complete
@@ -125,8 +119,8 @@ class DataProcessor {
             onProgress(`Cached adatok betöltve (${this.dataMap.size} rekord)`, 'success');
             onComplete();
         } else {
-            // Load default CSV if no cache
-            this.loadDefaultCSV(
+            // Load default JSON if no cache
+            this.loadDefaultJSON(
                 onProgress,
                 () => {
                     cacheManager.save(this.dataMap);

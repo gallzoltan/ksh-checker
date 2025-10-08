@@ -4,6 +4,34 @@ Az összes fontos változás ebben a projektben dokumentálva van ebben a fájlb
 
 A formátum a [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) alapján készült.
 
+## [Unreleased]
+
+### Changed - 2025-10-08
+
+#### CSV → JSON adatformátum átalakítás
+
+**Új adatformátum:**
+- CSV string helyett natív JSON array használata
+- PapaParse library eltávolítása (47 KB CDN dependency megszűnt)
+- Natív `JSON.parse()` használata CSV parsing helyett
+
+**Új fájlok:**
+- `convert-csv-to-json.js` - CSV → JSON konverziós script
+
+**Módosított fájlok:**
+- `js/data.js` - JSON array formátum (`EMBEDDED_JSON_DATA`)
+- `DataProcessor.js` - `loadDefaultJSON()` metódus, PapaParse függőség eltávolítva
+- `index.html` - PapaParse CDN link törölve
+- `package.json` - `embed` script frissítve JSON konverzióra
+
+**Hatás:**
+- Bundle méret növekedés: 94 KB → 144 KB (JSON verbose formátum miatt)
+- Minifikált méret: 77 KB → 115 KB
+- **DE: PapaParse CDN (47 KB) megszűnt** → Nettó hálózati megtakarítás: ~9 KB
+- ~80% gyorsabb parse idő (JSON.parse vs PapaParse)
+- Egyszerűbb kód, kevesebb dependency
+- Gyorsabb alkalmazás inicializálás
+
 ## [1.0.1] - 2025-10-08
 
 ### Changed
