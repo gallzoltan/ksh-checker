@@ -1,6 +1,6 @@
 {
   "name": "ksh-checker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Magyar önkormányzati KSH kód validáló alkalmazás",
   "scripts": {
     "build": "node build.js",

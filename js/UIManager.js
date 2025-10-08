@@ -19,6 +19,15 @@ class UIManager {
         document.getElementById('exportBtn').addEventListener('click', () => this.handleExport());
         document.getElementById('clearBtn').addEventListener('click', () => this.handleClear());
         document.getElementById('toggleCsvBtn').addEventListener('click', () => this.toggleCustomCsv());
+
+        // Add event listeners for filter badges (event delegation)
+        document.getElementById('bulkStats').addEventListener('click', (e) => {
+            const badge = e.target.closest('[data-filter]');
+            if (badge) {
+                const filter = badge.getAttribute('data-filter');
+                this.filterResults(filter);
+            }
+        });
     }
 
     /**
@@ -197,10 +206,53 @@ class UIManager {
     }
 
     /**
+     * Create table row element for bulk result
+     * @private
+     */
+    createBulkResultRow(item) {
+        const tr = document.createElement('tr');
+
+        // Set row class based on status
+        tr.className = item.status === 'valid' ? 'valid-row' :
+                       item.status === 'warning' ? 'warning-row' : 'invalid-row';
+
+        // Get badge HTML
+        const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
+                      item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
+                      '<span class="badge bg-danger">✗ Hibás</span>';
+
+        // Build row content
+        tr.innerHTML = `
+            <td>${item.index}</td>
+            <td>${item.ksh}</td>
+            <td>${item.onev}</td>
+            <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
+            <td class="text-center">${badge}</td>
+        `;
+
+        return tr;
+    }
+
+    /**
+     * Render bulk results to table
+     * @private
+     */
+    renderBulkResultsTable(results) {
+        const resultsBody = document.getElementById('bulkResults');
+        const fragment = document.createDocumentFragment();
+
+        results.forEach(item => {
+            fragment.appendChild(this.createBulkResultRow(item));
+        });
+
+        resultsBody.innerHTML = '';
+        resultsBody.appendChild(fragment);
+    }
+
+    /**
      * Display bulk validation results
      */
     displayBulkResults(results) {
-        const resultsBody = document.getElementById('bulkResults');
         const statsDiv = document.getElementById('bulkStats');
         const exportBtn = document.getElementById('exportBtn');
 
@@ -217,59 +269,14 @@ class UIManager {
         const invalidCount = stats.invalid;
         const accuracy = results.length > 0 ? ((validCount / results.length) * 100).toFixed(1) : 0;
 
-        // Use DocumentFragment for better DOM performance
-        const fragment = document.createDocumentFragment();
-
-        results.forEach(item => {
-            const tr = document.createElement('tr');
-
-            // Set row class based on status
-            tr.className = item.status === 'valid' ? 'valid-row' :
-                           item.status === 'warning' ? 'warning-row' : 'invalid-row';
-
-            // Get badge HTML
-            const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
-                          item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
-                          '<span class="badge bg-danger">✗ Hibás</span>';
-
-            // Build row content
-            tr.innerHTML = `
-                <td>${item.index}</td>
-                <td>${item.ksh}</td>
-                <td>${item.onev}</td>
-                <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
-                <td class="text-center">${badge}</td>
-            `;
-
-            fragment.appendChild(tr);
-        });
-
-        // Clear and append
-        resultsBody.innerHTML = '';
-        resultsBody.appendChild(fragment);
+        // Render table using shared method
+        this.renderBulkResultsTable(results);
 
         // Update statistics
         document.getElementById('totalCount').textContent = results.length;
         document.getElementById('validCount').textContent = validCount;
+        document.getElementById('warningCount').textContent = warningCount;
         document.getElementById('invalidCount').textContent = invalidCount;
-
-        // Add warning count display
-        const validCountElement = document.getElementById('validCount');
-        let warningElement = document.getElementById('warningCount');
-        if (!warningElement) {
-            warningElement = document.createElement('span');
-            warningElement.id = 'warningCount';
-            warningElement.className = 'text-warning fw-bold';
-
-            const warningLabel = document.createElement('span');
-            warningLabel.textContent = ' | Figyelmeztető: ';
-            warningLabel.className = 'text-muted';
-
-            validCountElement.parentNode.appendChild(warningLabel);
-            validCountElement.parentNode.appendChild(warningElement);
-        }
-        warningElement.textContent = warningCount;
-
         document.getElementById('accuracy').textContent = accuracy + '%';
 
         statsDiv.style.display = 'block';
@@ -300,42 +307,19 @@ class UIManager {
             filteredResults = this.lastBulkResults.filter(r => r.status === 'warning');
         }
 
-        // Display filtered results
-        const resultsBody = document.getElementById('bulkResults');
-        const fragment = document.createDocumentFragment();
-
-        filteredResults.forEach(item => {
-            const tr = document.createElement('tr');
-            tr.className = item.status === 'valid' ? 'valid-row' :
-                           item.status === 'warning' ? 'warning-row' : 'invalid-row';
-
-            const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
-                          item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
-                          '<span class="badge bg-danger">✗ Hibás</span>';
-
-            tr.innerHTML = `
-                <td>${item.index}</td>
-                <td>${item.ksh}</td>
-                <td>${item.onev}</td>
-                <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
-                <td class="text-center">${badge}</td>
-            `;
-
-            fragment.appendChild(tr);
-        });
-
-        resultsBody.innerHTML = '';
-        resultsBody.appendChild(fragment);
+        // Render using shared method
+        this.renderBulkResultsTable(filteredResults);
 
         // Update visual feedback
-        ['totalCount', 'validCount', 'invalidCount'].forEach(id => {
+        ['totalCount', 'validCount', 'warningCount', 'invalidCount'].forEach(id => {
             const element = document.getElementById(id);
             element.style.fontWeight = 'normal';
             element.style.textDecoration = 'none';
         });
 
         const activeElement = filter === 'all' ? 'totalCount' :
-                             filter === 'valid' ? 'validCount' : 'invalidCount';
+                             filter === 'valid' ? 'validCount' :
+                             filter === 'warning' ? 'warningCount' : 'invalidCount';
         const element = document.getElementById(activeElement);
         element.style.fontWeight = 'bold';
         element.style.textDecoration = 'underline';
@@ -445,12 +429,5 @@ class UIManager {
             btn.classList.remove('btn-outline-danger');
             btn.classList.add('btn-outline-secondary');
         }
-    }
-}
-
-// Global function for onclick handlers in HTML
-function filterResults(filter) {
-    if (window.app && window.app.uiManager) {
-        window.app.uiManager.filterResults(filter);
     }
 }

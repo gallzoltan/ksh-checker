@@ -169,14 +169,17 @@
 
                     <div class="stats" id="bulkStats" style="display:none;">
                         <div class="row">
-                            <div class="col-md-3">
-                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" style="cursor:pointer;" onclick="filterResults('all')" title="Kattints a szűréshez">0</span>
+                            <div class="col-md-2">
+                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" style="cursor:pointer;" data-filter="all" title="Kattints a szűréshez">0</span>
+                            </div>
+                            <div class="col-md-2">
+                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" style="cursor:pointer;" data-filter="valid" title="Kattints a szűréshez">0</span>
                             </div>
                             <div class="col-md-3">
-                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" style="cursor:pointer;" onclick="filterResults('valid')" title="Kattints a szűréshez">0</span>
+                                <strong>Figyelmeztető:</strong> <span id="warningCount" class="badge bg-warning text-dark badge-custom" style="cursor:pointer;" data-filter="warning" title="Kattints a szűréshez">0</span>
                             </div>
-                            <div class="col-md-3">
-                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" style="cursor:pointer;" onclick="filterResults('invalid')" title="Kattints a szűréshez">0</span>
+                            <div class="col-md-2">
+                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" style="cursor:pointer;" data-filter="invalid" title="Kattints a szűréshez">0</span>
                             </div>
                             <div class="col-md-3">
                                 <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom">0%</span>

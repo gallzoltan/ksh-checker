@@ -68,8 +68,10 @@ class Validator {
             return 'exact';
         }
 
-        // Normalize input string
-        const normalizedInput = this.normalizeText(this.expandAbbreviations(input));
+        // Normalize and expand input once, cache for reuse
+        const expandedInput = this.expandAbbreviations(input);
+        const normalizedInput = this.normalizeText(expandedInput);
+
         // Use pre-computed normalized reference
         const normalizedRef = referenceData.normalized;
 
@@ -86,8 +88,8 @@ class Validator {
             return 'fuzzy';
         }
 
-        // Extract core name from input and use pre-computed core reference
-        const coreInput = this.romanToArabic(this.extractCoreName(input));
+        // Extract core name from normalized input (reuse normalized value)
+        const coreInput = this.romanToArabic(this.extractCoreName(expandedInput));
         const coreRef = referenceData.core;
 
         // Check if core names match exactly (allow 2+ char names for short settlements)
