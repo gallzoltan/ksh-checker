@@ -168,35 +168,107 @@ class UIManager {
 
         lines.forEach((line, index) => {
             const parts = line.split('\t');
-            if (parts.length < 2) return;
 
-            // Normalize KSH code: pad with leading zeros to 7 digits
-            let ksh = parts[0].trim().replace(/"/g, '');
-            ksh = ksh.padStart(7, '0');
-
-            const onev = parts[1].trim().replace(/"/g, '');
-            const data = dataMap.get(ksh);
+            // Parse input (handle both TAB-separated and single column)
+            let ksh = parts[0] ? parts[0].trim().replace(/"/g, '') : '';
+            let onev = parts[1] ? parts[1].trim().replace(/"/g, '') : '';
 
             let status = 'error';
             let correctName = '';
+            let inputName = ''; // Store original input name for display
 
-            if (data) {
-                correctName = data.original;
-                const matchResult = this.validator.fuzzyMatchNames(onev, data);
+            // Detect if input is a KSH code (7 digits) or a name
+            // If no TAB separator and input looks like a number, treat as KSH
+            // Otherwise, treat as name
+            if (parts.length === 1 && ksh) {
+                // Single column input - auto-detect type
+                const isNumeric = /^\d+$/.test(ksh);
 
-                if (matchResult === 'exact') {
-                    status = 'valid';
-                } else if (matchResult === 'fuzzy') {
-                    status = 'warning';
+                if (isNumeric) {
+                    // Case 1: Only KSH code provided (numeric input)
+                    ksh = ksh.padStart(7, '0');
+                    const data = dataMap.get(ksh);
+                    if (data) {
+                        inputName = ''; // No name was provided
+                        onev = data.original;
+                        correctName = data.original;
+                        status = 'auto-filled-ksh';
+                    } else {
+                        status = 'error';
+                        correctName = '';
+                    }
+                } else {
+                    // Case 2: Only name provided (text input)
+                    inputName = ksh; // Store original input
+                    onev = ksh; // Move to onev
+                    ksh = ''; // Clear ksh
+                    const found = this.validator.findByName(onev, dataMap);
+                    if (found) {
+                        ksh = found.ksh;
+                        correctName = found.onev;
+                        status = found.matchType === 'exact' ? 'auto-filled-name' : 'auto-filled-fuzzy';
+                        // Keep onev as input for display, don't overwrite
+                    } else {
+                        status = 'error';
+                        correctName = '';
+                    }
+                }
+            } else if (ksh && onev) {
+                // Case 3: Both KSH code and name provided (validation)
+                inputName = onev; // Store original input
+                ksh = ksh.padStart(7, '0');
+                const data = dataMap.get(ksh);
+
+                if (data) {
+                    correctName = data.original;
+                    const matchResult = this.validator.fuzzyMatchNames(onev, data);
+
+                    if (matchResult === 'exact') {
+                        status = 'valid';
+                    } else if (matchResult === 'fuzzy') {
+                        status = 'warning';
+                    } else {
+                        status = 'error';
+                    }
                 } else {
                     status = 'error';
+                    correctName = '';
                 }
+            } else if (ksh && !onev) {
+                // TAB-separated but only KSH provided
+                inputName = ''; // No name was provided
+                ksh = ksh.padStart(7, '0');
+                const data = dataMap.get(ksh);
+                if (data) {
+                    onev = data.original;
+                    correctName = data.original;
+                    status = 'auto-filled-ksh';
+                } else {
+                    status = 'error';
+                    correctName = '';
+                }
+            } else if (!ksh && onev) {
+                // TAB-separated but only name provided (TAB + name)
+                inputName = onev; // Store original input
+                const found = this.validator.findByName(onev, dataMap);
+                if (found) {
+                    ksh = found.ksh;
+                    correctName = found.onev;
+                    status = found.matchType === 'exact' ? 'auto-filled-name' : 'auto-filled-fuzzy';
+                    // Keep onev as input for display
+                } else {
+                    status = 'error';
+                    correctName = '';
+                }
+            } else {
+                // Empty line
+                return;
             }
 
             results.push({
                 index: index + 1,
                 ksh,
-                onev,
+                onev: inputName || onev, // Use inputName if available, otherwise onev
                 correctName,
                 status
             });
@@ -213,13 +285,29 @@ class UIManager {
         const tr = document.createElement('tr');
 
         // Set row class based on status
-        tr.className = item.status === 'valid' ? 'valid-row' :
-                       item.status === 'warning' ? 'warning-row' : 'invalid-row';
+        if (item.status === 'valid' || item.status === 'auto-filled-ksh' || item.status === 'auto-filled-name') {
+            tr.className = 'valid-row';
+        } else if (item.status === 'warning' || item.status === 'auto-filled-fuzzy') {
+            tr.className = 'warning-row';
+        } else {
+            tr.className = 'invalid-row';
+        }
 
-        // Get badge HTML
-        const badge = item.status === 'valid' ? '<span class="badge bg-success">✓ Helyes</span>' :
-                      item.status === 'warning' ? '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>' :
-                      '<span class="badge bg-danger">✗ Hibás</span>';
+        // Get badge HTML based on status
+        let badge;
+        if (item.status === 'valid') {
+            badge = '<span class="badge bg-success">✓ Helyes</span>';
+        } else if (item.status === 'auto-filled-ksh') {
+            badge = '<span class="badge bg-info">🔍 KSH → Név</span>';
+        } else if (item.status === 'auto-filled-name') {
+            badge = '<span class="badge bg-info">🔍 Név → KSH</span>';
+        } else if (item.status === 'auto-filled-fuzzy') {
+            badge = '<span class="badge bg-warning text-dark">⚠ Név → KSH (közelítő)</span>';
+        } else if (item.status === 'warning') {
+            badge = '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>';
+        } else {
+            badge = '<span class="badge bg-danger">✗ Hibás</span>';
+        }
 
         // Build row content
         tr.innerHTML = `
@@ -258,9 +346,13 @@ class UIManager {
 
         // Calculate statistics
         const stats = results.reduce((acc, r) => {
-            if (r.status === 'valid') acc.valid++;
-            else if (r.status === 'warning') acc.warning++;
-            else acc.invalid++;
+            if (r.status === 'valid' || r.status === 'auto-filled-ksh' || r.status === 'auto-filled-name') {
+                acc.valid++;
+            } else if (r.status === 'warning' || r.status === 'auto-filled-fuzzy') {
+                acc.warning++;
+            } else {
+                acc.invalid++;
+            }
             return acc;
         }, { valid: 0, warning: 0, invalid: 0 });
 
@@ -300,11 +392,21 @@ class UIManager {
         // Filter results
         let filteredResults = this.lastBulkResults;
         if (filter === 'valid') {
-            filteredResults = this.lastBulkResults.filter(r => r.status === 'valid');
+            filteredResults = this.lastBulkResults.filter(r =>
+                r.status === 'valid' ||
+                r.status === 'auto-filled-ksh' ||
+                r.status === 'auto-filled-name'
+            );
         } else if (filter === 'invalid') {
-            filteredResults = this.lastBulkResults.filter(r => r.status === 'invalid' || r.status === 'error');
+            filteredResults = this.lastBulkResults.filter(r =>
+                r.status === 'invalid' ||
+                r.status === 'error'
+            );
         } else if (filter === 'warning') {
-            filteredResults = this.lastBulkResults.filter(r => r.status === 'warning');
+            filteredResults = this.lastBulkResults.filter(r =>
+                r.status === 'warning' ||
+                r.status === 'auto-filled-fuzzy'
+            );
         }
 
         // Render using shared method

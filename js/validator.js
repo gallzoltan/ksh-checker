@@ -133,6 +133,120 @@ class Validator {
     }
 
     /**
+     * Find KSH code by municipality name using fuzzy matching
+     * @param {string} input - Municipality name to search
+     * @param {Map} dataMap - Reference data map
+     * @returns {Object|null} - {ksh, onev, matchType} or null if not found
+     */
+    findByName(input, dataMap) {
+        if (!input || !input.trim()) {
+            return null;
+        }
+
+        const inputTrimmed = input.trim();
+        const inputLower = inputTrimmed.toLowerCase();
+        const inputNormalized = this.normalizeText(inputTrimmed);
+        const inputCore = this.extractCoreName(inputTrimmed);
+
+        let bestMatch = null;
+        let bestScore = -1;
+
+        // Try to find best match by scoring
+        for (let [ksh, data] of dataMap) {
+            const matchType = this.fuzzyMatchNames(inputTrimmed, data);
+
+            if (matchType === 'nomatch') {
+                continue;
+            }
+
+            // Calculate match score (higher is better)
+            let score = 0;
+            const refLower = data.lower;
+            const refNormalized = data.normalized;
+            const refCore = data.core;
+
+            // Score 1000: Exact string match (case insensitive)
+            if (inputLower === refLower) {
+                score = 1000;
+            }
+            // Score 900: Exact normalized match
+            else if (inputNormalized === refNormalized) {
+                score = 900;
+            }
+            // Score 800: Exact core name match (minimum 3 chars to avoid false positives)
+            else if (inputCore === refCore && inputCore.length >= 3) {
+                score = 800;
+            }
+            // Score based on core name similarity (prefer longer matches)
+            else if (inputCore && refCore) {
+                // For very short core names (< 3 chars), require exact match only
+                if (inputCore.length < 3 || refCore.length < 3) {
+                    // Only exact match for short names
+                    if (inputCore === refCore) {
+                        score = 750;
+                    }
+                    // No partial matching for short names
+                }
+                // For longer names, allow partial matching
+                else {
+                    // If cores are equal (already handled above, but safety check)
+                    if (inputCore === refCore) {
+                        score = 800;
+                    }
+                    // If input core is fully contained in reference core
+                    // But only if input is significant portion (at least 60% of reference)
+                    else if (refCore.includes(inputCore)) {
+                        const matchRatio = inputCore.length / refCore.length;
+                        if (matchRatio >= 0.6) {
+                            score = 500 + inputCore.length * 10;
+                        } else {
+                            // Weak partial match
+                            score = 150;
+                        }
+                    }
+                    // If reference core is contained in input core
+                    // Prefer this less (input might have extra characters)
+                    else if (inputCore.includes(refCore)) {
+                        const matchRatio = refCore.length / inputCore.length;
+                        if (matchRatio >= 0.6) {
+                            score = 400 + refCore.length * 10;
+                        } else {
+                            // Weak partial match
+                            score = 100;
+                        }
+                    }
+                    // Fuzzy match
+                    else if (matchType === 'fuzzy') {
+                        score = 200;
+                    }
+                    // Exact match from fuzzyMatchNames
+                    else if (matchType === 'exact') {
+                        score = 700;
+                    }
+                }
+            }
+            // Fallback: use matchType
+            else if (matchType === 'exact') {
+                score = 700;
+            } else if (matchType === 'fuzzy') {
+                score = 200;
+            }
+
+            // Update best match if this score is higher
+            if (score > bestScore) {
+                bestScore = score;
+                bestMatch = {
+                    ksh: ksh,
+                    onev: data.original,
+                    matchType: score >= 700 ? 'exact' : 'fuzzy'
+                };
+            }
+        }
+
+        return bestMatch;
+    }
+
+    /**
      * Validate a single KSH + name pair
      * @param {string} ksh - KSH code
      * @param {string} onev - Municipality name

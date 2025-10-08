@@ -147,12 +147,15 @@
                 <div class="tab-pane fade" id="bulk" role="tabpanel">
                     <div class="mb-3">
                         <label for="bulkInput" class="form-label">
-                            Másolj Excel-ből, majd nyomd meg az 'Ellenőrzés' gombot! (ksh kód + TAB + Önkormányzat neve):
+                            Másolj Excel-ből vagy írj be adatokat, majd nyomd meg az 'Ellenőrzés' gombot!
                         </label>
                         <textarea class="form-control" id="bulkInput" rows="10"
-                                  placeholder="Példa:&#10;0102112&#9;Budapest XVII. Kerület&#10;0103179&#9;Budapest II. Kerület&#10;&#10;"></textarea>
+                                  placeholder="Példa (3 lehetőség):&#10;0102112&#9;Budapest XVII. Kerület    (ellenőrzés: kód + név)&#10;0103179                         (auto-kitöltés: csak kód)&#10;Budapest II. Kerület            (auto-kitöltés: csak név)&#10;&#10;"></textarea>
                         <small class="text-muted">
-                            Ctrl+C az Excelben, majd Ctrl+V ide. Minden sor egy kód-név párt tartalmaz, TAB-bal elválasztva.
+                            💡 Tipp: Ctrl+C az Excelben, majd Ctrl+V ide. A sorok vegyesen is megadhatók!<br>
+                            • <strong>Kód + TAB + Név</strong> → ellenőrzi, hogy helyes-e<br>
+                            • <strong>Csak KSH kód</strong> (pl: 0102112) → automatikusan kitölti a nevet<br>
+                            • <strong>Csak név</strong> (pl: Budapest II. Kerület) → automatikusan megkeresi a KSH kódot
                         </small>
                     </div>
 
