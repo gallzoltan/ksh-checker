@@ -327,4 +327,46 @@ class Validator {
             return { status: 'invalid', correctName: referenceData.original, message: 'Hibás név' };
         }
     }
+
+    /**
+     * Validate entries in batches with progress callback
+     * Processes items asynchronously to avoid blocking the UI
+     * @param {Array} entries - Array of {ksh, onev} objects to validate
+     * @param {Map} dataMap - Reference data map
+     * @param {Function} progressCallback - Called with (current, total) after each batch
+     * @returns {Promise<Array>} - Promise resolving to array of validation results
+     */
+    async validateEntriesAsync(entries, dataMap, progressCallback) {
+        const results = [];
+        const total = entries.length;
+
+        // Adaptive batch size based on data volume
+        const batchSize = total < 100 ? 5 :    // Small datasets: frequent updates
+                          total < 500 ? 10 :   // Medium datasets: balanced
+                          20;                  // Large datasets: performance priority
+
+        for (let i = 0; i < total; i += batchSize) {
+            const batch = entries.slice(i, Math.min(i + batchSize, total));
+
+            // Process batch
+            for (const entry of batch) {
+                const result = this.validateEntry(entry.ksh, entry.onev, dataMap);
+                results.push({
+                    ...entry,
+                    ...result
+                });
+            }
+
+            // Update progress
+            const processed = Math.min(i + batchSize, total);
+            if (progressCallback) {
+                progressCallback(processed, total);
+            }
+
+            // Yield to UI thread
+            await new Promise(resolve => setTimeout(resolve, 0));
+        }
+
+        return results;
+    }
 }

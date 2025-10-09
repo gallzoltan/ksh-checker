@@ -147,9 +147,38 @@ class UIManager {
     }
 
     /**
+     * Show/hide progress bar
+     */
+    showProgress(show) {
+        const progressContainer = document.getElementById('progressContainer');
+        const validateBtn = document.getElementById('validateBtn');
+
+        progressContainer.style.display = show ? 'block' : 'none';
+        validateBtn.disabled = show;
+
+        if (!show) {
+            this.updateProgress(0, 0);
+        }
+    }
+
+    /**
+     * Update progress bar
+     */
+    updateProgress(current, total) {
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
+
+        progressBar.style.width = percentage + '%';
+        progressBar.setAttribute('aria-valuenow', percentage);
+        progressText.textContent = `${current} / ${total} (${percentage}%)`;
+    }
+
+    /**
      * Handle bulk validation
      */
-    handleBulkValidate() {
+    async handleBulkValidate() {
         const input = document.getElementById('bulkInput').value;
         const dataMap = this.dataProcessor.getData();
 
@@ -164,117 +193,168 @@ class UIManager {
         }
 
         const lines = input.split('\n').filter(line => line.trim());
-        const results = [];
+        const entries = [];
 
+        // Parse all lines into entries for processing
         lines.forEach((line, index) => {
             const parts = line.split('\t');
+            const ksh = parts[0] ? parts[0].trim().replace(/"/g, '') : '';
+            const onev = parts[1] ? parts[1].trim().replace(/"/g, '') : '';
 
-            // Parse input (handle both TAB-separated and single column)
-            let ksh = parts[0] ? parts[0].trim().replace(/"/g, '') : '';
-            let onev = parts[1] ? parts[1].trim().replace(/"/g, '') : '';
+            if (!ksh && !onev) {
+                return; // Skip empty lines
+            }
 
-            let status = 'error';
-            let correctName = '';
-            let inputName = ''; // Store original input name for display
+            entries.push({
+                index: index + 1,
+                ksh,
+                onev,
+                parts: parts
+            });
+        });
 
-            // Detect if input is a KSH code (7 digits) or a name
-            // If no TAB separator and input looks like a number, treat as KSH
-            // Otherwise, treat as name
-            if (parts.length === 1 && ksh) {
+        if (entries.length === 0) {
+            alert('Nincs feldolgozható adat!');
+            return;
+        }
+
+        // Show progress bar and initialize
+        this.showProgress(true);
+        this.updateProgress(0, entries.length);
+
+        try {
+            // Process entries with validation logic (async with batching)
+            const processedEntries = [];
+
+            // Adaptive batch size based on data volume
+            const batchSize = entries.length < 100 ? 5 :    // Small datasets: frequent updates
+                              entries.length < 500 ? 10 :   // Medium datasets: balanced
+                              20;                           // Large datasets: performance priority
+
+            for (let i = 0; i < entries.length; i++) {
+                const entry = entries[i];
+                let ksh = entry.ksh;
+                let onev = entry.onev;
+                let status = 'error';
+                let correctName = '';
+                let inputName = '';
+
                 // Single column input - auto-detect type
-                const isNumeric = /^\d+$/.test(ksh);
+                if (entry.parts.length === 1 && ksh) {
+                    const isNumeric = /^\d+$/.test(ksh);
 
-                if (isNumeric) {
-                    // Case 1: Only KSH code provided (numeric input)
+                    if (isNumeric) {
+                        // Case 1: Only KSH code provided
+                        ksh = ksh.padStart(7, '0');
+                        const data = dataMap.get(ksh);
+                        if (data) {
+                            inputName = '';
+                            onev = data.original;
+                            correctName = data.original;
+                            status = 'auto-filled-ksh';
+                        }
+                    } else {
+                        // Case 2: Only name provided
+                        inputName = ksh;
+                        onev = ksh;
+                        ksh = '';
+                        const found = this.validator.findByName(onev, dataMap);
+                        if (found) {
+                            ksh = found.ksh;
+                            correctName = found.onev;
+                            status = found.matchType === 'exact' ? 'auto-filled-name' : 'auto-filled-fuzzy';
+                        }
+                    }
+                } else if (ksh && onev) {
+                    // Case 3: Both provided
+                    inputName = onev;
+                    ksh = ksh.padStart(7, '0');
+                    processedEntries.push({
+                        index: entry.index,
+                        ksh: ksh,
+                        onev: onev,
+                        inputName: inputName
+                    });
+
+                    // Yield to UI every batch
+                    if ((i + 1) % batchSize === 0) {
+                        this.updateProgress(i + 1, entries.length);
+                        await new Promise(resolve => setTimeout(resolve, 0));
+                    }
+                    continue;
+                } else if (ksh && !onev) {
+                    // Case 4: Only KSH (TAB-separated)
+                    inputName = '';
                     ksh = ksh.padStart(7, '0');
                     const data = dataMap.get(ksh);
                     if (data) {
-                        inputName = ''; // No name was provided
                         onev = data.original;
                         correctName = data.original;
                         status = 'auto-filled-ksh';
-                    } else {
-                        status = 'error';
-                        correctName = '';
                     }
-                } else {
-                    // Case 2: Only name provided (text input)
-                    inputName = ksh; // Store original input
-                    onev = ksh; // Move to onev
-                    ksh = ''; // Clear ksh
+                } else if (!ksh && onev) {
+                    // Case 5: Only name (TAB-separated)
+                    inputName = onev;
                     const found = this.validator.findByName(onev, dataMap);
                     if (found) {
                         ksh = found.ksh;
                         correctName = found.onev;
                         status = found.matchType === 'exact' ? 'auto-filled-name' : 'auto-filled-fuzzy';
-                        // Keep onev as input for display, don't overwrite
-                    } else {
-                        status = 'error';
-                        correctName = '';
                     }
                 }
-            } else if (ksh && onev) {
-                // Case 3: Both KSH code and name provided (validation)
-                inputName = onev; // Store original input
-                ksh = ksh.padStart(7, '0');
-                const data = dataMap.get(ksh);
 
-                if (data) {
-                    correctName = data.original;
-                    const matchResult = this.validator.fuzzyMatchNames(onev, data);
+                // Add non-validation results immediately
+                if (processedEntries.length === 0 || status !== 'error' || correctName || ksh) {
+                    processedEntries.push({
+                        index: entry.index,
+                        ksh: ksh,
+                        onev: inputName || onev,
+                        correctName: correctName,
+                        status: status,
+                        inputName: inputName
+                    });
+                }
 
-                    if (matchResult === 'exact') {
-                        status = 'valid';
-                    } else if (matchResult === 'fuzzy') {
-                        status = 'warning';
-                    } else {
-                        status = 'error';
-                    }
-                } else {
-                    status = 'error';
-                    correctName = '';
+                // Yield to UI every batch
+                if ((i + 1) % batchSize === 0) {
+                    this.updateProgress(i + 1, entries.length);
+                    await new Promise(resolve => setTimeout(resolve, 0));
                 }
-            } else if (ksh && !onev) {
-                // TAB-separated but only KSH provided
-                inputName = ''; // No name was provided
-                ksh = ksh.padStart(7, '0');
-                const data = dataMap.get(ksh);
-                if (data) {
-                    onev = data.original;
-                    correctName = data.original;
-                    status = 'auto-filled-ksh';
-                } else {
-                    status = 'error';
-                    correctName = '';
-                }
-            } else if (!ksh && onev) {
-                // TAB-separated but only name provided (TAB + name)
-                inputName = onev; // Store original input
-                const found = this.validator.findByName(onev, dataMap);
-                if (found) {
-                    ksh = found.ksh;
-                    correctName = found.onev;
-                    status = found.matchType === 'exact' ? 'auto-filled-name' : 'auto-filled-fuzzy';
-                    // Keep onev as input for display
-                } else {
-                    status = 'error';
-                    correctName = '';
-                }
-            } else {
-                // Empty line
-                return;
             }
 
-            results.push({
-                index: index + 1,
-                ksh,
-                onev: inputName || onev, // Use inputName if available, otherwise onev
-                correctName,
-                status
-            });
-        });
+            // Final update for pre-processing
+            this.updateProgress(entries.length, entries.length);
 
-        this.displayBulkResults(results);
+            // Filter entries that need validation
+            const toValidate = processedEntries.filter(e => !e.status && e.ksh && e.onev);
+            const noValidation = processedEntries.filter(e => e.status);
+
+            let validated = [];
+
+            // Validate entries with progress (only if there are entries to validate)
+            if (toValidate.length > 0) {
+                validated = await this.validator.validateEntriesAsync(
+                    toValidate,
+                    dataMap,
+                    (current, total) => {
+                        this.updateProgress(current, total);
+                    }
+                );
+            }
+
+            // Combine results
+            const allResults = [...noValidation, ...validated].sort((a, b) => a.index - b.index);
+
+            // Hide progress bar
+            this.showProgress(false);
+
+            // Display results
+            this.displayBulkResults(allResults);
+        } catch (error) {
+            console.error('Validation error:', error);
+            this.showProgress(false);
+            alert('Hiba történt a validálás során: ' + error.message);
+        }
     }
 
     /**

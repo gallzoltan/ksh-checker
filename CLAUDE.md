@@ -10,6 +10,7 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 - CSV fájlból tölti be az önkormányzati adatokat (formátum: `ksh;onev`)
 - Gyors keresés: önkormányzatok keresése kód vagy név alapján
 - Tömeges ellenőrzés: Excel adatok beillesztése (kód + TAB + név) több bejegyzés validálásához
+- Progressz bar nagy adathalmazok validálása során (async batch processing)
 - Validációs eredmények exportálása CSV formátumban
 - Kliens oldali cache localStorage-ban (24 órás cache időtartam)
 
@@ -120,11 +121,13 @@ npm run embed:csv
   - `extractCoreName(text)` - Core név kinyerés
   - `fuzzyMatchNames(input, referenceData)` - Fuzzy matching (NameNormalizer-t használja)
   - `validateEntry(ksh, onev, dataMap)` - Egy bejegyzés validálása
+  - `validateEntriesAsync(entries, dataMap, progressCallback, batchSize)` - Async batch validálás progress callback-kel
   - `findByName(input, dataMap)` - KSH kód keresése név alapján
 - `UIManager` - UI kezelés
   - `setupEventListeners()` - Event binding
   - `handleSearch(event)` - Keresés debounce-szal
-  - `handleBulkValidate()` - Tömeges validálás
+  - `handleBulkValidate()` - Async tömeges validálás progress bar-ral
+  - `showProgress(show)`, `updateProgress(current, total)` - Progressz bar kezelés
   - `displaySearchResults()`, `displayBulkResults()` - Megjelenítés
   - `handleExport()` - CSV export
 - `App` - Fő alkalmazás
@@ -235,3 +238,29 @@ npm run embed:csv
   - **Bővíthetőség:** Könnyebb települési név típusok bővítése (municipalityTypes)
   - **Bundle méret:** 164.91 KB → 120.73 KB minifikált (26.8% csökkentés)
   - **Teljesítmény:** Gyorsabb név validáció pre-parsed adatokkal
+
+**2025-10-09 - Async batch processing és progressz bar:**
+
+### 7. Tömeges validálás teljesítmény és UX javítása
+- **Probléma:**
+  - Nagy adathalmazok (100+ bejegyzés) validálása blokkolja a böngésző UI-t
+  - Nincs visszajelzés a feldolgozás folyamatáról
+  - Felhasználó nem látja, hogy mennyi időbe telik még a validálás
+  - Szinkron feldolgozás "lefagyasztja" az oldalt
+- **Megoldás:**
+  - Új `validateEntriesAsync()` metódus a `Validator.js`-ben batch feldolgozással
+  - Progressz bar komponens hozzáadva az `index.html`-hez (Bootstrap animated progress bar)
+  - `showProgress()` és `updateProgress()` metódusok a `UIManager.js`-ben
+  - `handleBulkValidate()` teljes refaktorálás async/await használatával
+  - **Adaptív batch size:** 5 (< 100 bejegyzés), 10 (100-500), 20 (500+)
+  - Async batch processing a pre-processing fázisban is (név keresés, auto-fill)
+  - `setTimeout(0)` UI yield minden batch után (kliens oldali, szerver nélkül működik!)
+  - Progress callback minden köteg után frissíti a progressz bar-t
+  - "Ellenőrzés" gomb letiltva validálás alatt
+- **Hatás:**
+  - **Nem blokkoló UI:** Az alkalmazás reszponzív marad nagy adathalmazok validálása alatt
+  - **Vizuális visszajelzés:** Valós idejű progressz bar (X / Y, százalék)
+  - **Jobb UX:** Felhasználó látja, hogy mennyi van még hátra - kis adathalmazoknál gyakoribb frissítés
+  - **Hibakezelés:** Try-catch blokk a validálási hibák kezelésére
+  - **Optimalizált teljesítmény:** Adaptív batch size minimalizálja az overhead-et
+  - **Bundle méret:** 170.18 KB → 121.79 KB minifikált (28.4% csökkentés)
