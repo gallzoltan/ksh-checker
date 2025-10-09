@@ -60,10 +60,12 @@ async function createBundle(shouldMinify = true) {
       const result = await minify(bundleCode, {
         compress: {
           dead_code: true,
-          drop_console: false,
+          drop_console: true,  // Remove console.log in production
           drop_debugger: true,
           keep_classnames: false,
-          keep_fnames: false
+          keep_fnames: false,
+          passes: 2,  // Two passes for better compression
+          pure_funcs: ['console.log', 'console.info', 'console.debug']  // Mark as pure functions
         },
         mangle: {
           keep_classnames: false,

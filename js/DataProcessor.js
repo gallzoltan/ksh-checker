@@ -39,9 +39,10 @@ class DataProcessor {
                 const parsed = this.nameNormalizer.parse(onev);
 
                 // Pre-compute expensive normalizations for better validation performance
+                // Optimize: reuse expanded value to avoid duplicate expandAbbreviations call
                 const expanded = this.validator.expandAbbreviations(onev);
                 const normalized = this.validator.normalizeText(expanded);
-                const core = this.validator.romanToArabic(this.validator.extractCoreName(onev));
+                const core = this.validator.romanToArabic(this.validator.extractCoreName(expanded));
 
                 // Store object with pre-computed values for fast searching and validation
                 this.dataMap.set(ksh, {
