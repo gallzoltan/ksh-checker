@@ -517,17 +517,22 @@ class UIManager {
         }
 
         const csvContent = [
-            ['Sorszám', 'Megadott KSH', 'Megadott Név', 'Helyes Név', 'Státusz'],
+            ['Megadott KSH', 'Megadott Név', 'Helyes Név', 'Státusz'],
             ...this.lastBulkResults.map(r => {
                 let statusText = 'Hibás';
                 if (r.status === 'valid') {
                     statusText = 'Helyes';
+                } else if (r.status === 'auto-filled-ksh') {
+                    statusText = 'KSH → Név';
+                } else if (r.status === 'auto-filled-name') {
+                    statusText = 'Név → KSH';
+                } else if (r.status === 'auto-filled-fuzzy') {
+                    statusText = 'Név → KSH (közelítő)';
                 } else if (r.status === 'warning') {
                     statusText = 'Figyelmeztető';
                 }
 
                 return [
-                    r.index,
                     r.ksh,
                     r.onev,
                     r.correctName,

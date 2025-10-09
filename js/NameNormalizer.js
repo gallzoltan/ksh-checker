@@ -2,22 +2,29 @@
  * Települési önkormányzat nevek normalizálása és összehasonlítása
  * 
  * Tesztelendő:
- * Budapest Főváros Önkormányzata
- * Szeged Megyei Jogú Város Önkormányzata
- * Budapest Főváros X. Kerület
- * BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA
- * Budapest Főváros II. Kerület
- * Budapest Főváros XIV. Kerület Zugló
- * ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA
- * KOMORÓ KÖZSÉG ÖNKORMÁNYZATA
- * Kömörő Község Önkormányzata
+ Budapest Főváros Önkormányzata
+ Szeged Megyei Jogú Város Önkormányzata
+ Budapest Főváros X. Kerület
+ BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA
+ Budapest Főváros II. Kerület
+ Budapest Főváros XIV. Kerület Zugló
+ VÉCS KÖZSÉGI ÖNKORMÁNYZAT*
+ Bokod Község Önkományzata
+ Piliscsév Község Önkományzata
+ OLCSVAAPÁTI KÖZSÉG ÖKORMÁNYZATA
+ ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA
+ Békés Város Önkormányzat
+ Heves Város Önkormányzata
+ Veszprém Megyei Jogú Város Önkormányzata
+ KOMORÓ KÖZSÉG ÖNKORMÁNYZATA
+ Kömörő Község Önkormányzata
  */
 
 class NameNormalizer {
   constructor() {
     // Önkormányzat típusok és szinonimáik
     this.municipalityTypes = {
-      'önkormányzat': ['önkormányzat', 'onkormanyzat', 'önkormányzata', 'onkormanyzata'],
+      'önkormányzat': ['önkormányzat', 'onkormanyzat', 'önkormányzata', 'onkormanyzata', 'önkományzata', 'onkomanyzata', 'ökormányzata', 'okormanyzata'],
       'község': ['község', 'kozseg', 'községi', 'kozsegi'],
       'nagyközség': ['nagyközség', 'nagykozseg', 'nagyközségi', 'nagykozsegi'],
       'település': ['település', 'telepules', 'települési', 'telepulesi'],
