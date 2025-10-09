@@ -10,6 +10,7 @@ const DIST_JS_DIR = path.join(DIST_DIR, 'js');
 const JS_FILES_ORDER = [
   'data.js',
   'Config.js',
+  'NameNormalizer.js',
   'CacheManager.js',
   'DataProcessor.js',
   'Validator.js',

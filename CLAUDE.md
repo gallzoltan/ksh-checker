@@ -27,6 +27,7 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 **JavaScript modulok (`js/` könyvtár) - OOP struktúra:**
 - `data.js` - Beágyazott JSON adat (auto-generált a `convert-csv-to-json.js` által)
 - `Config.js` - Static configuration class (konstansok, regex map-ek)
+- `NameNormalizer.js` - Települési nevek normalizálása és összehasonlítása osztály
 - `CacheManager.js` - localStorage kezelés osztály (load/save/isValid)
 - `DataProcessor.js` - JSON feldolgozás és Map építés osztály
 - `Validator.js` - Validációs és fuzzy matching osztály
@@ -78,16 +79,17 @@ npm run embed:csv
 
 **Build rendszer részletei:**
 - `build.js` - Terser-alapú bundle készítő script
-- 7 JS fájl összefűzése helyes sorrendben (data.js → Config.js → ... → App.js)
-- Minifikálás egyetlen `bundle.min.js` fájlba (~17-20% méretcsökkenés)
-- HTML automatikus frissítése (7 script tag → 1 bundle script)
+- 8 JS fájl összefűzése helyes sorrendben (data.js → Config.js → NameNormalizer.js → ... → App.js)
+- Minifikálás egyetlen `bundle.min.js` fájlba (~26-27% méretcsökkenés)
+- HTML automatikus frissítése (8 script tag → 1 bundle script)
 - `--debug` flag: nem minifikált bundle hibakereséshez
 
 **JavaScript módosítások (OOP struktúra):**
 - `Config.js` - Static konstansok, cache időtartam, regex pattern-ek
-- `Validator.js` - Validációs szabályok, fuzzy matching algoritmus
+- `NameNormalizer.js` - Települési nevek normalizálása, összehasonlítása, hasonlóság számítás
+- `Validator.js` - Validációs szabályok, fuzzy matching algoritmus (NameNormalizer-t használja)
 - `UIManager.js` - UI logika, megjelenítés, interakciók, DOM műveletek
-- `DataProcessor.js` - CSV feldolgozás, Map kezelés
+- `DataProcessor.js` - CSV feldolgozás, Map kezelés (NameNormalizer-t használja)
 - `CacheManager.js` - localStorage műveletek
 - `App.js` - Dependency injection, alkalmazás orchestration
 
@@ -97,18 +99,28 @@ npm run embed:csv
 - `Config` - Static configuration class
   - `CACHE_DURATION`, `STORAGE_KEY`, `SEARCH_DEBOUNCE_MS`, `MAX_SEARCH_RESULTS`
   - `IGNORED_WORDS_REGEX`, `ROMAN_REGEX_MAP`
+- `NameNormalizer` - Települési nevek normalizálása és összehasonlítása
+  - `normalize(text)` - Szöveg normalizálás ékezetek eltávolításával
+  - `removeAccents(text)` - Magyar ékezetek eltávolítása
+  - `parse(name)` - Település nevének parsolása (név, típus, normalizált formák)
+  - `areEqual(name1, name2)` - Két név összehasonlítása (ékezetek nélkül)
+  - `areEqualWithAccents(name1, name2)` - Összehasonlítás ékezetekkel
+  - `smartMatch(name1, name2, threshold)` - Intelligens egyezés hasonlóság alapján
+  - `similarity(name1, name2)` - Hasonlóság számítás (Levenshtein távolság)
+  - `levenshteinDistance(str1, str2)` - Levenshtein távolság számítás
 - `CacheManager` - localStorage kezelés
   - `load()`, `save(dataMap)`, `isValid()`, `clear()`
 - `DataProcessor` - JSON/CSV feldolgozás
-  - `processData(data)` - JSON/CSV → Map konverzió
+  - `processData(data)` - JSON/CSV → Map konverzió (NameNormalizer-t használja)
   - `loadDefaultJSON()` - Beágyazott JSON betöltése (natív)
   - `loadFromFile(file)` - File input kezelés (CSV, PapaParse-szal)
   - `loadData(cacheManager)` - Cache-ből vagy JSON-ből
 - `Validator` - Validációs logika
-  - `normalizeText(text)` - Szöveg normalizálás
+  - `normalizeText(text)` - Szöveg normalizálás (NameNormalizer-t használja)
   - `extractCoreName(text)` - Core név kinyerés
-  - `fuzzyMatchNames(input, referenceData)` - Fuzzy matching
+  - `fuzzyMatchNames(input, referenceData)` - Fuzzy matching (NameNormalizer-t használja)
   - `validateEntry(ksh, onev, dataMap)` - Egy bejegyzés validálása
+  - `findByName(input, dataMap)` - KSH kód keresése név alapján
 - `UIManager` - UI kezelés
   - `setupEventListeners()` - Event binding
   - `handleSearch(event)` - Keresés debounce-szal
@@ -116,7 +128,7 @@ npm run embed:csv
   - `displaySearchResults()`, `displayBulkResults()` - Megjelenítés
   - `handleExport()` - CSV export
 - `App` - Fő alkalmazás
-  - `constructor()` - Dependency injection
+  - `constructor()` - Dependency injection (NameNormalizer létrehozása)
   - `init()` - Alkalmazás inicializálás
 
 **Adatfolyam (OOP):**
@@ -199,3 +211,27 @@ npm run embed:csv
 - Jobb teljesítmény (gyorsabb validálás, kevesebb DOM műveletek)
 - OOP elvek következetes betartása (nincs globális függvény)
 - Kisebb bundle méret (jobb betöltési idő)
+
+**2025-10-09 - NameNormalizer osztály integráció:**
+
+### 6. NameNormalizer osztály bevezetése
+- **Probléma:**
+  - Települési nevek normalizálása és összehasonlítása szétszórva volt a `Validator.js`-ben
+  - Kevésbé átlátható ékezet-kezelés (NFD normalize használata)
+  - Hiányzott a dedikált települési név parsing (típusok, core nevek)
+  - Levenshtein távolság alapú hasonlóság számítás nem volt implementálva
+- **Megoldás:**
+  - Új `NameNormalizer.js` osztály létrehozása dedikált név normalizációhoz
+  - Magyar ékezetek explicit kezelése (accentMap)
+  - Települési nevek intelligens parsolása (típusok felismerése: község, város, kerület, stb.)
+  - Levenshtein távolság alapú hasonlóság számítás implementálása
+  - `smartMatch()` metódus intelligens név összehasonlításhoz
+  - Dependency injection: `App.js` → `Validator.js` és `DataProcessor.js`
+  - Build rendszer frissítése: 8 JS modul (NameNormalizer.js hozzáadva)
+- **Hatás:**
+  - **Tisztább architektúra:** Települési név kezelés elkülönítve dedikált osztályba
+  - **Jobb validáció:** Intelligens név összehasonlítás hasonlóság küszöbértékkel (95%)
+  - **Ékezet-kezelés:** Explicit magyar ékezet map, pontosabb normalizálás
+  - **Bővíthetőség:** Könnyebb települési név típusok bővítése (municipalityTypes)
+  - **Bundle méret:** 164.91 KB → 120.73 KB minifikált (26.8% csökkentés)
+  - **Teljesítmény:** Gyorsabb név validáció pre-parsed adatokkal

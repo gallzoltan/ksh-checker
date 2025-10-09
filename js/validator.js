@@ -1,17 +1,18 @@
 // Validator Class - Validation and fuzzy matching logic
 
 class Validator {
+    constructor(nameNormalizer) {
+        this.nameNormalizer = nameNormalizer;
+    }
+
     /**
      * Normalize text for fuzzy matching
      * @param {string} text
      * @returns {string}
      */
     normalizeText(text) {
-        return text
-            .toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove diacritics
-            .replace(/\s+/g, ' ') // Normalize whitespace
-            .trim();
+        // Use NameNormalizer's normalize method
+        return this.nameNormalizer.normalize(text);
     }
 
     /**
@@ -66,6 +67,16 @@ class Validator {
 
         // Exact match (case insensitive)
         if (input.toLowerCase() === reference.toLowerCase()) {
+            return 'exact';
+        }
+
+        // Use NameNormalizer's smart matching for intelligent comparison
+        if (this.nameNormalizer.smartMatch(input, reference, 0.95)) {
+            return 'exact';
+        }
+
+        // Check if names are equal (without accents)
+        if (this.nameNormalizer.areEqual(input, reference)) {
             return 'exact';
         }
 
@@ -147,12 +158,13 @@ class Validator {
         const inputTrimmed = input.trim();
         const inputLower = inputTrimmed.toLowerCase();
         const inputNormalized = this.normalizeText(inputTrimmed);
+
+        // Use NameNormalizer for parsing
+        const inputParsed = this.nameNormalizer.parse(inputTrimmed);
+
         // Extract core with diacritics preserved for accurate matching
         const inputCore = this.extractCoreName(inputTrimmed);
-        const inputCoreWithDiacritics = inputTrimmed.toLowerCase()
-            .replace(Config.IGNORED_WORDS_REGEX, '')
-            .replace(/\s+/g, ' ')
-            .trim();
+        const inputCoreWithDiacritics = inputParsed.normalizedWithAccents;
 
         let bestMatch = null;
         let bestScore = -1;
@@ -175,6 +187,10 @@ class Validator {
             // Score 1000: Exact string match (case insensitive)
             if (inputLower === refLower) {
                 score = 1000;
+            }
+            // Score 950: Smart match with high similarity (uses NameNormalizer)
+            else if (this.nameNormalizer.smartMatch(inputTrimmed, data.original, 0.95)) {
+                score = 950;
             }
             // Score 900: Exact normalized match
             else if (inputNormalized === refNormalized) {

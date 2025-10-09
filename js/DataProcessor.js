@@ -1,8 +1,9 @@
 // DataProcessor Class - CSV processing and data management
 
 class DataProcessor {
-    constructor(validator) {
+    constructor(validator, nameNormalizer) {
         this.validator = validator;
+        this.nameNormalizer = nameNormalizer;
         this.dataMap = new Map();
     }
 
@@ -34,15 +35,13 @@ class DataProcessor {
             const onev = row.onev ? row.onev.trim() : '';
 
             if (ksh && onev) {
+                // Use NameNormalizer for parsing and normalization
+                const parsed = this.nameNormalizer.parse(onev);
+
                 // Pre-compute expensive normalizations for better validation performance
                 const expanded = this.validator.expandAbbreviations(onev);
                 const normalized = this.validator.normalizeText(expanded);
                 const core = this.validator.romanToArabic(this.validator.extractCoreName(onev));
-                // Compute core with diacritics preserved (lowercase only, no NFD normalization)
-                const coreWithDiacritics = onev.toLowerCase()
-                    .replace(Config.IGNORED_WORDS_REGEX, '')
-                    .replace(/\s+/g, ' ')
-                    .trim();
 
                 // Store object with pre-computed values for fast searching and validation
                 this.dataMap.set(ksh, {
@@ -51,7 +50,11 @@ class DataProcessor {
                     kshLower: ksh.toLowerCase(),
                     normalized: normalized,
                     core: core,
-                    coreWithDiacritics: coreWithDiacritics
+                    coreWithDiacritics: parsed.normalizedWithAccents,
+                    // Add NameNormalizer parsed data
+                    parsedName: parsed.normalized,
+                    parsedFullNormalized: parsed.fullNormalized,
+                    parsedType: parsed.type
                 });
             }
         });

@@ -1,5 +1,16 @@
 /**
  * Települési önkormányzat nevek normalizálása és összehasonlítása
+ * 
+ * Tesztelendő:
+ * Budapest Főváros Önkormányzata
+ * Szeged Megyei Jogú Város Önkormányzata
+ * Budapest Főváros X. Kerület
+ * BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA
+ * Budapest Főváros II. Kerület
+ * Budapest Főváros XIV. Kerület Zugló
+ * ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA
+ * KOMORÓ KÖZSÉG ÖNKORMÁNYZATA
+ * Kömörő Község Önkormányzata
  */
 
 class NameNormalizer {

@@ -3,9 +3,10 @@
 class App {
     constructor() {
         // Initialize all managers and processors
-        this.validator = new Validator();
+        this.nameNormalizer = new NameNormalizer();
+        this.validator = new Validator(this.nameNormalizer);
         this.cacheManager = new CacheManager();
-        this.dataProcessor = new DataProcessor(this.validator);
+        this.dataProcessor = new DataProcessor(this.validator, this.nameNormalizer);
         this.uiManager = new UIManager(this.dataProcessor, this.validator);
     }
 
