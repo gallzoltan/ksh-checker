@@ -4,16 +4,25 @@ class CacheManager {
     constructor() {
         this.storageKey = Config.STORAGE_KEY;
         this.timestampKey = Config.STORAGE_TIMESTAMP;
+        this.versionKey = Config.STORAGE_VERSION;
         this.cacheDuration = Config.CACHE_DURATION;
+        this.cacheVersion = Config.CACHE_VERSION;
     }
 
     /**
-     * Check if cache is valid (not expired)
+     * Check if cache is valid (not expired and correct version)
      * @returns {boolean}
      */
     isValid() {
         const timestamp = localStorage.getItem(this.timestampKey);
         if (!timestamp) return false;
+
+        // Check version compatibility
+        const cachedVersion = localStorage.getItem(this.versionKey);
+        if (cachedVersion !== this.cacheVersion) {
+            this.clear(); // Clear incompatible cache
+            return false;
+        }
 
         const age = new Date().getTime() - parseInt(timestamp);
         return age < this.cacheDuration;
@@ -56,6 +65,7 @@ class CacheManager {
             const mapEntries = Array.from(dataMap.entries());
             localStorage.setItem(this.storageKey, JSON.stringify(mapEntries));
             localStorage.setItem(this.timestampKey, new Date().getTime().toString());
+            localStorage.setItem(this.versionKey, this.cacheVersion);
         } catch (e) {
             console.error('Cache mentési hiba:', e);
         }
@@ -67,5 +77,6 @@ class CacheManager {
     clear() {
         localStorage.removeItem(this.storageKey);
         localStorage.removeItem(this.timestampKey);
+        localStorage.removeItem(this.versionKey);
     }
 }

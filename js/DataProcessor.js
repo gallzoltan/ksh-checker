@@ -38,6 +38,11 @@ class DataProcessor {
                 const expanded = this.validator.expandAbbreviations(onev);
                 const normalized = this.validator.normalizeText(expanded);
                 const core = this.validator.romanToArabic(this.validator.extractCoreName(onev));
+                // Compute core with diacritics preserved (lowercase only, no NFD normalization)
+                const coreWithDiacritics = onev.toLowerCase()
+                    .replace(Config.IGNORED_WORDS_REGEX, '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
 
                 // Store object with pre-computed values for fast searching and validation
                 this.dataMap.set(ksh, {
@@ -45,7 +50,8 @@ class DataProcessor {
                     lower: onev.toLowerCase(),
                     kshLower: ksh.toLowerCase(),
                     normalized: normalized,
-                    core: core
+                    core: core,
+                    coreWithDiacritics: coreWithDiacritics
                 });
             }
         });

@@ -2,9 +2,11 @@
 
 class Config {
     // Cache configuration
+    static CACHE_VERSION = '2.0'; // Increment when data structure changes
     static CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
     static STORAGE_KEY = 'kshData';
     static STORAGE_TIMESTAMP = 'kshDataTimestamp';
+    static STORAGE_VERSION = 'kshDataVersion';
 
     // Search configuration
     static SEARCH_DEBOUNCE_MS = 250; // Debounce delay for search
@@ -13,8 +15,7 @@ class Config {
     // List of administrative/common words to ignore in comparisons
     static IGNORED_WORDS = [
         'onkormanyzat', 'onkormanyzata', 'nagykozseg', 'nagykozsegi', 'kozseg', 'kozsegi',
-        'telepules', 'varos', 'varosi', 'fovaros', 'fovarosi','kerulet', 'ker', 'megye', 'megyei',
-        'varmegye', 'varmegyei'
+        'telepules', 'telepulesi', 'varos', 'varosi', 'fovaros', 'fovarosi'
     ];
 
     // Pre-compiled regex for ignored words (optimize performance)

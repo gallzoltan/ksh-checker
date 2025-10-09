@@ -24,6 +24,7 @@ class Validator {
 
         // Remove all ignored words using pre-compiled regex from Config
         normalized = normalized.replace(Config.IGNORED_WORDS_REGEX, '');
+        console.log(normalized);
 
         // Clean up extra whitespace
         return normalized.replace(/\s+/g, ' ').trim();
@@ -146,7 +147,12 @@ class Validator {
         const inputTrimmed = input.trim();
         const inputLower = inputTrimmed.toLowerCase();
         const inputNormalized = this.normalizeText(inputTrimmed);
+        // Extract core with diacritics preserved for accurate matching
         const inputCore = this.extractCoreName(inputTrimmed);
+        const inputCoreWithDiacritics = inputTrimmed.toLowerCase()
+            .replace(Config.IGNORED_WORDS_REGEX, '')
+            .replace(/\s+/g, ' ')
+            .trim();
 
         let bestMatch = null;
         let bestScore = -1;
@@ -164,6 +170,7 @@ class Validator {
             const refLower = data.lower;
             const refNormalized = data.normalized;
             const refCore = data.core;
+            const refCoreWithDiacritics = data.coreWithDiacritics;
 
             // Score 1000: Exact string match (case insensitive)
             if (inputLower === refLower) {
@@ -173,46 +180,76 @@ class Validator {
             else if (inputNormalized === refNormalized) {
                 score = 900;
             }
+            // Score 850: Exact core name match with diacritics (preferred over normalized core)
+            else if (inputCoreWithDiacritics === refCoreWithDiacritics && inputCoreWithDiacritics.length >= 3) {
+                score = 850;
+            }
             // Score 800: Exact core name match (minimum 3 chars to avoid false positives)
             else if (inputCore === refCore && inputCore.length >= 3) {
                 score = 800;
             }
             // Score based on core name similarity (prefer longer matches)
             else if (inputCore && refCore) {
+                // First try with diacritics preserved for more accurate matching
+                const diacriticMatch = inputCoreWithDiacritics === refCoreWithDiacritics;
+
                 // For very short core names (< 3 chars), require exact match only
                 if (inputCore.length < 3 || refCore.length < 3) {
-                    // Only exact match for short names
-                    if (inputCore === refCore) {
+                    // Exact match with diacritics is best
+                    if (diacriticMatch) {
+                        score = 800;
+                    }
+                    // Only exact match for short names (normalized)
+                    else if (inputCore === refCore) {
                         score = 750;
                     }
                     // No partial matching for short names
                 }
                 // For longer names, allow partial matching
                 else {
-                    // If cores are equal (already handled above, but safety check)
-                    if (inputCore === refCore) {
+                    // If cores are equal with diacritics (already handled above, but safety check)
+                    if (diacriticMatch) {
+                        score = 850;
+                    }
+                    // If cores are equal (normalized)
+                    else if (inputCore === refCore) {
                         score = 800;
                     }
-                    // If input core is fully contained in reference core
-                    // But only if input is significant portion (at least 60% of reference)
-                    else if (refCore.includes(inputCore)) {
-                        const matchRatio = inputCore.length / refCore.length;
+                    // If input core is fully contained in reference core (with diacritics)
+                    else if (refCoreWithDiacritics.includes(inputCoreWithDiacritics)) {
+                        const matchRatio = inputCoreWithDiacritics.length / refCoreWithDiacritics.length;
                         if (matchRatio >= 0.6) {
-                            score = 500 + inputCore.length * 10;
+                            score = 500 + inputCoreWithDiacritics.length * 10;
                         } else {
                             // Weak partial match
                             score = 150;
                         }
                     }
-                    // If reference core is contained in input core
-                    // Prefer this less (input might have extra characters)
-                    else if (inputCore.includes(refCore)) {
-                        const matchRatio = refCore.length / inputCore.length;
+                    // If reference core is contained in input core (with diacritics)
+                    else if (inputCoreWithDiacritics.includes(refCoreWithDiacritics)) {
+                        const matchRatio = refCoreWithDiacritics.length / inputCoreWithDiacritics.length;
                         if (matchRatio >= 0.6) {
-                            score = 400 + refCore.length * 10;
+                            score = 400 + refCoreWithDiacritics.length * 10;
                         } else {
                             // Weak partial match
                             score = 100;
+                        }
+                    }
+                    // Fallback to normalized core matching
+                    else if (refCore.includes(inputCore)) {
+                        const matchRatio = inputCore.length / refCore.length;
+                        if (matchRatio >= 0.6) {
+                            score = 450 + inputCore.length * 10;
+                        } else {
+                            score = 120;
+                        }
+                    }
+                    else if (inputCore.includes(refCore)) {
+                        const matchRatio = refCore.length / inputCore.length;
+                        if (matchRatio >= 0.6) {
+                            score = 350 + refCore.length * 10;
+                        } else {
+                            score = 80;
                         }
                     }
                     // Fuzzy match
