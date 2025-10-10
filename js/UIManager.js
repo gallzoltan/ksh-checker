@@ -15,17 +15,31 @@ class UIManager {
     setupEventListeners() {
         document.getElementById('csvFile').addEventListener('change', (e) => this.handleFileSelect(e));
         document.getElementById('searchInput').addEventListener('input', (e) => this.handleSearch(e));
+        document.getElementById('clearSearchBtn').addEventListener('click', () => this.clearSearch());
         document.getElementById('validateBtn').addEventListener('click', () => this.handleBulkValidate());
         document.getElementById('exportBtn').addEventListener('click', () => this.handleExport());
         document.getElementById('clearBtn').addEventListener('click', () => this.handleClear());
         document.getElementById('toggleCsvBtn').addEventListener('click', () => this.toggleCustomCsv());
 
         // Add event listeners for filter badges (event delegation)
-        document.getElementById('bulkStats').addEventListener('click', (e) => {
+        const bulkStats = document.getElementById('bulkStats');
+        bulkStats.addEventListener('click', (e) => {
             const badge = e.target.closest('[data-filter]');
             if (badge) {
                 const filter = badge.getAttribute('data-filter');
                 this.filterResults(filter);
+            }
+        });
+
+        // Keyboard support for filter badges
+        bulkStats.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const badge = e.target.closest('[data-filter]');
+                if (badge) {
+                    e.preventDefault();
+                    const filter = badge.getAttribute('data-filter');
+                    this.filterResults(filter);
+                }
             }
         });
     }
@@ -59,6 +73,16 @@ class UIManager {
      * Handle search input with debouncing
      */
     handleSearch(event) {
+        const searchTerm = event.target.value;
+        const clearBtn = document.getElementById('clearSearchBtn');
+
+        // Show/hide clear button
+        if (searchTerm.trim()) {
+            clearBtn.classList.add('visible');
+        } else {
+            clearBtn.classList.remove('visible');
+        }
+
         // Clear previous timer
         if (this.searchDebounceTimer) {
             clearTimeout(this.searchDebounceTimer);
@@ -66,8 +90,23 @@ class UIManager {
 
         // Debounce search
         this.searchDebounceTimer = setTimeout(() => {
-            this.performSearch(event.target.value.trim().toLowerCase());
+            this.performSearch(searchTerm.trim().toLowerCase());
         }, Config.SEARCH_DEBOUNCE_MS);
+    }
+
+    /**
+     * Clear search input
+     */
+    clearSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearchBtn');
+
+        searchInput.value = '';
+        clearBtn.classList.remove('visible');
+        searchInput.focus();
+
+        // Trigger search to reset results
+        this.performSearch('');
     }
 
     /**
@@ -176,6 +215,45 @@ class UIManager {
     }
 
     /**
+     * Show toast notification
+     */
+    showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toastId = 'toast-' + Date.now();
+
+        const bgClass = {
+            'success': 'bg-success',
+            'error': 'bg-danger',
+            'warning': 'bg-warning',
+            'info': 'bg-info'
+        }[type] || 'bg-info';
+
+        const toast = document.createElement('div');
+        toast.id = toastId;
+        toast.className = `toast align-items-center text-white ${bgClass} border-0`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Bezárás"></button>
+            </div>
+        `;
+
+        container.appendChild(toast);
+
+        const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+        bsToast.show();
+
+        // Remove from DOM after hiding
+        toast.addEventListener('hidden.bs.toast', () => {
+            toast.remove();
+        });
+    }
+
+    /**
      * Handle bulk validation
      */
     async handleBulkValidate() {
@@ -183,12 +261,12 @@ class UIManager {
         const dataMap = this.dataProcessor.getData();
 
         if (!input.trim()) {
-            alert('Kérem, illesszen be adatokat!');
+            this.showToast('Kérem, illesszen be adatokat!', 'warning');
             return;
         }
 
         if (dataMap.size === 0) {
-            alert('Kérem, először töltsön be egy CSV fájlt!');
+            this.showToast('Kérem, először töltsön be egy CSV fájlt!', 'error');
             return;
         }
 
@@ -214,7 +292,7 @@ class UIManager {
         });
 
         if (entries.length === 0) {
-            alert('Nincs feldolgozható adat!');
+            this.showToast('Nincs feldolgozható adat!', 'warning');
             return;
         }
 
@@ -345,7 +423,7 @@ class UIManager {
         } catch (error) {
             console.error('Validation error:', error);
             this.showProgress(false);
-            alert('Hiba történt a validálás során: ' + error.message);
+            this.showToast('Hiba történt a validálás során: ' + error.message, 'error');
         }
     }
 
@@ -504,7 +582,7 @@ class UIManager {
      */
     handleExport() {
         if (!this.lastBulkResults || this.lastBulkResults.length === 0) {
-            alert('Nincs exportálható eredmény!');
+            this.showToast('Nincs exportálható eredmény!', 'warning');
             return;
         }
 
@@ -538,6 +616,8 @@ class UIManager {
         link.href = URL.createObjectURL(blob);
         link.download = `ellenorzes_eredmeny_${new Date().toISOString().slice(0,10)}.csv`;
         link.click();
+
+        this.showToast('CSV export sikeresen letöltve!', 'success');
     }
 
     /**
@@ -602,11 +682,13 @@ class UIManager {
             btn.textContent = '✖️ Mégse';
             btn.classList.remove('btn-outline-secondary');
             btn.classList.add('btn-outline-danger');
+            btn.setAttribute('aria-expanded', 'true');
         } else {
             csvSection.style.display = 'none';
             btn.textContent = '📂 Egyéni CSV betöltése';
             btn.classList.remove('btn-outline-danger');
             btn.classList.add('btn-outline-secondary');
+            btn.setAttribute('aria-expanded', 'false');
         }
     }
 }

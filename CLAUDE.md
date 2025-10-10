@@ -130,12 +130,16 @@ npm run embed:csv
   - `validateEntriesAsync(entries, dataMap, progressCallback, batchSize)` - Async batch validálás progress callback-kel
   - `findByName(input, dataMap)` - KSH kód keresése név alapján
 - `UIManager` - UI kezelés
-  - `setupEventListeners()` - Event binding
-  - `handleSearch(event)` - Keresés debounce-szal
+  - `setupEventListeners()` - Event binding (keyboard support a badge-ekhez)
+  - `handleSearch(event)` - Keresés debounce-szal + clear gomb kezelés
+  - `clearSearch()` - Keresési mező törlése és reset
+  - `showToast(message, type)` - Toast notification megjelenítés (success/error/warning/info)
   - `handleBulkValidate()` - Async tömeges validálás progress bar-ral
   - `showProgress(show)`, `updateProgress(current, total)` - Progressz bar kezelés
   - `displaySearchResults()`, `displayBulkResults()` - Megjelenítés
-  - `handleExport()` - CSV export
+  - `createBulkResultRow(item)`, `renderBulkResultsTable(results)` - Privát helper metódusok
+  - `handleExport()` - CSV export + success toast
+  - `toggleCustomCsv()` - CSV betöltés panel toggle (aria-expanded frissítéssel)
 - `App` - Fő alkalmazás
   - `constructor()` - Dependency injection (NameNormalizer létrehozása)
   - `init()` - Alkalmazás inicializálás
@@ -350,6 +354,53 @@ npm run embed:csv
   - Fázis 2: ES6 modules refaktorálás (`export class`, `import` statements)
   - Jobb tree-shaking (5-15% további méretcsökkentés várható)
   - TypeScript migráció lehetősége
+
+**2025-10-10 - UX/UI Javítások:**
+
+### 11. Felhasználói élmény és hozzáférhetőség javítása
+- **Probléma:**
+  - Gyenge responsive design mobilon (táblázatok túlcsordulnak)
+  - Hiányzó accessibility (ARIA attribútumok, semantic HTML)
+  - Invazív `alert()` dialógusok felhasználói interakciók során
+  - Nincs "Clear" gomb a keresésben (rossz UX)
+  - Alacsony kontraszt a figyelmeztető soroknál (sárga háttér)
+  - Hiányzó keyboard navigáció a szűrő badge-eknél
+- **Megoldás:**
+  - **Responsive design:**
+    - `@media (max-width: 768px)` és `(max-width: 576px)` breakpointok
+    - Csökkentett padding, font-size mobilon
+    - `.table-responsive` osztály horizontális scrollhoz
+    - Statisztikák oszlop elrendezés mobilon
+  - **Accessibility fejlesztések:**
+    - ARIA attribútumok: `role`, `aria-label`, `aria-live`, `aria-describedby`
+    - Semantic HTML: `<header>`, `role="main"`, `scope="col"`
+    - Skip link: "Ugrás a tartalomhoz" link (screen reader support)
+    - Focus indicators: 2px outline minden interaktív elemre
+    - Keyboard support: Enter/Space billentyűk a szűrő badge-ekhez
+  - **Toast notification rendszer:**
+    - Bootstrap Toast komponens az `alert()` helyett
+    - 4 típus: success, error, warning, info
+    - Auto-close 4 másodperc után
+    - `aria-live="assertive"` screen reader támogatással
+    - Toast container jobb felső sarokban
+  - **Keresési UX javítások:**
+    - "Clear" gomb (✕) a keresési input mezőben
+    - Automatikus megjelenés/eltüntetés input alapján
+    - Focus visszaállítás törlés után
+    - `autocomplete="off"` jobb keresési élményhez
+  - **Vizuális fejlesztések:**
+    - Színes bal border (4px) a validációs sorokban
+    - Jobb kontrasztok: `#fff8e1` sárga helyett (warning)
+    - Hover animáció: `transform: scale(1.05)` badge-ekhez
+    - Monospace font: Consolas/Monaco a bulk input mezőben
+- **Hatás:**
+  - **WCAG AA compliance:** Jobb hozzáférhetőség látássérültek számára
+  - **Mobilbarát:** Használható 320px széles képernyőkön is
+  - **Modern UX:** Toast-ok az alert()-ok helyett (nem blokkoló)
+  - **Keyboard navigáció:** Teljes funkcionalitás billentyűzetről
+  - **Bundle méret:** 175.39 KB → 134.58 KB minifikált (23.3% csökkentés)
+  - **Jobb vizuális hierarchia:** Színes borderek, focus indicators
+  - **Export feedback:** Sikerüzenet CSV letöltés után
 
 ## Tesztelés
 

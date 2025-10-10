@@ -10,6 +10,7 @@
             padding: 20px;
             background-color: #f8f9fa;
         }
+
         .container {
             max-width: 1200px;
             background-color: white;
@@ -17,79 +18,235 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
+
         .search-box {
             margin-bottom: 20px;
+            position: relative;
         }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0 8px;
+            display: none;
+            z-index: 10;
+        }
+
+        .clear-search:hover {
+            color: #212529;
+        }
+
+        .clear-search.visible {
+            display: block;
+        }
+
         .result-table {
             max-height: 500px;
             overflow-y: auto;
+            overflow-x: auto;
+            border-radius: 5px;
         }
+
+        /* Improved contrast for better accessibility (WCAG AA) */
         .valid-row {
-            background-color: #d4edda;
+            background-color: #d1e7dd;
+            border-left: 4px solid #198754;
         }
+
         .warning-row {
-            background-color: #fff3cd;
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
         }
+
         .invalid-row {
             background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
         }
+
         .stats {
             margin: 20px 0;
             padding: 15px;
             background-color: #e7f3ff;
             border-radius: 5px;
+            border: 1px solid #dee2e6;
         }
+
         .highlight {
-            background-color: yellow;
+            background-color: #ffd700;
+            color: #000;
             font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
         }
+
         #bulkInput {
             min-height: 200px;
-            font-family: monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
+
         .loading {
             display: none;
             text-align: center;
             padding: 20px;
         }
+
         .spinner-border {
             width: 3rem;
             height: 3rem;
         }
+
         .table-hover tbody tr:hover {
             background-color: #f0f0f0;
         }
+
         .badge-custom {
             font-size: 0.9em;
             padding: 5px 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .badge-custom:hover {
+            transform: scale(1.05);
+        }
+
+        /* Toast container for notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .result-table {
+                max-height: 400px;
+            }
+
+            .table {
+                font-size: 0.85rem;
+            }
+
+            .stats .row {
+                flex-direction: column;
+            }
+
+            .stats .col-md-2,
+            .stats .col-md-3 {
+                margin-bottom: 8px;
+            }
+
+            /* Horizontal scroll for tables on mobile */
+            .table-responsive {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #bulkInput {
+                font-size: 0.8rem;
+                min-height: 150px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn-lg {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        /* Focus indicators for accessibility */
+        button:focus,
+        input:focus,
+        textarea:focus,
+        .badge-custom:focus {
+            outline: 2px solid #0d6efd;
+            outline-offset: 2px;
+        }
+
+        /* Skip to main content link (accessibility) */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #0d6efd;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
-                <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
-                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>
-            </svg>
-            KSH kód ellenőrző
-        </h1>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#mainContent" class="skip-link">Ugrás a tartalomhoz</a>
 
-        <div class="alert alert-info" id="loadStatus">
+    <!-- Toast container for notifications -->
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="container" role="main">
+        <header>
+            <h1 class="mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>
+                </svg>
+                KSH kód ellenőrző
+            </h1>
+        </header>
+
+        <div class="alert alert-info" id="loadStatus" role="status" aria-live="polite">
             <strong>Állapot:</strong> <span id="statusText">CSV fájl betöltésére vár...</span>
         </div>
 
         <div class="mb-4" id="customCsvSection" style="display:none;">
             <label for="csvFile" class="form-label">CSV fájl betöltése:</label>
-            <input type="file" class="form-control" id="csvFile" accept=".csv">
-            <small class="text-muted">Formátum: ksh;onev (pl: "0102112";Budapest XVII. Kerület)</small>
+            <input type="file" class="form-control" id="csvFile" accept=".csv" aria-describedby="csvHelp">
+            <small id="csvHelp" class="text-muted">Formátum: ksh;onev (pl: "0102112";Budapest XVII. Kerület)</small>
         </div>
 
-        <button class="btn btn-outline-secondary btn-sm mb-3" id="toggleCsvBtn" style="display:none;">
+        <button class="btn btn-outline-secondary btn-sm mb-3" id="toggleCsvBtn" style="display:none;" aria-expanded="false" aria-controls="customCsvSection">
             📂 Egyéni CSV betöltése
         </button>
 
-        <div class="loading" id="loading">
+        <div class="loading" id="loading" role="status" aria-live="polite">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Betöltés...</span>
             </div>
@@ -112,24 +269,29 @@
 
             <div class="tab-content" id="myTabContent">
                 <!-- Gyors Keresés Tab -->
-                <div class="tab-pane fade show active" id="search" role="tabpanel">
+                <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
                     <div class="search-box">
                         <label for="searchInput" class="form-label">Keresés kód vagy név alapján:</label>
-                        <input type="text" class="form-control form-control-lg" id="searchInput"
-                               placeholder="pl: 0102112 vagy Budapest XVII">
-                        <small class="text-muted">Kezdj el gépelni a szűréshez...</small>
+                        <div class="search-wrapper">
+                            <input type="text" class="form-control form-control-lg" id="searchInput"
+                                   placeholder="pl: 0102112 vagy Budapest XVII"
+                                   aria-describedby="searchHelp"
+                                   autocomplete="off">
+                            <button class="clear-search" id="clearSearchBtn" aria-label="Keresés törlése" title="Törlés">✕</button>
+                        </div>
+                        <small id="searchHelp" class="text-muted">Kezdj el gépelni a szűréshez...</small>
                     </div>
 
-                    <div class="stats" id="searchStats">
+                    <div class="stats" id="searchStats" role="status" aria-live="polite">
                         Találatok száma: <strong>0</strong>
                     </div>
 
-                    <div class="result-table">
-                        <table class="table table-striped table-hover">
+                    <div class="result-table table-responsive">
+                        <table class="table table-striped table-hover" aria-label="Keresési eredmények">
                             <thead class="table-dark">
                                 <tr>
-                                    <th style="width: 20%">KSH Kód</th>
-                                    <th style="width: 80%">Önkormányzat Név</th>
+                                    <th scope="col" style="width: 20%">KSH Kód</th>
+                                    <th scope="col" style="width: 80%">Önkormányzat Név</th>
                                 </tr>
                             </thead>
                             <tbody id="searchResults">
@@ -144,14 +306,15 @@
                 </div>
 
                 <!-- Tömeges Ellenőrzés Tab -->
-                <div class="tab-pane fade" id="bulk" role="tabpanel">
+                <div class="tab-pane fade" id="bulk" role="tabpanel" aria-labelledby="bulk-tab">
                     <div class="mb-3">
                         <label for="bulkInput" class="form-label">
                             Másolj Excel-ből vagy írj be adatokat, majd nyomd meg az 'Ellenőrzés' gombot!
                         </label>
                         <textarea class="form-control" id="bulkInput" rows="10"
-                                  placeholder="Példa (3 lehetőség):&#10;0102112&#9;Budapest XVII. Kerület    (ellenőrzés: kód + név)&#10;0103179                         (auto-kitöltés: csak kód)&#10;Budapest II. Kerület            (auto-kitöltés: csak név)&#10;&#10;"></textarea>
-                        <small class="text-muted">
+                                  placeholder="Példa (3 lehetőség):&#10;0102112&#9;Budapest XVII. Kerület    (ellenőrzés: kód + név)&#10;0103179                         (auto-kitöltés: csak kód)&#10;Budapest II. Kerület            (auto-kitöltés: csak név)&#10;&#10;"
+                                  aria-describedby="bulkHelp"></textarea>
+                        <small id="bulkHelp" class="text-muted">
                             💡 Tipp: Ctrl+C az Excelben, majd Ctrl+V ide. A sorok vegyesen is megadhatók!<br>
                             • <strong>Kód + TAB + Név</strong> → ellenőrzi, hogy helyes-e<br>
                             • <strong>Csak KSH kód</strong> (pl: 0102112) → automatikusan kitölti a nevet<br>
@@ -159,58 +322,59 @@
                         </small>
                     </div>
 
-                    <button class="btn btn-primary btn-lg mb-3" id="validateBtn">
-                        ✓ Ellenőrzés
-                    </button>
-                    <button class="btn btn-success btn-lg mb-3 ms-2" id="exportBtn" style="display:none;">
-                        📥 Eredmény Exportálása
-                    </button>
-                    <button class="btn btn-secondary btn-lg mb-3 ms-2" id="clearBtn">
-                        🗑️ Eredmény Törlése
-                    </button>
+                    <div class="mb-3" role="group" aria-label="Műveletek">
+                        <button class="btn btn-primary btn-lg mb-2 me-2" id="validateBtn">
+                            ✓ Ellenőrzés
+                        </button>
+                        <button class="btn btn-success btn-lg mb-2 me-2" id="exportBtn" style="display:none;">
+                            📥 Eredmény Exportálása
+                        </button>
+                        <button class="btn btn-secondary btn-lg mb-2" id="clearBtn">
+                            🗑️ Eredmény Törlése
+                        </button>
+                    </div>
 
                     <!-- Progress Bar -->
-                    <div class="progress mb-3" id="progressContainer" style="display:none; height: 30px;">
+                    <div class="progress mb-3" id="progressContainer" style="display:none; height: 20px;" role="progressbar" aria-label="Validálási folyamat">
                         <div class="progress-bar progress-bar-striped progress-bar-animated"
-                             role="progressbar"
                              id="progressBar"
                              style="width: 0%"
                              aria-valuenow="0"
                              aria-valuemin="0"
                              aria-valuemax="100">
-                            <span id="progressText">0 / 0 (0%)</span>
+                            <span id="progressText" style="font-size: 0.85rem;">0 / 0 (0%)</span>
                         </div>
                     </div>
 
-                    <div class="stats" id="bulkStats" style="display:none;">
+                    <div class="stats" id="bulkStats" style="display:none;" role="region" aria-label="Statisztikák">
                         <div class="row">
                             <div class="col-md-2">
-                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" style="cursor:pointer;" data-filter="all" title="Kattints a szűréshez">0</span>
+                                <strong>Összesen:</strong> <span id="totalCount" class="badge bg-primary badge-custom" role="button" tabindex="0" data-filter="all" title="Kattints a szűréshez" aria-label="Összes eredmény szűrése">0</span>
                             </div>
                             <div class="col-md-2">
-                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" style="cursor:pointer;" data-filter="valid" title="Kattints a szűréshez">0</span>
+                                <strong>Helyes:</strong> <span id="validCount" class="badge bg-success badge-custom" role="button" tabindex="0" data-filter="valid" title="Kattints a szűréshez" aria-label="Helyes eredmények szűrése">0</span>
                             </div>
                             <div class="col-md-3">
-                                <strong>Figyelmeztető:</strong> <span id="warningCount" class="badge bg-warning text-dark badge-custom" style="cursor:pointer;" data-filter="warning" title="Kattints a szűréshez">0</span>
+                                <strong>Figyelmeztető:</strong> <span id="warningCount" class="badge bg-warning text-dark badge-custom" role="button" tabindex="0" data-filter="warning" title="Kattints a szűréshez" aria-label="Figyelmeztető eredmények szűrése">0</span>
                             </div>
                             <div class="col-md-2">
-                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" style="cursor:pointer;" data-filter="invalid" title="Kattints a szűréshez">0</span>
+                                <strong>Hibás:</strong> <span id="invalidCount" class="badge bg-danger badge-custom" role="button" tabindex="0" data-filter="invalid" title="Kattints a szűréshez" aria-label="Hibás eredmények szűrése">0</span>
                             </div>
                             <div class="col-md-3">
-                                <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom">0%</span>
+                                <strong>Pontosság:</strong> <span id="accuracy" class="badge bg-info badge-custom" aria-label="Validálási pontosság">0%</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="result-table">
-                        <table class="table table-bordered">
+                    <div class="result-table table-responsive">
+                        <table class="table table-bordered" aria-label="Validálási eredmények">
                             <thead class="table-dark">
                                 <tr>
-                                    <th style="width: 5%">#</th>
-                                    <th style="width: 15%">Megadott Kód</th>
-                                    <th style="width: 35%">Megadott Név</th>
-                                    <th style="width: 35%">Helyes Név</th>
-                                    <th style="width: 10%">Státusz</th>
+                                    <th scope="col" style="width: 5%">#</th>
+                                    <th scope="col" style="width: 15%">Megadott Kód</th>
+                                    <th scope="col" style="width: 35%">Megadott Név</th>
+                                    <th scope="col" style="width: 35%">Helyes Név</th>
+                                    <th scope="col" style="width: 10%">Státusz</th>
                                 </tr>
                             </thead>
                             <tbody id="bulkResults">
