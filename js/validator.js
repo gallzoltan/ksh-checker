@@ -163,6 +163,13 @@ class Validator {
         const inputCore = this.extractCoreName(inputTrimmed);
         const inputCoreWithDiacritics = inputParsed.normalizedWithAccents;
 
+        // Detect if input refers to a city (város) or county (vármegye/vármegyei)
+        const inputHasVaros = /\bv[aá]ros\b/i.test(inputTrimmed);
+        const inputHasMegyeiJogu = /\bmegyei\s+jog[uú]\b/i.test(inputTrimmed);
+        const inputHasVarmegye = /\bv[aá]rmegy(e|ei)\b/i.test(inputTrimmed);
+        const inputIsCity = inputHasVaros || inputHasMegyeiJogu;
+        const inputIsCounty = inputHasVarmegye;
+
         let bestMatch = null;
         let bestScore = -1;
 
@@ -171,6 +178,21 @@ class Validator {
             const matchType = this.fuzzyMatchNames(inputTrimmed, data);
 
             if (matchType === 'nomatch') {
+                continue;
+            }
+
+            // Detect if reference is a county (vármegye/vármegyei)
+            const refIsCounty = /\bv[aá]rmegy(e|ei)\b/i.test(data.original);
+            const refIsCity = /\bv[aá]ros\b/i.test(data.original) || /\bmegyei\s+jog[uú]\b/i.test(data.original);
+
+            // Skip if type mismatch: input is city but reference is county, or vice versa
+            // Exception: if input doesn't specify type, allow both
+            if (inputIsCity && refIsCounty && !inputIsCounty) {
+                // Input explicitly says "város" or "megyei jogú" but reference is "vármegyei" → skip
+                continue;
+            }
+            if (inputIsCounty && refIsCity && !inputIsCity) {
+                // Input explicitly says "vármegyei" but reference is "város" → skip
                 continue;
             }
 

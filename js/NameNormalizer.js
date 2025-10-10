@@ -2,22 +2,24 @@
  * Települési önkormányzat nevek normalizálása és összehasonlítása
  * 
  * Tesztelendő:
- Budapest Főváros Önkormányzata
- Szeged Megyei Jogú Város Önkormányzata
- Budapest Főváros X. Kerület
- BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA
- Budapest Főváros II. Kerület
- Budapest Főváros XIV. Kerület Zugló
- VÉCS KÖZSÉGI ÖNKORMÁNYZAT*
- Bokod Község Önkományzata
- Piliscsév Község Önkományzata
- OLCSVAAPÁTI KÖZSÉG ÖKORMÁNYZATA
- ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA
- Békés Város Önkormányzat
- Heves Város Önkormányzata
- Veszprém Megyei Jogú Város Önkormányzata
- KOMORÓ KÖZSÉG ÖNKORMÁNYZATA
- Kömörő Község Önkormányzata
+Budapest Főváros Önkormányzata === Budapest Főváros
+Szeged Megyei Jogú Város Önkormányzata === Szeged
+Budapest Főváros X. Kerület === Budapest X. Kerület
+BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA === Budapest XVII. Kerület
+Budapest Főváros II. Kerület === Budapest II. Kerület
+Budapest Főváros XIV. Kerület Zugló === Budapest XIV. Kerület
+VÉCS KÖZSÉGI ÖNKORMÁNYZAT* === Vécs
+Bokod Község Önkományzata === Bokod
+Piliscsév Község Önkományzata === Piliscsév
+OLCSVAAPÁTI KÖZSÉG ÖKORMÁNYZATA === Olcsvaapáti
+ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA === Zalamerenye
+Békés Város Önkormányzat === Békés
+Békés Vármegyei Önkormányzat === Békés Vármegyei Önkormányzat
+Heves Város Önkormányzata === Heves
+Heves Vármegyei Önkormányzat === Heves Vármegyei Önkormányzat
+Veszprém Megyei Jogú Város Önkormányzata === Veszprém
+KOMORÓ KÖZSÉG ÖNKORMÁNYZATA === Komoró
+Kömörő Község Önkormányzata === Kömörő
  */
 
 class NameNormalizer {

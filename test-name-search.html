@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Search Tests - KSH Checker</title>
+    <style>
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ec9b0;
+            border-bottom: 2px solid #4ec9b0;
+            padding-bottom: 10px;
+        }
+        .test-result {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .test-pass {
+            background-color: #1a3d2f;
+            border-left-color: #4ec9b0;
+        }
+        .test-fail {
+            background-color: #3d1a1a;
+            border-left-color: #f48771;
+        }
+        .test-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .test-details {
+            margin-left: 20px;
+            color: #9cdcfe;
+        }
+        .test-details div {
+            margin: 5px 0;
+        }
+        .label {
+            color: #c586c0;
+            display: inline-block;
+            width: 120px;
+        }
+        .summary {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #264f78;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .summary-fail {
+            background-color: #5a1e1e;
+        }
+        .failures-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #3d1a1a;
+            border-radius: 5px;
+        }
+        .failures-summary h2 {
+            color: #f48771;
+            margin-top: 0;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Name → KSH Code Search Tests</h1>
+        <div id="loading" class="loading">Loading data and running tests...</div>
+        <div id="results"></div>
+    </div>
+
+    <!-- Load JS modules -->
+    <script src="js/data.js"></script>
+    <script src="js/Config.js"></script>
+    <script src="js/NameNormalizer.js"></script>
+    <script src="js/DataProcessor.js"></script>
+    <script src="js/Validator.js"></script>
+
+    <script>
+        // Test cases from NameNormalizer.js comments (lines 5-22)
+        const testCases = [
+            {
+                input: 'Budapest Főváros Önkormányzata',
+                expectedKsh: '0113578',
+                expectedName: 'Budapest Főváros',
+                description: 'Budapest Főváros - remove Önkormányzata'
+            },
+            {
+                input: 'Szeged Megyei Jogú Város Önkormányzata',
+                expectedKsh: '0633367',
+                expectedName: 'Szeged',
+                description: 'Szeged - remove Megyei Jogú Város Önkormányzata'
+            },
+            {
+                input: 'Budapest Főváros X. Kerület',
+                expectedKsh: '0110700',
+                expectedName: 'Budapest X. Kerület',
+                description: 'Budapest X. Kerület - remove Főváros'
+            },
+            {
+                input: 'BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA',
+                expectedKsh: '0102112',
+                expectedName: 'Budapest XVII. Kerület',
+                description: 'Budapest XVII. Kerület - uppercase, remove Főváros, RÁKOSMENTE, Önkormányzata'
+            },
+            {
+                input: 'Budapest Főváros II. Kerület',
+                expectedKsh: '0103179',
+                expectedName: 'Budapest II. Kerület',
+                description: 'Budapest II. Kerület - remove Főváros'
+            },
+            {
+                input: 'Budapest Főváros XIV. Kerület Zugló',
+                expectedKsh: '0116337',
+                expectedName: 'Budapest XIV. Kerület',
+                description: 'Budapest XIV. Kerület - remove Főváros and Zugló'
+            },
+            {
+                input: 'VÉCS KÖZSÉGI ÖNKORMÁNYZAT',
+                expectedKsh: '1005759',
+                expectedName: 'Vécs',
+                description: 'Vécs - remove KÖZSÉGI ÖNKORMÁNYZAT'
+            },
+            {
+                input: 'Bokod Község Önkományzata',
+                expectedKsh: '1107311',
+                expectedName: 'Bokod',
+                description: 'Bokod - typo in Önkományzata (missing r)'
+            },
+            {
+                input: 'Piliscsév Község Önkományzata',
+                expectedKsh: '1121874',
+                expectedName: 'Piliscsév',
+                description: 'Piliscsév - typo in Önkományzata (missing r)'
+            },
+            {
+                input: 'OLCSVAAPÁTI KÖZSÉG ÖKORMÁNYZATA',
+                expectedKsh: '1510834',
+                expectedName: 'Olcsvaapáti',
+                description: 'Olcsvaapáti - typo in ÖKORMÁNYZATA (missing N)'
+            },
+            {
+                input: 'ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA',
+                expectedKsh: '2031617',
+                expectedName: 'Zalamerenye',
+                description: 'Zalamerenye - remove KÖZSÉG ÖNKORMÁNYZATA'
+            },
+            {
+                input: 'Békés Város Önkormányzat',
+                expectedKsh: '0409760',
+                expectedName: 'Békés',
+                description: 'Békés Város - distinguish from Békés Vármegyei'
+            },
+            {
+                input: 'Békés Vármegyei Önkormányzat',
+                expectedKsh: '0400000',
+                expectedName: 'Békés Vármegyei Önkormányzat',
+                description: 'Békés Vármegyei - keep full name to distinguish from Békés Város'
+            },
+            {
+                input: 'Heves Város Önkormányzata',
+                expectedKsh: '1014526',
+                expectedName: 'Heves',
+                description: 'Heves Város - distinguish from Heves Vármegyei'
+            },
+            {
+                input: 'Heves Vármegyei Önkormányzat',
+                expectedKsh: '1000000',
+                expectedName: 'Heves Vármegyei Önkormányzat',
+                description: 'Heves Vármegyei - keep full name to distinguish from Heves Város'
+            },
+            {
+                input: 'Veszprém Megyei Jogú Város Önkormányzata',
+                expectedKsh: '1911767',
+                expectedName: 'Veszprém',
+                description: 'Veszprém - remove Megyei Jogú Város Önkormányzata'
+            },
+            {
+                input: 'KOMORÓ KÖZSÉG ÖNKORMÁNYZATA',
+                expectedKsh: '1527146',
+                expectedName: 'Komoró',
+                description: 'Komoró - distinguish from Kömörő (different accent)'
+            },
+            {
+                input: 'Kömörő Község Önkormányzata',
+                expectedKsh: '1523612',
+                expectedName: 'Kömörő',
+                description: 'Kömörő - distinguish from Komoró (different accent)'
+            }
+        ];
+
+        // Initialize and run tests
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Initialize classes (correct order: nameNormalizer first, then validator, then dataProcessor)
+                const nameNormalizer = new NameNormalizer();
+                const validator = new Validator(nameNormalizer);
+                const dataProcessor = new DataProcessor(validator, nameNormalizer);
+
+                // Load data
+                dataProcessor.processData(EMBEDDED_JSON_DATA);
+                const dataMap = dataProcessor.getData();
+
+                console.log(`✓ Loaded ${dataMap.size} municipalities from database`);
+
+                // Run tests
+                let passCount = 0;
+                let failCount = 0;
+                const failures = [];
+                let resultsHTML = '';
+
+                testCases.forEach((testCase, index) => {
+                    const result = validator.findByName(testCase.input, dataMap);
+                    const passed = result && result.ksh === testCase.expectedKsh;
+
+                    if (passed) {
+                        passCount++;
+                        resultsHTML += `
+                            <div class="test-result test-pass">
+                                <div class="test-header">✓ Test ${index + 1}: PASS</div>
+                                <div class="test-details">
+                                    <div><span class="label">Input:</span> "${testCase.input}"</div>
+                                    <div><span class="label">Expected:</span> ${testCase.expectedKsh} → "${testCase.expectedName}"</div>
+                                    <div><span class="label">Got:</span> ${result.ksh} → "${result.onev}" (${result.matchType})</div>
+                                    <div><span class="label">Description:</span> ${testCase.description}</div>
+                                </div>
+                            </div>
+                        `;
+
+                        console.log(`✓ Test ${index + 1}: PASS`);
+                        console.log(`  Input:    "${testCase.input}"`);
+                        console.log(`  Expected: ${testCase.expectedKsh} → "${testCase.expectedName}"`);
+                        console.log(`  Got:      ${result.ksh} → "${result.onev}" (${result.matchType})`);
+                    } else {
+                        failCount++;
+                        resultsHTML += `
+                            <div class="test-result test-fail">
+                                <div class="test-header">✗ Test ${index + 1}: FAIL</div>
+                                <div class="test-details">
+                                    <div><span class="label">Input:</span> "${testCase.input}"</div>
+                                    <div><span class="label">Expected:</span> ${testCase.expectedKsh} → "${testCase.expectedName}"</div>
+                                    <div><span class="label">Got:</span> ${result ? `${result.ksh} → "${result.onev}" (${result.matchType})` : 'null (no match found)'}</div>
+                                    <div><span class="label">Description:</span> ${testCase.description}</div>
+                                </div>
+                            </div>
+                        `;
+
+                        failures.push({
+                            test: index + 1,
+                            input: testCase.input,
+                            expected: `${testCase.expectedKsh} → ${testCase.expectedName}`,
+                            got: result ? `${result.ksh} → ${result.onev}` : 'null',
+                            description: testCase.description
+                        });
+
+                        console.log(`✗ Test ${index + 1}: FAIL`);
+                        console.log(`  Input:    "${testCase.input}"`);
+                        console.log(`  Expected: ${testCase.expectedKsh} → "${testCase.expectedName}"`);
+                        console.log(`  Got:      ${result ? `${result.ksh} → ${result.onev}` : 'null'}`);
+                    }
+                });
+
+                // Summary
+                const summaryClass = failCount > 0 ? 'summary summary-fail' : 'summary';
+                let summaryHTML = `
+                    <div class="${summaryClass}">
+                        <strong>Test Results:</strong> ${passCount} passed, ${failCount} failed (${testCases.length} total)
+                    </div>
+                `;
+
+                // Failed tests summary
+                if (failures.length > 0) {
+                    summaryHTML += '<div class="failures-summary"><h2>Failed Tests Summary</h2>';
+                    failures.forEach(failure => {
+                        summaryHTML += `
+                            <div style="margin-bottom: 20px;">
+                                <strong>Test ${failure.test}:</strong> ${failure.description}<br>
+                                <span class="label">Input:</span> "${failure.input}"<br>
+                                <span class="label">Expected:</span> ${failure.expected}<br>
+                                <span class="label">Got:</span> ${failure.got}
+                            </div>
+                        `;
+                    });
+                    summaryHTML += '</div>';
+
+                    console.log('\n=== Failed Tests Summary ===');
+                    failures.forEach(failure => {
+                        console.log(`\nTest ${failure.test}: ${failure.description}`);
+                        console.log(`  Input:    "${failure.input}"`);
+                        console.log(`  Expected: ${failure.expected}`);
+                        console.log(`  Got:      ${failure.got}`);
+                    });
+                } else {
+                    console.log('\n✓ All tests passed!');
+                }
+
+                // Display results
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').innerHTML = summaryHTML + resultsHTML;
+
+            } catch (error) {
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #f48771;">
+                        <h2>Error loading tests:</h2>
+                        <pre>${error.message}\n${error.stack}</pre>
+                    </div>
+                `;
+                console.error('Test error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

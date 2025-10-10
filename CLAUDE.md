@@ -264,3 +264,46 @@ npm run embed:csv
   - **Hibakezelés:** Try-catch blokk a validálási hibák kezelésére
   - **Optimalizált teljesítmény:** Adaptív batch size minimalizálja az overhead-et
   - **Bundle méret:** 170.18 KB → 121.79 KB minifikált (28.4% csökkentés)
+
+**2025-10-10 - Település típus alapú keresés javítása:**
+
+### 8. Validator.js - Város vs. Vármegyei megkülönböztetés
+- **Probléma:**
+  - A `findByName()` metódus nem tudta megkülönböztetni az azonos nevű város és vármegyei önkormányzatokat
+  - Példák:
+    - "Békés Város Önkormányzat" → hibásan "Békés Vármegyei Önkormányzat"-ot találta
+    - "Heves Város Önkormányzata" → hibásan "Heves Vármegyei Önkormányzat"-ot találta
+    - "Veszprém Megyei Jogú Város Önkormányzata" → hibásan "Veszprém Vármegyei Önkormányzat"-ot találta
+  - A core név alapú scoring nem vette figyelembe a település típusát
+  - Vármegyei önkormányzatok (KSH kód végződik "00000"-ra) prioritást kaptak
+- **Megoldás:**
+  - Típusfelismerés az input szövegben:
+    - `inputIsCity`: detektálja a "város" vagy "megyei jogú" kulcsszavakat
+    - `inputIsCounty`: detektálja a "vármegye" vagy "vármegyei" kulcsszavakat
+  - Típusfelismerés a referencia adatokban:
+    - `refIsCity`: referencia adat tartalmaz "város" vagy "megyei jogú" kulcsszót
+    - `refIsCounty`: referencia adat tartalmaz "vármegye" vagy "vármegyei" kulcsszót
+  - Típus-alapú szűrés a scoring előtt:
+    - Ha input "város" típusú, de referencia "vármegyei" → skip (folytatás következő jelölttel)
+    - Ha input "vármegyei" típusú, de referencia "város" → skip
+    - Ha input nem specifikálja a típust → mindkettő elfogadható
+- **Hatás:**
+  - **Pontos keresés:** Város és vármegyei önkormányzatok helyes megkülönböztetése
+  - **18 tesztből 18 sikeres:** Az összes edge case helyesen működik
+  - **Regex-alapú típusdetektálás:** Rugalmas, ékezetek támogatásával (`/\bv[aá]ros\b/i`)
+  - **Jobb felhasználói élmény:** A keresés pontosabb találatokat ad azonos nevű települések esetén
+
+## Tesztelés
+
+**Név → KSH kód keresés tesztelése:**
+```bash
+# Nyisd meg böngészőben a teszt fájlt:
+start test-name-search.html
+```
+
+A `test-name-search.html` fájl 18 problémás esetet tesztel:
+- Budapest kerületek különböző formátumokban
+- Elírások az "Önkormányzata" szóban
+- Város vs. Vármegyei megkülönböztetés (Békés, Heves, Veszprém)
+- Ékezetes különbségek (Komoró vs. Kömörő)
+- Hosszú önkormányzati nevek (pl. "BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA")
