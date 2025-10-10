@@ -8,6 +8,9 @@ class App {
         this.cacheManager = new CacheManager();
         this.dataProcessor = new DataProcessor(this.validator, this.nameNormalizer);
         this.uiManager = new UIManager(this.dataProcessor, this.validator);
+
+        // P1: Link validator to dataProcessor for reverse index access
+        this.validator.setDataProcessor(this.dataProcessor);
     }
 
     /**

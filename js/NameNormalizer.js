@@ -51,7 +51,7 @@ class NameNormalizer {
       'település': ['település', 'telepules', 'települési', 'telepulesi'],
       'város': ['város', 'varos', 'városi', 'varosi'],
       'megye': ['megye', 'megyei'],
-      'vármegye': ['vármegye', 'varmegye', 'vármegyei', 'varmegyei'],  
+      'vármegye': ['vármegye', 'varmegye', 'vármegyei', 'varmegyei'],
       'megyei jogú': ['jogú', 'jogu'],
       'főváros': ['főváros', 'fovaros', 'fővárosi', 'fovarosi'],
       'kerület': ['kerület', 'kerulet', 'kerületi', 'keruleti']
@@ -64,6 +64,10 @@ class NameNormalizer {
       'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ö': 'O', 'Ő': 'O',
       'Ú': 'U', 'Ü': 'U', 'Ű': 'U'
     };
+
+    // P2: LRU cache for parse results (max 1000 entries)
+    this.parseCache = new Map();
+    this.maxCacheSize = 1000;
   }
 
   /**
@@ -91,12 +95,17 @@ class NameNormalizer {
   }
 
   /**
-   * Település nevének parsolása
+   * Település nevének parsolása (P2 optimized: LRU cache)
    */
   parse(name) {
+    // P2: Cache lookup
+    if (this.parseCache.has(name)) {
+      return this.parseCache.get(name);
+    }
+
     const normalized = this.normalize(name);
     const parts = normalized.split(' ').filter(p => p.length > 0);
-    
+
     // Eredeti szöveg részek (ékezetekkel)
     const originalNormalized = name.toLowerCase().trim()
       .replace(/\s+/g, ' ')
@@ -107,7 +116,7 @@ class NameNormalizer {
       .replace(/\s+/g, ' ')
       .trim();
     const originalParts = originalNormalized.split(' ').filter(p => p.length > 0);
-    
+
     let settlementName = [...parts];
     let originalSettlementName = [...originalParts];
     let municipalityTypes = [];
@@ -119,7 +128,7 @@ class NameNormalizer {
       for (const variant of variants) {
         const normalizedVariant = this.normalize(variant);
         const index = parts.indexOf(normalizedVariant);
-        
+
         if (index !== -1 && !removedIndices.includes(index) && !foundTypes.has(type)) {
           municipalityTypes.push(type);
           foundTypes.add(type);
@@ -137,7 +146,7 @@ class NameNormalizer {
       originalSettlementName = originalParts.filter((_, i) => !removedIndices.includes(i));
     }
 
-    return {
+    const result = {
       original: name,
       normalized: settlementName.join(' '),
       normalizedWithAccents: originalSettlementName.join(' '), // Ékezetes forma
@@ -145,6 +154,16 @@ class NameNormalizer {
       types: municipalityTypes,
       fullNormalized: normalized
     };
+
+    // P2: Cache store (LRU eviction)
+    if (this.parseCache.size >= this.maxCacheSize) {
+      // Remove first (oldest) entry
+      const firstKey = this.parseCache.keys().next().value;
+      this.parseCache.delete(firstKey);
+    }
+    this.parseCache.set(name, result);
+
+    return result;
   }
 
   /**

@@ -5,6 +5,11 @@ class DataProcessor {
         this.validator = validator;
         this.nameNormalizer = nameNormalizer;
         this.dataMap = new Map();
+
+        // Reverse indexes for O(1) lookups (P1 optimization)
+        this.lowerIndex = new Map();     // lowercase name → ksh (exact match)
+        this.nameIndex = new Map();      // core name (lowercase) → [{ksh, data}] (core match)
+        this.normalizedIndex = new Map(); // normalized name → ksh (normalized match)
     }
 
     /**
@@ -29,6 +34,9 @@ class DataProcessor {
      */
     processData(data) {
         this.dataMap.clear();
+        this.lowerIndex.clear();
+        this.nameIndex.clear();
+        this.normalizedIndex.clear();
 
         data.forEach(row => {
             const ksh = row.ksh ? row.ksh.trim() : '';
@@ -44,8 +52,12 @@ class DataProcessor {
                 const normalized = this.validator.normalizeText(expanded);
                 const core = this.validator.romanToArabic(this.validator.extractCoreName(expanded));
 
+                // P3: Pre-compute regex-based type detection flags
+                const isCounty = /\bv[aá]rmegy(e|ei)\b/i.test(onev);
+                const isCity = /\bv[aá]ros\b/i.test(onev) || /\bmegyei\s+jog[uú]\b/i.test(onev);
+
                 // Store object with pre-computed values for fast searching and validation
-                this.dataMap.set(ksh, {
+                const dataObj = {
                     original: onev,
                     lower: onev.toLowerCase(),
                     kshLower: ksh.toLowerCase(),
@@ -55,7 +67,36 @@ class DataProcessor {
                     // Add NameNormalizer parsed data
                     parsedName: parsed.normalized,
                     parsedFullNormalized: parsed.fullNormalized,
-                    parsedType: parsed.type
+                    parsedType: parsed.type,
+                    // P3: Pre-computed type flags
+                    isCounty: isCounty,
+                    isCity: isCity
+                };
+
+                this.dataMap.set(ksh, dataObj);
+
+                // P1: Build reverse indexes for O(1) lookups
+                const lowerName = onev.toLowerCase();
+                const coreLower = core.toLowerCase();
+                const normalizedLower = normalized.toLowerCase();
+
+                // Exact match index (lowercase)
+                if (!this.lowerIndex.has(lowerName)) {
+                    this.lowerIndex.set(lowerName, ksh);
+                }
+
+                // Normalized match index
+                if (!this.normalizedIndex.has(normalizedLower)) {
+                    this.normalizedIndex.set(normalizedLower, ksh);
+                }
+
+                // Core name index (multiple matches possible for same core)
+                if (!this.nameIndex.has(coreLower)) {
+                    this.nameIndex.set(coreLower, []);
+                }
+                this.nameIndex.get(coreLower).push({
+                    ksh: ksh,
+                    data: dataObj
                 });
             }
         });

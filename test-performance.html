@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - KSH Checker</title>
+    <style>
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ec9b0;
+            border-bottom: 2px solid #4ec9b0;
+            padding-bottom: 10px;
+        }
+        .test-result {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #2d2d2d;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #1a1a1a;
+            border-radius: 3px;
+        }
+        .metric-label {
+            color: #9cdcfe;
+            font-weight: bold;
+        }
+        .metric-value {
+            color: #4ec9b0;
+            font-size: 1.1em;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 50px;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Teljesítmény Teszt - Név → KSH Keresés</h1>
+        <div id="loading" class="loading">Adatok betöltése...</div>
+        <div id="controls" style="display: none;">
+            <button id="test100">100 név teszt</button>
+            <button id="test500">500 név teszt</button>
+            <button id="test1000">1000 név teszt</button>
+            <button id="testAll">Összes teszt futtatása</button>
+        </div>
+        <div id="results"></div>
+    </div>
+
+    <!-- Load JS modules -->
+    <script src="js/data.js"></script>
+    <script src="js/Config.js"></script>
+    <script src="js/NameNormalizer.js"></script>
+    <script src="js/DataProcessor.js"></script>
+    <script src="js/Validator.js"></script>
+
+    <script>
+        let nameNormalizer, validator, dataProcessor, dataMap;
+        let testNames = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Initialize classes
+                nameNormalizer = new NameNormalizer();
+                validator = new Validator(nameNormalizer);
+                dataProcessor = new DataProcessor(validator, nameNormalizer);
+
+                // Link validator to dataProcessor for reverse index access
+                validator.setDataProcessor(dataProcessor);
+
+                // Load data
+                dataProcessor.processData(EMBEDDED_JSON_DATA);
+                dataMap = dataProcessor.getData();
+
+                console.log(`✓ Loaded ${dataMap.size} municipalities from database`);
+
+                // Prepare test names (extract all municipality names)
+                testNames = Array.from(dataMap.values()).map(d => d.original);
+
+                // Show controls
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('controls').style.display = 'block';
+
+                // Setup event listeners
+                document.getElementById('test100').addEventListener('click', () => runTest(100));
+                document.getElementById('test500').addEventListener('click', () => runTest(500));
+                document.getElementById('test1000').addEventListener('click', () => runTest(1000));
+                document.getElementById('testAll').addEventListener('click', () => runAllTests());
+
+            } catch (error) {
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #f48771;">
+                        <h2>Error loading:</h2>
+                        <pre>${error.message}\n${error.stack}</pre>
+                    </div>
+                `;
+                console.error('Initialization error:', error);
+            }
+        });
+
+        /**
+         * Run performance test
+         */
+        function runTest(count) {
+            const resultsDiv = document.getElementById('results');
+            const testSet = testNames.slice(0, count);
+
+            // Disable buttons
+            document.querySelectorAll('button').forEach(btn => btn.disabled = true);
+
+            // Add test result container
+            const testContainer = document.createElement('div');
+            testContainer.className = 'test-result';
+            testContainer.innerHTML = `<h3>🚀 Teszt: ${count} név keresése...</h3>`;
+            resultsDiv.appendChild(testContainer);
+
+            setTimeout(() => {
+                let found = 0;
+                let notFound = 0;
+                const startTime = performance.now();
+
+                // Run test
+                for (const name of testSet) {
+                    const result = validator.findByName(name, dataMap);
+                    if (result) {
+                        found++;
+                    } else {
+                        notFound++;
+                    }
+                }
+
+                const endTime = performance.now();
+                const totalTime = endTime - startTime;
+                const avgTime = totalTime / count;
+
+                // Display results
+                testContainer.innerHTML = `
+                    <h3>✅ Teszt kész: ${count} név</h3>
+                    <div class="metric">
+                        <span class="metric-label">Teljes idő:</span>
+                        <span class="metric-value">${totalTime.toFixed(2)} ms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Átlagos idő/név:</span>
+                        <span class="metric-value">${avgTime.toFixed(2)} ms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Találatok:</span>
+                        <span class="metric-value">${found} / ${count} (${((found/count)*100).toFixed(1)}%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Nem talált:</span>
+                        <span class="metric-value">${notFound}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Névkeresés/sec:</span>
+                        <span class="metric-value">${(count / (totalTime / 1000)).toFixed(0)} név/sec</span>
+                    </div>
+                `;
+
+                console.log(`✅ Test ${count} név: ${totalTime.toFixed(2)} ms (${avgTime.toFixed(2)} ms/név)`);
+                console.log(`   Találatok: ${found} / ${count}`);
+
+                // Re-enable buttons
+                document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            }, 100);
+        }
+
+        /**
+         * Run all tests sequentially
+         */
+        async function runAllTests() {
+            document.querySelectorAll('button').forEach(btn => btn.disabled = true);
+
+            runTest(100);
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            runTest(500);
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            runTest(1000);
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+        }
+    </script>
+</body>
+</html>

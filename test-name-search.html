@@ -220,6 +220,9 @@
                 const validator = new Validator(nameNormalizer);
                 const dataProcessor = new DataProcessor(validator, nameNormalizer);
 
+                // Link validator to dataProcessor for reverse index access (P1 optimization)
+                validator.setDataProcessor(dataProcessor);
+
                 // Load data
                 dataProcessor.processData(EMBEDDED_JSON_DATA);
                 const dataMap = dataProcessor.getData();

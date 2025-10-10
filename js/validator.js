@@ -3,6 +3,15 @@
 class Validator {
     constructor(nameNormalizer) {
         this.nameNormalizer = nameNormalizer;
+        this.dataProcessor = null; // Will be set by App.js for reverse index access
+    }
+
+    /**
+     * Set data processor reference for reverse index access
+     * @param {DataProcessor} dataProcessor
+     */
+    setDataProcessor(dataProcessor) {
+        this.dataProcessor = dataProcessor;
     }
 
     /**
@@ -142,7 +151,7 @@ class Validator {
     }
 
     /**
-     * Find KSH code by municipality name using fuzzy matching
+     * Find KSH code by municipality name using fuzzy matching (P1 optimized)
      * @param {string} input - Municipality name to search
      * @param {Map} dataMap - Reference data map
      * @returns {Object|null} - {ksh, onev, matchType} or null if not found
@@ -154,49 +163,93 @@ class Validator {
 
         const inputTrimmed = input.trim();
         const inputLower = inputTrimmed.toLowerCase();
-        const inputNormalized = this.normalizeText(inputTrimmed);
+
+        // P1: Fast path - O(1) exact match lookup
+        if (this.dataProcessor && this.dataProcessor.lowerIndex.has(inputLower)) {
+            const ksh = this.dataProcessor.lowerIndex.get(inputLower);
+            const data = dataMap.get(ksh);
+            return {
+                ksh: ksh,
+                onev: data.original,
+                matchType: 'exact'
+            };
+        }
+
+        // Pre-compute input properties once
+        const expandedInput = this.expandAbbreviations(inputTrimmed);
+        const inputNormalized = this.normalizeText(expandedInput);
+        const inputCore = this.romanToArabic(this.extractCoreName(expandedInput));
+
+        // P1: Fast path - O(1) normalized match lookup
+        if (this.dataProcessor && this.dataProcessor.normalizedIndex.has(inputNormalized.toLowerCase())) {
+            const ksh = this.dataProcessor.normalizedIndex.get(inputNormalized.toLowerCase());
+            const data = dataMap.get(ksh);
+            return {
+                ksh: ksh,
+                onev: data.original,
+                matchType: 'exact'
+            };
+        }
 
         // Use NameNormalizer for parsing
         const inputParsed = this.nameNormalizer.parse(inputTrimmed);
-
-        // Extract core with diacritics preserved for accurate matching
-        const inputCore = this.extractCoreName(inputTrimmed);
         const inputCoreWithDiacritics = inputParsed.normalizedWithAccents;
 
-        // Detect if input refers to a city (város) or county (vármegye/vármegyei)
+        // P1: Medium path - O(k) core name lookup (k = small number of candidates)
+        const coreLower = inputCore.toLowerCase();
+        let candidates = [];
+
+        if (this.dataProcessor && this.dataProcessor.nameIndex.has(coreLower)) {
+            // Get candidates from core name index
+            candidates = this.dataProcessor.nameIndex.get(coreLower).map(entry => ({
+                ksh: entry.ksh,
+                data: entry.data
+            }));
+        }
+
+        // If no core match candidates, fall back to full scan (rare case)
+        if (candidates.length === 0) {
+            // Collect candidates via fuzzy matching (O(n) - only for edge cases)
+            for (let [ksh, data] of dataMap) {
+                const matchType = this.fuzzyMatchNames(inputTrimmed, data);
+                if (matchType !== 'nomatch') {
+                    candidates.push({ ksh, data });
+                }
+            }
+        }
+
+        // If still no candidates, not found
+        if (candidates.length === 0) {
+            return null;
+        }
+
+        // Detect input type once (P3: use pre-computed flags for reference data)
         const inputHasVaros = /\bv[aá]ros\b/i.test(inputTrimmed);
         const inputHasMegyeiJogu = /\bmegyei\s+jog[uú]\b/i.test(inputTrimmed);
         const inputHasVarmegye = /\bv[aá]rmegy(e|ei)\b/i.test(inputTrimmed);
         const inputIsCity = inputHasVaros || inputHasMegyeiJogu;
         const inputIsCounty = inputHasVarmegye;
 
+        // Score candidates and find best match
         let bestMatch = null;
         let bestScore = -1;
 
-        // Try to find best match by scoring
-        for (let [ksh, data] of dataMap) {
-            const matchType = this.fuzzyMatchNames(inputTrimmed, data);
+        for (const candidate of candidates) {
+            const { ksh, data } = candidate;
 
-            if (matchType === 'nomatch') {
-                continue;
-            }
+            // P3: Use pre-computed type flags (no regex during search!)
+            const refIsCounty = data.isCounty;
+            const refIsCity = data.isCity;
 
-            // Detect if reference is a county (vármegye/vármegyei)
-            const refIsCounty = /\bv[aá]rmegy(e|ei)\b/i.test(data.original);
-            const refIsCity = /\bv[aá]ros\b/i.test(data.original) || /\bmegyei\s+jog[uú]\b/i.test(data.original);
-
-            // Skip if type mismatch: input is city but reference is county, or vice versa
-            // Exception: if input doesn't specify type, allow both
+            // Skip if type mismatch
             if (inputIsCity && refIsCounty && !inputIsCounty) {
-                // Input explicitly says "város" or "megyei jogú" but reference is "vármegyei" → skip
                 continue;
             }
             if (inputIsCounty && refIsCity && !inputIsCity) {
-                // Input explicitly says "vármegyei" but reference is "város" → skip
                 continue;
             }
 
-            // Calculate match score (higher is better)
+            // Calculate match score
             let score = 0;
             const refLower = data.lower;
             const refNormalized = data.normalized;
@@ -225,83 +278,45 @@ class Validator {
             }
             // Score based on core name similarity (prefer longer matches)
             else if (inputCore && refCore) {
-                // First try with diacritics preserved for more accurate matching
                 const diacriticMatch = inputCoreWithDiacritics === refCoreWithDiacritics;
 
                 // For very short core names (< 3 chars), require exact match only
                 if (inputCore.length < 3 || refCore.length < 3) {
-                    // Exact match with diacritics is best
                     if (diacriticMatch) {
                         score = 800;
-                    }
-                    // Only exact match for short names (normalized)
-                    else if (inputCore === refCore) {
+                    } else if (inputCore === refCore) {
                         score = 750;
                     }
-                    // No partial matching for short names
                 }
                 // For longer names, allow partial matching
                 else {
-                    // If cores are equal with diacritics (already handled above, but safety check)
                     if (diacriticMatch) {
                         score = 850;
-                    }
-                    // If cores are equal (normalized)
-                    else if (inputCore === refCore) {
+                    } else if (inputCore === refCore) {
                         score = 800;
-                    }
-                    // If input core is fully contained in reference core (with diacritics)
-                    else if (refCoreWithDiacritics.includes(inputCoreWithDiacritics)) {
+                    } else if (refCoreWithDiacritics.includes(inputCoreWithDiacritics)) {
                         const matchRatio = inputCoreWithDiacritics.length / refCoreWithDiacritics.length;
-                        if (matchRatio >= 0.6) {
-                            score = 500 + inputCoreWithDiacritics.length * 10;
-                        } else {
-                            // Weak partial match
-                            score = 150;
-                        }
-                    }
-                    // If reference core is contained in input core (with diacritics)
-                    else if (inputCoreWithDiacritics.includes(refCoreWithDiacritics)) {
+                        score = matchRatio >= 0.6 ? 500 + inputCoreWithDiacritics.length * 10 : 150;
+                    } else if (inputCoreWithDiacritics.includes(refCoreWithDiacritics)) {
                         const matchRatio = refCoreWithDiacritics.length / inputCoreWithDiacritics.length;
-                        if (matchRatio >= 0.6) {
-                            score = 400 + refCoreWithDiacritics.length * 10;
-                        } else {
-                            // Weak partial match
-                            score = 100;
-                        }
-                    }
-                    // Fallback to normalized core matching
-                    else if (refCore.includes(inputCore)) {
+                        score = matchRatio >= 0.6 ? 400 + refCoreWithDiacritics.length * 10 : 100;
+                    } else if (refCore.includes(inputCore)) {
                         const matchRatio = inputCore.length / refCore.length;
-                        if (matchRatio >= 0.6) {
-                            score = 450 + inputCore.length * 10;
-                        } else {
-                            score = 120;
-                        }
-                    }
-                    else if (inputCore.includes(refCore)) {
+                        score = matchRatio >= 0.6 ? 450 + inputCore.length * 10 : 120;
+                    } else if (inputCore.includes(refCore)) {
                         const matchRatio = refCore.length / inputCore.length;
-                        if (matchRatio >= 0.6) {
-                            score = 350 + refCore.length * 10;
-                        } else {
-                            score = 80;
-                        }
-                    }
-                    // Fuzzy match
-                    else if (matchType === 'fuzzy') {
-                        score = 200;
-                    }
-                    // Exact match from fuzzyMatchNames
-                    else if (matchType === 'exact') {
-                        score = 700;
+                        score = matchRatio >= 0.6 ? 350 + refCore.length * 10 : 80;
+                    } else {
+                        // Fuzzy match fallback
+                        const matchType = this.fuzzyMatchNames(inputTrimmed, data);
+                        score = matchType === 'exact' ? 700 : (matchType === 'fuzzy' ? 200 : 0);
                     }
                 }
             }
-            // Fallback: use matchType
-            else if (matchType === 'exact') {
-                score = 700;
-            } else if (matchType === 'fuzzy') {
-                score = 200;
+            // Fallback: use fuzzyMatchNames
+            else {
+                const matchType = this.fuzzyMatchNames(inputTrimmed, data);
+                score = matchType === 'exact' ? 700 : (matchType === 'fuzzy' ? 200 : 0);
             }
 
             // Update best match if this score is higher
