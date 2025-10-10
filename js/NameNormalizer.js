@@ -265,4 +265,3 @@ class NameNormalizer {
     return prevRow[str1.length];
   }
 }
-// module.exports = MunicipalityNameNormalizer;

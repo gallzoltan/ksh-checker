@@ -275,13 +275,6 @@ class UIManager {
                         onev: onev,
                         inputName: inputName
                     });
-
-                    // Yield to UI every batch
-                    if ((i + 1) % batchSize === 0) {
-                        this.updateProgress(i + 1, entries.length);
-                        await new Promise(resolve => setTimeout(resolve, 0));
-                    }
-                    continue;
                 } else if (ksh && !onev) {
                     // Case 4: Only KSH (TAB-separated)
                     inputName = '';
@@ -303,8 +296,8 @@ class UIManager {
                     }
                 }
 
-                // Add non-validation results immediately
-                if (processedEntries.length === 0 || status !== 'error' || correctName || ksh) {
+                // Add auto-filled results (skip Case 3 which will be validated later)
+                if (status && status !== 'error') {
                     processedEntries.push({
                         index: entry.index,
                         ksh: ksh,

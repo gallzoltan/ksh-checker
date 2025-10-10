@@ -109,7 +109,7 @@ function updateAndCopyHTML(bundleFileName) {
   let htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
   // Replace individual script tags with single bundle script
-  const scriptSectionRegex = /<!-- Application JavaScript files \(OOP structure\) -->[\s\S]*?<script src="js\/App\.js"><\/script>/;
+  const scriptSectionRegex = /<!-- Application JavaScript files \(OOP structure\)[^\n]*-->[\s\S]*?<script src="js\/App\.js"><\/script>/;
   const bundleScript = `<!-- Application JavaScript bundle -->\n    <script src="js/${bundleFileName}"></script>`;
 
   htmlContent = htmlContent.replace(scriptSectionRegex, bundleScript);
