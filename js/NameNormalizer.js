@@ -20,6 +20,25 @@ Heves Vármegyei Önkormányzat === Heves Vármegyei Önkormányzat
 Veszprém Megyei Jogú Város Önkormányzata === Veszprém
 KOMORÓ KÖZSÉG ÖNKORMÁNYZATA === Komoró
 Kömörő Község Önkormányzata === Kömörő
+ *
+Budapest Főváros Önkormányzata
+Szeged Megyei Jogú Város Önkormányzata
+Budapest Főváros X. Kerület
+BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA
+Budapest Főváros II. Kerület
+Budapest Főváros XIV. Kerület Zugló
+VÉCS KÖZSÉGI ÖNKORMÁNYZAT
+Bokod Község Önkományzata
+Piliscsév Község Önkományzata
+OLCSVAAPÁTI KÖZSÉG ÖKORMÁNYZATA
+ZALAMERENYE KÖZSÉG ÖNKORMÁNYZATA
+Békés Város Önkormányzat
+Békés Vármegyei Önkormányzat
+Heves Város Önkormányzata
+Heves Vármegyei Önkormányzat
+Veszprém Megyei Jogú Város Önkormányzata
+KOMORÓ KÖZSÉG ÖNKORMÁNYZATA
+Kömörő Község Önkormányzata
  */
 
 class NameNormalizer {

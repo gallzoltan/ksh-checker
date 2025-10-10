@@ -220,7 +220,8 @@ class UIManager {
 
         // Show progress bar and initialize
         this.showProgress(true);
-        this.updateProgress(0, entries.length);
+        const totalEntries = entries.length;
+        this.updateProgress(0, totalEntries);
 
         try {
             // Process entries with validation logic (async with batching)
@@ -310,13 +311,13 @@ class UIManager {
 
                 // Yield to UI every batch
                 if ((i + 1) % batchSize === 0) {
-                    this.updateProgress(i + 1, entries.length);
+                    this.updateProgress(i + 1, totalEntries);
                     await new Promise(resolve => setTimeout(resolve, 0));
                 }
             }
 
             // Final update for pre-processing
-            this.updateProgress(entries.length, entries.length);
+            this.updateProgress(entries.length, totalEntries);
 
             // Filter entries that need validation
             const toValidate = processedEntries.filter(e => !e.status && e.ksh && e.onev);
@@ -324,14 +325,12 @@ class UIManager {
 
             let validated = [];
 
-            // Validate entries with progress (only if there are entries to validate)
+            // Validate entries (validation doesn't update progress to avoid jumping back)
             if (toValidate.length > 0) {
                 validated = await this.validator.validateEntriesAsync(
                     toValidate,
                     dataMap,
-                    (current, total) => {
-                        this.updateProgress(current, total);
-                    }
+                    null // No progress callback to avoid progress bar jumping back
                 );
             }
 

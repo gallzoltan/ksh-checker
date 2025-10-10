@@ -293,6 +293,29 @@ npm run embed:csv
   - **Regex-alapú típusdetektálás:** Rugalmas, ékezetek támogatásával (`/\bv[aá]ros\b/i`)
   - **Jobb felhasználói élmény:** A keresés pontosabb találatokat ad azonos nevű települések esetén
 
+**2025-10-10 - Progressz bar javítás:**
+
+### 9. UIManager.js - Progressz bar előre-hátra ugrás javítása
+- **Probléma:**
+  - A progressz bar nem futott végig folyamatosan, bizonyos esetekben előre-hátra mozgott
+  - A tömeges validálás során kétféle fázis létezett:
+    1. **Pre-processing fázis** (parsing, auto-fill): 0% → 100% (teljes `entries.length`)
+    2. **Validációs fázis** (csak a validálandó elemek): újra 0% → ? (`toValidate.length`)
+  - Ha pl. 100 bejegyzésből 50-et auto-fillelt, akkor:
+    - Pre-processing: 0 → 100 (100%) ✓
+    - Validálás: **0 → 50** (visszaugrott!) ✗
+  - A két fázis eltérő `total` értékekkel frissítette ugyanazt a progresszbárt
+- **Megoldás:**
+  - `totalEntries` konstans bevezetése az összes bejegyzés számának cache-eléséhez (UIManager.js:223)
+  - Pre-processing fázis frissíti a progresszbárt `totalEntries` értékkel (UIManager.js:314, 320)
+  - Validációs fázis **nem frissíti** a progresszbárt (`null` progress callback, UIManager.js:333)
+  - Egyszerűsített logika: progresszbar csak egyszer fut végig (0% → 100%), nincs visszaugrás
+- **Hatás:**
+  - **Folyamatos animáció:** A progressz bar egyenletesen halad előre visszaugrás nélkül
+  - **Jobb UX:** Vizuális visszajelzés a pre-processing során, validálás csendben fut
+  - **Konzisztens százalék:** Mindig a teljes bejegyzésszámhoz viszonyítva számol
+  - **Bundle méret:** 171.96 KB → 122.10 KB minifikált (29.0% csökkentés)
+
 ## Tesztelés
 
 **Név → KSH kód keresés tesztelése:**

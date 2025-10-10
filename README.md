@@ -30,10 +30,11 @@ Magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validáló alka
 ksh_checker/
 ├── index.html              # Fő HTML fájl (UI + CSS) - development
 ├── js/                     # JavaScript modulok (fejlesztéshez)
-│   ├── data.js            # Beágyazott CSV adatok (auto-generált)
+│   ├── data.js            # Beágyazott JSON adatok (auto-generált)
 │   ├── Config.js          # Static configuration class
+│   ├── NameNormalizer.js  # Települési nevek normalizálása osztály
 │   ├── CacheManager.js    # localStorage kezelés osztály
-│   ├── DataProcessor.js   # CSV feldolgozás osztály
+│   ├── DataProcessor.js   # JSON feldolgozás osztály
 │   ├── Validator.js       # Validációs logika osztály
 │   ├── UIManager.js       # UI kezelés osztály
 │   └── App.js             # Fő alkalmazás osztály
@@ -44,15 +45,15 @@ ksh_checker/
 ├── db/
 │   └── t_onkorm_tech_20251006.csv  # Referencia CSV
 ├── build.js               # Build script (Terser-alapú bundler)
-├── embed-csv.js           # CSV → data.js generáló
+├── convert-csv-to-json.js # CSV → JSON konverzió és beágyazás
 ├── package.json           # npm scripts és dependencies
 └── .gitignore             # Git ignore (node_modules, dist)
 ```
 
-## 🔧 CSV adatok frissítése
+## 🔧 Önkormányzati adatok frissítése
 
 1. Cseréld ki a CSV fájlt a `db/` könyvtárban
-2. Generáld be a CSV-t a JavaScript fájlba:
+2. Konvertáld és ágyazd be JSON formátumban:
    ```bash
    npm run embed
    ```
@@ -66,7 +67,8 @@ ksh_checker/
 
 - **Gyors keresés:** KSH kód vagy önkormányzat név alapján
 - **Tömeges validálás:** Excel adatok beillesztése (TAB-elválasztva)
-- **Fuzzy matching:** Intelligens név egyeztetés (római számok, rövidítések, stb.)
+- **Progressz bar:** Vizuális visszajelzés nagy adathalmazok validálása során
+- **Fuzzy matching:** Intelligens név egyeztetés (római számok, rövidítések, település típusok)
 - **Export:** Validációs eredmények CSV exportálása
 - **Cache:** 24 órás localStorage cache a gyorsabb betöltésért
 
@@ -105,20 +107,21 @@ Az alkalmazás OOP (Object-Oriented Programming) struktúrát használ:
 
 **JavaScript osztályok:**
 - `Config.js` - Static konstansok (cache időtartam, limitek, regex-ek)
+- `NameNormalizer.js` - Települési nevek normalizálása és összehasonlítása
 - `CacheManager.js` - localStorage műveletek
-- `DataProcessor.js` - CSV feldolgozás, Map kezelés
+- `DataProcessor.js` - JSON feldolgozás, Map kezelés
 - `Validator.js` - Validációs szabályok, fuzzy matching
-- `UIManager.js` - UI logika, DOM műveletek
-- `App.js` - Alkalmazás orchestration
+- `UIManager.js` - UI logika, DOM műveletek, progressz bar
+- `App.js` - Alkalmazás orchestration, dependency injection
 
 ### Build rendszer
 
 - **Bundler:** `build.js` (Terser-alapú)
 - **Folyamat:**
-  1. 7 JS fájl beolvasása helyes sorrendben
+  1. 8 JS fájl beolvasása helyes sorrendben (data.js → Config.js → ... → App.js)
   2. Összefűzés egyetlen fájlba
-  3. Minifikálás (~17-20% méretcsökkenés)
-  4. HTML frissítése (7 script → 1 bundle)
+  3. Minifikálás (~26-29% méretcsökkenés)
+  4. HTML frissítése (8 script → 1 bundle)
 - **Kimenet:** `dist/index.html` + `dist/js/bundle.min.js`
 - **File:// kompatibilitás:** Működik szerver nélkül
 
@@ -139,10 +142,11 @@ Az alkalmazás többszintű fuzzy matching-et használ:
 ## 📝 Technológiák
 
 - **Nincs szerver szükséges** - működik `file://` protokollal (development és production is)
-- **Terser-alapú build** - JavaScript minifikálás egyetlen bundle-be
+- **Natív JSON feldolgozás** - nincs külső CSV library dependency
+- **Terser-alapú build** - JavaScript minifikálás egyetlen bundle-be (~29% méretcsökkenés)
 - **localStorage cache** - 24 órás cache a gyorsabb betöltésért
 - **Bootstrap 5** - modern, reszponzív UI
-- **PapaParse** - CSV feldolgozás
+- **Async batch processing** - nem blokkoló UI nagy adathalmazok validálása során
 - **OOP JavaScript** - osztály-alapú moduláris architektúra
 
 ## 📦 Dependencies
@@ -155,4 +159,4 @@ Az alkalmazás többszintű fuzzy matching-et használ:
 }
 ```
 
-**Runtime dependencies:** Nincs (Bootstrap és PapaParse CDN-ről töltődik)
+**Runtime dependencies:** Nincs (Bootstrap CDN-ről töltődik, beágyazott JSON adatok)
