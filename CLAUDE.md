@@ -402,6 +402,32 @@ npm run embed:csv
   - **Jobb vizuális hierarchia:** Színes borderek, focus indicators
   - **Export feedback:** Sikerüzenet CSV letöltés után
 
+**2025-10-10 - Cache betöltés és reverse index újraépítés:**
+
+### 12. DataProcessor.js - Reverse indexek újraépítése cache-ből betöltéskor
+- **Probléma:**
+  - Cache-ből betöltéskor a `dataMap` betöltődött, de a reverse indexek (lowerIndex, nameIndex, normalizedIndex) üresek maradtak
+  - A `findByName()` O(1) fast-path lookupjai (DataProcessor.js:168-176, 184-192) **nem találtak semmit**
+  - Az algoritmus a O(n) full scan-re esett vissza (Validator.js:213-219), ahol **nincs típus-alapú szűrés**
+  - Példa hiba: "Békés Város Önkormányzat" és "Békés Vármegyei Önkormányzat" **ugyanazt a KSH kódot** kapta
+  - A `test-name-search.html` **passed**, de az `index.html` (cache-ből betöltve) **failed**
+- **Gyökérok:** A `loadData()` metódus (164-184. sor) csak a `dataMap`-et állította be cache-ből, de nem hívta meg a `processData()`-t, így a reverse indexek nem épültek fel.
+- **Megoldás:**
+  - Új `rebuildIndexes()` metódus létrehozása (DataProcessor.js:188-222)
+  - Cache-ből betöltéskor automatikusan hívja meg a `rebuildIndexes()`-et (DataProcessor.js:171)
+  - A metódus végigiterál a `dataMap`-en és újraépíti az összes reverse indexet:
+    - `lowerIndex` - lowercase exact match index
+    - `normalizedIndex` - normalized match index
+    - `nameIndex` - core name candidates index
+  - Teljes kompatibilitás a cached adatstruktúrával (isCounty, isCity, core, normalized, stb.)
+- **Hatás:**
+  - **O(1) fast-path működik cache-ből betöltéskor is:** Gyors név → KSH keresés minden esetben
+  - **Típus-alapú szűrés helyreállt:** Város vs. Vármegyei megkülönböztetés cache használatakor is
+  - **Békés város/vármegye bug javítva:** Minden edge case helyesen működik index.html-ben is
+  - **Nincs teljesítmény-romlás:** Reverse index rebuild O(n), de csak egyszer fut le betöltéskor (~10-20ms)
+  - **Bundle méret:** 179.48 KB → 136.64 KB minifikált (23.9% csökkentés)
+  - **Konzisztens viselkedés:** test-name-search.html és index.html ugyanúgy működnek
+
 ## Tesztelés
 
 **Név → KSH kód keresés tesztelése:**

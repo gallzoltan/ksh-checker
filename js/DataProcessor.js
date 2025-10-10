@@ -167,6 +167,8 @@ class DataProcessor {
 
         if (cachedMap) {
             this.dataMap = cachedMap;
+            // Rebuild reverse indexes from cached data (P1 optimization)
+            this.rebuildIndexes();
             onProgress(`Cached adatok betöltve (${this.dataMap.size} rekord)`, 'success');
             onComplete();
         } else {
@@ -180,6 +182,42 @@ class DataProcessor {
                 },
                 onError
             );
+        }
+    }
+
+    /**
+     * Rebuild reverse indexes from existing dataMap
+     * Used when loading from cache to restore O(1) lookup performance
+     * @private
+     */
+    rebuildIndexes() {
+        this.lowerIndex.clear();
+        this.nameIndex.clear();
+        this.normalizedIndex.clear();
+
+        for (let [ksh, dataObj] of this.dataMap) {
+            const lowerName = dataObj.lower;
+            const coreLower = dataObj.core.toLowerCase();
+            const normalizedLower = dataObj.normalized.toLowerCase();
+
+            // Exact match index (lowercase)
+            if (!this.lowerIndex.has(lowerName)) {
+                this.lowerIndex.set(lowerName, ksh);
+            }
+
+            // Normalized match index
+            if (!this.normalizedIndex.has(normalizedLower)) {
+                this.normalizedIndex.set(normalizedLower, ksh);
+            }
+
+            // Core name index (multiple matches possible for same core)
+            if (!this.nameIndex.has(coreLower)) {
+                this.nameIndex.set(coreLower, []);
+            }
+            this.nameIndex.get(coreLower).push({
+                ksh: ksh,
+                data: dataObj
+            });
         }
     }
 }
