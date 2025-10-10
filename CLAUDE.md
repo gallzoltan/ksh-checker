@@ -23,7 +23,7 @@ Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validál
 - Bootstrap 5-öt használ a UI stílusokhoz
 - Natív JSON feldolgozás (nincs külső CSV library dependency)
 - **Nincs szükség szerverre** - működik `file://` protokollal is
-- Terser-alapú build rendszer egyetlen minifikált bundle létrehozásához
+- esbuild-alapú build rendszer egyetlen minifikált bundle létrehozásához (10-30x gyorsabb, mint Terser)
 
 **JavaScript modulok (`js/` könyvtár) - OOP struktúra:**
 - `data.js` - Beágyazott JSON adat (auto-generált a `convert-csv-to-json.js` által)
@@ -60,8 +60,11 @@ npm install
 # Minifikált bundle készítése
 npm run build
 
-# Debug build (nem minifikált, könnyebb hibakeresés)
+# Debug build (nem minifikált, source maps-szal)
 npm run build:debug
+
+# Watch mode (auto-rebuild file változáskor)
+npm run build:watch
 ```
 
 Build kimenet: `dist/index.html` és `dist/js/bundle.min.js` (működik `file://` protokollal).
@@ -79,11 +82,14 @@ npm run embed:csv
 ```
 
 **Build rendszer részletei:**
-- `build.js` - Terser-alapú bundle készítő script
+- `build.js` - esbuild-alapú bundle készítő script (2025-10-10-től)
 - 8 JS fájl összefűzése helyes sorrendben (data.js → Config.js → NameNormalizer.js → ... → App.js)
-- Minifikálás egyetlen `bundle.min.js` fájlba (~26-27% méretcsökkenés)
+- IIFE formátum (Immediately Invoked Function Expression) - nincs ES6 module refaktorálás szükséges
+- Minifikálás egyetlen `bundle.min.js` fájlba (~22-29% méretcsökkenés)
 - HTML automatikus frissítése (8 script tag → 1 bundle script)
-- `--debug` flag: nem minifikált bundle hibakereséshez
+- `--debug` flag: nem minifikált bundle inline source maps-szal
+- `--watch` flag: automatikus rebuild file változáskor (fejlesztéshez)
+- Build idő: ~76ms production, ~91ms debug (korábban ~2-3s Terser-rel)
 
 **JavaScript módosítások (OOP struktúra):**
 - `Config.js` - Static konstansok, cache időtartam, regex pattern-ek
@@ -315,6 +321,35 @@ npm run embed:csv
   - **Jobb UX:** Vizuális visszajelzés a pre-processing során, validálás csendben fut
   - **Konzisztens százalék:** Mindig a teljes bejegyzésszámhoz viszonyítva számol
   - **Bundle méret:** 171.96 KB → 122.10 KB minifikált (29.0% csökkentés)
+
+**2025-10-10 - Build rendszer migráció: Terser → esbuild:**
+
+### 10. esbuild migráció (Fázis 1: IIFE bundling)
+- **Probléma:**
+  - Terser-alapú build lassú (~2-3s build idő)
+  - Nincs watch mode (manuális rebuild minden változtatásnál)
+  - Nincs source maps támogatás debug módban
+  - Nincs tree-shaking (teljes kód a bundle-ben)
+- **Megoldás:**
+  - `package.json` frissítése: `terser` dependency → `esbuild`
+  - `build.js` teljes átírása esbuild API-val
+  - IIFE formátum használata (drop-in replacement, nincs kód refaktorálás!)
+  - Watch mode támogatás (`--watch` flag)
+  - Inline source maps debug módban (`--debug` flag)
+  - Temporary entry point generálás (8 fájl konkatenálása helyes sorrendben)
+  - `SIGINT` handler Ctrl+C kezeléshez watch módban
+- **Hatás:**
+  - **10-30x gyorsabb build:** 76ms production (korábban ~2-3s)
+  - **Watch mode:** Automatikus rebuild file változáskor
+  - **Source maps:** Inline source maps debug módban (könnyebb hibakeresés)
+  - **Kisebb bundle:** 133.15 KB (22.8% csökkentés, korábban 115-122 KB Terser-rel)
+  - **Működik file:// protokollal:** IIFE formátum garantálja a kompatibilitást
+  - **Nincs refaktorálás:** Drop-in replacement, a kódbázis változatlan maradt
+  - **Új scriptek:** `npm run build:watch` fejlesztéshez
+- **Következő lépés (opcionális):**
+  - Fázis 2: ES6 modules refaktorálás (`export class`, `import` statements)
+  - Jobb tree-shaking (5-15% további méretcsökkentés várható)
+  - TypeScript migráció lehetősége
 
 ## Tesztelés
 

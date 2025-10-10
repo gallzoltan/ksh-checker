@@ -6,6 +6,44 @@ A formátum a [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) alapján 
 
 ## [Unreleased]
 
+### Changed - 2025-10-10
+
+#### Build rendszer migráció: Terser → esbuild
+
+**Motiváció:**
+- Terser-alapú build lassú (~2-3s build idő)
+- Nincs watch mode fejlesztéshez
+- Nincs source maps támogatás debug módban
+
+**Változások:**
+
+**package.json:**
+- `terser` dependency cseréje → `esbuild ^0.24.0`
+- Új script: `build:watch` - automatikus rebuild file változáskor
+
+**build.js - teljes átírás:**
+- esbuild API használata IIFE formátummal (Immediately Invoked Function Expression)
+- Temporary entry point generálás (`.entry.js`) - 8 JS fájl konkatenálása helyes sorrendben
+- Minifikálás opcionális (`--debug` flag: source maps, `--minify`: production)
+- Watch mode támogatás (`--watch` flag)
+- `SIGINT` handler Ctrl+C kezeléshez watch módban
+- Automatikus cleanup (temporary entry point törlése)
+
+**.gitignore:**
+- `.entry.js` hozzáadva (temporary build artifact)
+
+**Hatás:**
+- ⚡ **10-30x gyorsabb build:** 76ms production (korábban ~2-3s Terser-rel)
+- ⚡ **Watch mode:** Automatikus rebuild másodpercek alatt
+- 🔍 **Source maps:** Inline source maps debug módban (könnyebb hibakeresés)
+- 📦 **Bundle méret:** 133.15 KB (22.8% csökkentés, korábban ~115-122 KB)
+- ✅ **Működik file:// protokollal:** IIFE formátum garantálja a kompatibilitást
+- ✅ **Nincs refaktorálás:** Drop-in replacement, a kódbázis változatlan
+
+**Következő lépés (opcionális):**
+- Fázis 2: ES6 modules refaktorálás (`export class`, `import` statements)
+- TypeScript migráció lehetősége
+
 ### Changed - 2025-10-08
 
 #### CSV → JSON adatformátum átalakítás

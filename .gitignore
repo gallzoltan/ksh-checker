@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+.entry.js
 
 # OS files
 .DS_Store

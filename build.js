@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { minify } = require('terser');
+const esbuild = require('esbuild');
 
 const JS_DIR = path.join(__dirname, 'js');
 const DIST_DIR = path.join(__dirname, 'dist');
@@ -26,80 +26,30 @@ if (!fs.existsSync(DIST_JS_DIR)) {
   fs.mkdirSync(DIST_JS_DIR);
 }
 
-async function createBundle(shouldMinify = true) {
-  console.log('Creating JavaScript bundle...\n');
+/**
+ * Create a temporary entry point file that imports all modules in order
+ * This ensures correct execution order while maintaining compatibility
+ */
+function createEntryPoint() {
+  const entryPath = path.join(__dirname, '.entry.js');
 
-  let bundleCode = '';
-  let totalOriginalSize = 0;
+  let entryContent = '// Auto-generated entry point for esbuild\n';
+  entryContent += '// This file is temporary and will be deleted after build\n\n';
 
-  // Concatenate all JS files in order
+  // Import all files in order (as raw file reads to maintain IIFE compatibility)
   for (const file of JS_FILES_ORDER) {
     const filePath = path.join(JS_DIR, file);
-
-    if (!fs.existsSync(filePath)) {
-      console.error(`  ✗ Error: ${file} not found!`);
-      process.exit(1);
-    }
-
     const code = fs.readFileSync(filePath, 'utf8');
-    totalOriginalSize += code.length;
-
-    console.log(`  Adding: ${file} (${(code.length / 1024).toFixed(2)} KB)`);
-
-    // Add file separator comment and code
-    bundleCode += `// === ${file} ===\n${code}\n\n`;
+    entryContent += `// === ${file} ===\n${code}\n\n`;
   }
 
-  console.log(`\nTotal bundle size: ${(totalOriginalSize / 1024).toFixed(2)} KB`);
-
-  // Minify if requested
-  if (shouldMinify) {
-    console.log('Minifying bundle...');
-
-    try {
-      const result = await minify(bundleCode, {
-        compress: {
-          dead_code: true,
-          drop_console: true,  // Remove console.log in production
-          drop_debugger: true,
-          keep_classnames: false,
-          keep_fnames: false,
-          passes: 2,  // Two passes for better compression
-          pure_funcs: ['console.log', 'console.info', 'console.debug']  // Mark as pure functions
-        },
-        mangle: {
-          keep_classnames: false,
-          keep_fnames: false
-        },
-        format: {
-          comments: false
-        }
-      });
-
-      const outputPath = path.join(DIST_JS_DIR, 'bundle.min.js');
-      fs.writeFileSync(outputPath, result.code, 'utf8');
-
-      const minifiedSize = (result.code.length / 1024).toFixed(2);
-      const savings = ((1 - result.code.length / totalOriginalSize) * 100).toFixed(1);
-
-      console.log(`  ✓ Minified: ${minifiedSize} KB (${savings}% reduction)\n`);
-
-      return 'bundle.min.js';
-    } catch (error) {
-      console.error(`  ✗ Error minifying bundle:`, error.message);
-      process.exit(1);
-    }
-  } else {
-    // Save non-minified bundle
-    const outputPath = path.join(DIST_JS_DIR, 'bundle.js');
-    fs.writeFileSync(outputPath, bundleCode, 'utf8');
-
-    console.log(`  ✓ Bundle created (not minified)\n`);
-
-    return 'bundle.js';
-  }
+  fs.writeFileSync(entryPath, entryContent, 'utf8');
+  return entryPath;
 }
 
+/**
+ * Update and copy index.html with bundle script reference
+ */
 function updateAndCopyHTML(bundleFileName) {
   console.log('Updating and copying index.html...');
 
@@ -118,22 +68,121 @@ function updateAndCopyHTML(bundleFileName) {
   console.log('  ✓ index.html updated and copied\n');
 }
 
+/**
+ * Build with esbuild
+ */
 async function build() {
-  const shouldMinify = process.argv[2] !== '--debug';
+  const args = process.argv.slice(2);
+  const isDebug = args.includes('--debug');
+  const isWatch = args.includes('--watch');
 
-  console.log('=== Building KSH Checker ===');
-  console.log(`Mode: ${shouldMinify ? 'Production (minified)' : 'Debug (not minified)'}\n`);
+  console.log('=== Building KSH Checker with esbuild ===');
+  console.log(`Mode: ${isDebug ? 'Debug (not minified)' : 'Production (minified)'}`);
+  console.log(`Watch: ${isWatch ? 'Enabled' : 'Disabled'}\n`);
 
-  const bundleFileName = await createBundle(shouldMinify);
-  updateAndCopyHTML(bundleFileName);
+  // Create temporary entry point
+  console.log('Creating bundle entry point...');
+  const entryPath = createEntryPoint();
+  console.log('  ✓ Entry point created\n');
 
-  console.log('=== Build complete! ===');
-  console.log(`Output: ${DIST_DIR}/index.html`);
-  console.log(`Bundle: ${DIST_JS_DIR}/${bundleFileName}`);
-  console.log('You can open dist/index.html in your browser (works with file:// protocol)');
+  // Calculate original size
+  let totalOriginalSize = 0;
+  for (const file of JS_FILES_ORDER) {
+    const filePath = path.join(JS_DIR, file);
+    const code = fs.readFileSync(filePath, 'utf8');
+    totalOriginalSize += code.length;
+    console.log(`  ${file} (${(code.length / 1024).toFixed(2)} KB)`);
+  }
+
+  console.log(`\nTotal source size: ${(totalOriginalSize / 1024).toFixed(2)} KB`);
+
+  // Output file name
+  const outputFileName = isDebug ? 'bundle.js' : 'bundle.min.js';
+  const outputPath = path.join(DIST_JS_DIR, outputFileName);
+
+  // esbuild configuration
+  const buildOptions = {
+    entryPoints: [entryPath],
+    bundle: true,
+    minify: !isDebug,
+    sourcemap: isDebug ? 'inline' : false,
+    target: ['es2015'],  // Support older browsers
+    format: 'iife',      // Immediately Invoked Function Expression (no module system needed)
+    outfile: outputPath,
+    drop: isDebug ? [] : ['console', 'debugger'],  // Remove console.* and debugger in production
+    legalComments: 'none',
+    logLevel: 'info',
+  };
+
+  try {
+    console.log(`\nBuilding with esbuild...`);
+
+    if (isWatch) {
+      // Watch mode
+      const context = await esbuild.context(buildOptions);
+
+      console.log('  ✓ Build complete');
+      console.log(`  Output: ${outputPath}`);
+
+      // Update HTML
+      updateAndCopyHTML(outputFileName);
+
+      console.log('\n🔍 Watch mode enabled - watching for changes...');
+      console.log('Press Ctrl+C to stop\n');
+
+      await context.watch();
+
+      // Watch mode never exits until manual interrupt
+      // Clean up handled by process.on('SIGINT')
+
+    } else {
+      // One-time build
+      const result = await esbuild.build(buildOptions);
+
+      // Get bundle size
+      const bundleStats = fs.statSync(outputPath);
+      const bundleSize = (bundleStats.size / 1024).toFixed(2);
+      const savings = ((1 - bundleStats.size / totalOriginalSize) * 100).toFixed(1);
+
+      console.log('  ✓ Build complete');
+      console.log(`  Output size: ${bundleSize} KB (${savings}% reduction)\n`);
+
+      // Update HTML
+      updateAndCopyHTML(outputFileName);
+
+      // Clean up temporary entry point
+      fs.unlinkSync(entryPath);
+
+      console.log('=== Build complete! ===');
+      console.log(`Output: ${DIST_DIR}/index.html`);
+      console.log(`Bundle: ${DIST_JS_DIR}/${outputFileName}`);
+      console.log('You can open dist/index.html in your browser (works with file:// protocol)');
+    }
+
+  } catch (error) {
+    console.error('\n✗ Build failed:', error.message);
+
+    // Clean up temporary entry point on error
+    if (fs.existsSync(entryPath)) {
+      fs.unlinkSync(entryPath);
+    }
+
+    process.exit(1);
+  }
 }
 
-build().catch(error => {
-  console.error('Build failed:', error);
-  process.exit(1);
+// Handle Ctrl+C in watch mode
+process.on('SIGINT', () => {
+  console.log('\n\nBuild stopped by user');
+
+  // Clean up temporary entry point
+  const entryPath = path.join(__dirname, '.entry.js');
+  if (fs.existsSync(entryPath)) {
+    fs.unlinkSync(entryPath);
+  }
+
+  process.exit(0);
 });
+
+// Run build
+build();
