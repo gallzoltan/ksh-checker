@@ -232,25 +232,11 @@
             </h1>
         </header>
 
-        <div class="alert alert-info" id="loadStatus" role="status" aria-live="polite">
-            <strong>Állapot:</strong> <span id="statusText">CSV fájl betöltésére vár...</span>
-        </div>
-
-        <div class="mb-4" id="customCsvSection" style="display:none;">
-            <label for="csvFile" class="form-label">CSV fájl betöltése:</label>
-            <input type="file" class="form-control" id="csvFile" accept=".csv" aria-describedby="csvHelp">
-            <small id="csvHelp" class="text-muted">Formátum: ksh;onev (pl: "0102112";Budapest XVII. Kerület)</small>
-        </div>
-
-        <button class="btn btn-outline-secondary btn-sm mb-3" id="toggleCsvBtn" style="display:none;" aria-expanded="false" aria-controls="customCsvSection">
-            📂 Egyéni CSV betöltése
-        </button>
-
         <div class="loading" id="loading" role="status" aria-live="polite">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Betöltés...</span>
             </div>
-            <p class="mt-2">CSV feldolgozása folyamatban...</p>
+            <p class="mt-2">Adatok betöltése folyamatban...</p>
         </div>
 
         <div id="mainContent" style="display:none;">

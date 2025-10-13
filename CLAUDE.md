@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Ez egy magyar önkormányzati KSH (Központi Statisztikai Hivatal) kód validáló alkalmazás. Moduláris HTML alkalmazás, amely önkormányzati kódokat és neveket validál egy referencia adatbázis alapján.
 
 **Fő funkciók:**
-- CSV fájlból tölti be az önkormányzati adatokat (formátum: `ksh;onev`)
+- Beágyazott JSON adatok (auto-generált a CSV fájlból, nincs runtime CSV parsing)
 - Gyors keresés: önkormányzatok keresése kód vagy név alapján
 - Tömeges ellenőrzés: Excel adatok beillesztése (kód + TAB + név) több bejegyzés validálásához
 - Progressz bar nagy adathalmazok validálása során (async batch processing)
@@ -96,7 +96,7 @@ npm run embed:csv
 - `NameNormalizer.js` - Települési nevek normalizálása, összehasonlítása, hasonlóság számítás
 - `Validator.js` - Validációs szabályok, fuzzy matching algoritmus (NameNormalizer-t használja)
 - `UIManager.js` - UI logika, megjelenítés, interakciók, DOM műveletek
-- `DataProcessor.js` - CSV feldolgozás, Map kezelés (NameNormalizer-t használja)
+- `DataProcessor.js` - JSON feldolgozás, Map kezelés (NameNormalizer-t használja)
 - `CacheManager.js` - localStorage műveletek
 - `App.js` - Dependency injection, alkalmazás orchestration
 
@@ -111,17 +111,17 @@ npm run embed:csv
   - `removeAccents(text)` - Magyar ékezetek eltávolítása
   - `parse(name)` - Település nevének parsolása (név, típus, normalizált formák)
   - `areEqual(name1, name2)` - Két név összehasonlítása (ékezetek nélkül)
-  - `areEqualWithAccents(name1, name2)` - Összehasonlítás ékezetekkel
   - `smartMatch(name1, name2, threshold)` - Intelligens egyezés hasonlóság alapján
   - `similarity(name1, name2)` - Hasonlóság számítás (Levenshtein távolság)
   - `levenshteinDistance(str1, str2)` - Levenshtein távolság számítás
+  - `countAccentDifferences(str1, str2)` - Ékezetes különbségek elemzése
 - `CacheManager` - localStorage kezelés
   - `load()`, `save(dataMap)`, `isValid()`, `clear()`
-- `DataProcessor` - JSON/CSV feldolgozás
-  - `processData(data)` - JSON/CSV → Map konverzió (NameNormalizer-t használja)
+- `DataProcessor` - JSON feldolgozás
+  - `processData(data)` - JSON → Map konverzió (NameNormalizer-t használja)
   - `loadDefaultJSON()` - Beágyazott JSON betöltése (natív)
-  - `loadFromFile(file)` - File input kezelés (CSV, PapaParse-szal)
   - `loadData(cacheManager)` - Cache-ből vagy JSON-ből
+  - `rebuildIndexes()` - Reverse indexek újraépítése cache betöltés után
 - `Validator` - Validációs logika
   - `normalizeText(text)` - Szöveg normalizálás (NameNormalizer-t használja)
   - `extractCoreName(text)` - Core név kinyerés
@@ -139,7 +139,8 @@ npm run embed:csv
   - `displaySearchResults()`, `displayBulkResults()` - Megjelenítés
   - `createBulkResultRow(item)`, `renderBulkResultsTable(results)` - Privát helper metódusok
   - `handleExport()` - CSV export + success toast
-  - `toggleCustomCsv()` - CSV betöltés panel toggle (aria-expanded frissítéssel)
+  - `handleClear()` - Tömeges ellenőrzés eredményeinek törlése
+  - `showLoading(show)`, `showMainContent()` - UI állapot kezelés
 - `App` - Fő alkalmazás
   - `constructor()` - Dependency injection (NameNormalizer létrehozása)
   - `init()` - Alkalmazás inicializálás
@@ -148,11 +149,12 @@ npm run embed:csv
 1. DOMContentLoaded → `App` példány létrehozása
 2. `app.init()` → event listeners setup
 3. `dataProcessor.loadData(cacheManager)` → cache vagy JSON betöltés
-4. Cache hit: `cacheManager.load()` → Map visszaállítás
+4. Cache hit: `cacheManager.load()` → Map visszaállítás → `rebuildIndexes()`
 5. Cache miss: `dataProcessor.loadDefaultJSON()` → natív JSON parse → `processData()` → `cacheManager.save()`
-6. `uiManager.showMainContent()` → UI megjelenítése
-7. User interakció → `uiManager` event handlerek → `validator` metódusok
-8. Eredmények megjelenítése színkódolással (zöld=helyes, sárga=figyelmeztető, piros=hibás)
+6. `uiManager.showLoading(false)` → loading spinner elrejtése
+7. `uiManager.showMainContent()` → UI megjelenítése
+8. User interakció → `uiManager` event handlerek → `validator` metódusok
+9. Eredmények megjelenítése színkódolással (zöld=helyes, sárga=figyelmeztető, piros=hibás)
 
 ## Optimalizációk
 
@@ -427,6 +429,42 @@ npm run embed:csv
   - **Nincs teljesítmény-romlás:** Reverse index rebuild O(n), de csak egyszer fut le betöltéskor (~10-20ms)
   - **Bundle méret:** 179.48 KB → 136.64 KB minifikált (23.9% csökkentés)
   - **Konzisztens viselkedés:** test-name-search.html és index.html ugyanúgy működnek
+
+**2025-10-13 - Kód tisztítás: Nem használt függvények eltávolítása:**
+
+### 13. Dead code elimination - Fejlesztési feature-ök eltávolítása
+- **Probléma:**
+  - Egyéni CSV betöltési funkcionalitás (csak fejlesztési célokra volt)
+  - Nem használt metódusok a kódbázisban
+  - Felesleges UI elemek és event handlerek
+  - Runtime CSV parsing már nem szükséges (beágyazott JSON használata miatt)
+- **Megoldás:**
+  - **Törölt UI elemek (index.html):**
+    - `loadStatus` div (állapot üzenetek megjelenítése)
+    - `customCsvSection` div (CSV file input panel)
+    - `toggleCsvBtn` gomb (CSV betöltés toggle)
+  - **Törölt metódusok:**
+    - `DataProcessor.getSize()` - Soha nem volt használva
+    - `DataProcessor.loadFromFile()` - CSV fájl betöltés (már nem kell)
+    - `NameNormalizer.areEqualWithAccents()` - Nem használt összehasonlítás
+    - `UIManager.handleFileSelect()` - CSV fájl kezelés
+    - `UIManager.toggleCustomCsv()` - UI toggle logika
+    - `UIManager.updateStatus()` - Státusz üzenetek (felesleges)
+  - **Frissített metódusok:**
+    - `UIManager.showMainContent()` - `toggleCsvBtn` referencek eltávolítva
+    - `UIManager.setupEventListeners()` - `csvFile` event listener törölve
+    - `App.init()` - Egyszerűsített callback-ek (üres `onProgress`, `onError`)
+  - **Megtartott metódusok:**
+    - `NameNormalizer.countAccentDifferences()` - A `smartMatch()` aktívan használja
+    - `UIManager.showLoading()` - Továbbra is szükséges a betöltési folyamathoz
+- **Hatás:**
+  - **Törölt kódsorok:** ~85 sor (tisztább kódbázis)
+  - **Forráskód méret:** 178.86 KB → **175.74 KB** (3.12 KB csökkentés)
+  - **Bundle méret:** 136.46 KB → **134.96 KB** (1.5 KB csökkentés)
+  - **Egyszerűbb architektúra:** Nincs CSV betöltési feature, csak beágyazott JSON
+  - **Build idő:** ~87ms ⚡
+  - **Kevesebb dependency:** PapaParse már teljesen ki lett vonva korábban
+  - **Production-ready:** Az alkalmazás csak a beágyazott JSON adatokat használja
 
 ## Tesztelés
 

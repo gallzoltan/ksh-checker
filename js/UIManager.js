@@ -13,13 +13,11 @@ class UIManager {
      * Setup event listeners
      */
     setupEventListeners() {
-        document.getElementById('csvFile').addEventListener('change', (e) => this.handleFileSelect(e));
         document.getElementById('searchInput').addEventListener('input', (e) => this.handleSearch(e));
         document.getElementById('clearSearchBtn').addEventListener('click', () => this.clearSearch());
         document.getElementById('validateBtn').addEventListener('click', () => this.handleBulkValidate());
         document.getElementById('exportBtn').addEventListener('click', () => this.handleExport());
         document.getElementById('clearBtn').addEventListener('click', () => this.handleClear());
-        document.getElementById('toggleCsvBtn').addEventListener('click', () => this.toggleCustomCsv());
 
         // Add event listeners for filter badges (event delegation)
         const bulkStats = document.getElementById('bulkStats');
@@ -42,31 +40,6 @@ class UIManager {
                 }
             }
         });
-    }
-
-    /**
-     * Handle file selection
-     */
-    handleFileSelect(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        this.showLoading(true);
-
-        this.dataProcessor.loadFromFile(
-            file,
-            (message, type) => this.updateStatus(message, type),
-            () => {
-                // On complete
-                this.showLoading(false);
-                this.showMainContent();
-            },
-            (error) => {
-                // On error
-                this.updateStatus(error, 'danger');
-                this.showLoading(false);
-            }
-        );
     }
 
     /**
@@ -645,22 +618,11 @@ class UIManager {
     showMainContent() {
         const dataMap = this.dataProcessor.getData();
         document.getElementById('mainContent').style.display = 'block';
-        document.getElementById('toggleCsvBtn').style.display = 'inline-block';
 
         // Display all data initially
         this.displaySearchResults(
             Array.from(dataMap.entries()).map(([ksh, data]) => ({ ksh, onev: data.original }))
         );
-    }
-
-    /**
-     * Update status message
-     */
-    updateStatus(message, type) {
-        const statusDiv = document.getElementById('loadStatus');
-        const statusText = document.getElementById('statusText');
-        statusText.textContent = message;
-        statusDiv.className = `alert alert-${type}`;
     }
 
     /**
@@ -670,25 +632,4 @@ class UIManager {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-    /**
-     * Toggle custom CSV section
-     */
-    toggleCustomCsv() {
-        const csvSection = document.getElementById('customCsvSection');
-        const btn = document.getElementById('toggleCsvBtn');
-
-        if (csvSection.style.display === 'none') {
-            csvSection.style.display = 'block';
-            btn.textContent = '✖️ Mégse';
-            btn.classList.remove('btn-outline-secondary');
-            btn.classList.add('btn-outline-danger');
-            btn.setAttribute('aria-expanded', 'true');
-        } else {
-            csvSection.style.display = 'none';
-            btn.textContent = '📂 Egyéni CSV betöltése';
-            btn.classList.remove('btn-outline-danger');
-            btn.classList.add('btn-outline-secondary');
-            btn.setAttribute('aria-expanded', 'false');
-        }
-    }
 }

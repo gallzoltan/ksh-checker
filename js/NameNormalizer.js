@@ -178,22 +178,6 @@ class NameNormalizer {
   }
 
   /**
-   * Pontosabb összehasonlítás ékezetes formával
-   */
-  areEqualWithAccents(name1, name2) {
-    const parsed1 = this.parse(name1);
-    const parsed2 = this.parse(name2);
-
-    // Először a normalizált (ékezet nélküli) formát hasonlítjuk össze
-    if (parsed1.normalized !== parsed2.normalized) {
-      return false;
-    }
-
-    // Ha a normalizált formák egyeznek, akkor az ékezetes formát is
-    return parsed1.normalizedWithAccents === parsed2.normalizedWithAccents;
-  }
-
-  /**
    * Intelligens egyezés - ha normalizált formák egyeznek, de ékezetes formák nem,
    * akkor hasonlóság alapján dönt
    */

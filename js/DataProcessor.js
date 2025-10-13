@@ -21,14 +21,6 @@ class DataProcessor {
     }
 
     /**
-     * Get the size of the data map
-     * @returns {number}
-     */
-    getSize() {
-        return this.dataMap.size;
-    }
-
-    /**
      * Process CSV data into dataMap
      * @param {Array} data - Parsed CSV data from PapaParse
      */
@@ -123,35 +115,6 @@ class DataProcessor {
         } catch (error) {
             onError('Hiba a JSON betöltése során: ' + error.message);
         }
-    }
-
-    /**
-     * Load CSV from file
-     * @param {File} file - File object from file input
-     * @param {Function} onProgress - Callback for progress updates
-     * @param {Function} onComplete - Callback when loading is complete
-     * @param {Function} onError - Callback when error occurs
-     */
-    loadFromFile(file, onProgress, onComplete, onError) {
-        if (!file) {
-            onError('Nincs fájl kiválasztva');
-            return;
-        }
-
-        onProgress('CSV fájl betöltése folyamatban...', 'info');
-
-        Papa.parse(file, {
-            header: true,
-            delimiter: ';',
-            skipEmptyLines: true,
-            complete: (results) => {
-                this.processData(results.data);
-                onComplete();
-            },
-            error: (error) => {
-                onError('Hiba a CSV betöltése során: ' + error.message);
-            }
-        });
     }
 
     /**

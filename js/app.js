@@ -20,21 +20,18 @@ class App {
         // Setup event listeners
         this.uiManager.setupEventListeners();
 
-        // Load data (from cache or default CSV)
+        // Load data (from cache or default JSON)
         this.dataProcessor.loadData(
             this.cacheManager,
             // onProgress callback
-            (message, type) => {
-                this.uiManager.updateStatus(message, type);
-            },
+            () => {},
             // onComplete callback
             () => {
                 this.uiManager.showLoading(false);
                 this.uiManager.showMainContent();
             },
             // onError callback
-            (error) => {
-                this.uiManager.updateStatus(error, 'danger');
+            () => {
                 this.uiManager.showLoading(false);
             }
         );
