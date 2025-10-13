@@ -30,10 +30,25 @@ class Validator {
      * @returns {string}
      */
     extractCoreName(text) {
-        let normalized = this.normalizeText(text);
+        // Expand abbreviations first (ker. → kerület, főv. → főváros)
+        const expanded = this.expandAbbreviations(text);
+        let normalized = this.normalizeText(expanded);
+
+        // Special handling for Budapest districts: extract only "budapest + roman numeral + kerulet"
+        // Pattern: budapest ... XVIII. ... kerulet (allow any words in between)
+        // Use word boundaries to match complete roman numerals (I-XXIII)
+        const budapestDistrictMatch = normalized.match(/budapest.*?\b([ivxlcdm]{1,5})\.?\b.*?kerulet/i);
+        if (budapestDistrictMatch) {
+            // Extract only "budapest + roman numeral + kerulet" (remove intermediate words)
+            const romanNumeral = budapestDistrictMatch[1].replace(/\./g, '').trim();
+            return `budapest ${romanNumeral} kerulet`;
+        }
 
         // Remove all ignored words using pre-compiled regex from Config
         normalized = normalized.replace(Config.IGNORED_WORDS_REGEX, '');
+
+        // Remove Budapest district nicknames (e.g., "BELVÁROS-LIPÓTVÁROS", "ÓBUDA-BÉKÁSMEGYER")
+        normalized = normalized.replace(Config.DISTRICT_NICKNAMES_REGEX, '');
 
         // Clean up extra whitespace
         return normalized.replace(/\s+/g, ' ').trim();
@@ -180,8 +195,11 @@ class Validator {
         const inputNormalized = this.normalizeText(expandedInput);
         const inputCore = this.romanToArabic(this.extractCoreName(expandedInput));
 
-        // P1: Fast path - O(1) normalized match lookup
-        if (this.dataProcessor && this.dataProcessor.normalizedIndex.has(inputNormalized.toLowerCase())) {
+        // Check if input is a Budapest district (skip normalizedIndex fast-path for districts)
+        const isBudapestDistrict = /budapest.*?\b([ivxlcdm]{1,5})\.?\b.*?kerulet/i.test(inputNormalized);
+
+        // P1: Fast path - O(1) normalized match lookup (skip for Budapest districts)
+        if (!isBudapestDistrict && this.dataProcessor && this.dataProcessor.normalizedIndex.has(inputNormalized.toLowerCase())) {
             const ksh = this.dataProcessor.normalizedIndex.get(inputNormalized.toLowerCase());
             const data = dataMap.get(ksh);
             return {
@@ -208,7 +226,8 @@ class Validator {
         }
 
         // If no core match candidates, fall back to full scan (rare case)
-        if (candidates.length === 0) {
+        // BUT: Skip full scan for Budapest districts to avoid false matches with "Budapest Főváros"
+        if (candidates.length === 0 && !isBudapestDistrict) {
             // Collect candidates via fuzzy matching (O(n) - only for edge cases)
             for (let [ksh, data] of dataMap) {
                 const matchType = this.fuzzyMatchNames(inputTrimmed, data);

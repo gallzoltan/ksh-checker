@@ -45,7 +45,7 @@ class NameNormalizer {
   constructor() {
     // Önkormányzat típusok és szinonimáik
     this.municipalityTypes = {
-      'önkormányzat': ['önkormányzat', 'onkormanyzat', 'önkormányzata', 'onkormanyzata', 'önkományzata', 'onkomanyzata', 'ökormányzata', 'okormanyzata'],
+      'önkormányzat': ['önkormányzat', 'onkormanyzat', 'önkormányzata', 'onkormanyzata', 'önkományzata', 'onkomanyzata', 'ökormányzata', 'okormanyzata', 'önkormányzat*', 'onkormanyzat*'],
       'község': ['község', 'kozseg', 'községi', 'kozsegi'],
       'nagyközség': ['nagyközség', 'nagykozseg', 'nagyközségi', 'nagykozsegi'],
       'település': ['település', 'telepules', 'települési', 'telepulesi'],
@@ -87,8 +87,9 @@ class NameNormalizer {
       .trim()
       // Római számok után pont megőrzése (I-XX. közötti számok)
       .replace(/\b([ivxlcdm]+)\./gi, '$1.')
-      // Egyéb pontok és kötőjelek eltávolítása, kivéve római számok után
+      // Egyéb pontok, kötőjelek és vesszők eltávolítása, kivéve római számok után
       .replace(/(?<![ivxlcdm])[-.]/gi, ' ')
+      .replace(/,/g, ' ')
       // Final whitespace normalization (combined at the end)
       .replace(/\s+/g, ' ')
       .trim();
@@ -111,8 +112,9 @@ class NameNormalizer {
       .replace(/\s+/g, ' ')
       // Római számok után pont megőrzése
       .replace(/\b([ivxlcdm]+)\./gi, '$1.')
-      // Egyéb pontok és kötőjelek eltávolítása, kivéve római számok után
+      // Egyéb pontok, kötőjelek és vesszők eltávolítása, kivéve római számok után
       .replace(/(?<![ivxlcdm])[-.]/gi, ' ')
+      .replace(/,/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
     const originalParts = originalNormalized.split(' ').filter(p => p.length > 0);
