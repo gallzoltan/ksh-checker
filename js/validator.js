@@ -46,7 +46,7 @@ class Validator {
      */
     expandAbbreviations(text) {
         return text
-            .replace(/\bker\./gi, 'Kerület')
+            .replace(/\bker\./gi, 'kerület')
             .replace(/\bfőv\./gi, 'főváros');
     }
 

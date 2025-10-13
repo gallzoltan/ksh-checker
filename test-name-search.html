@@ -209,6 +209,24 @@
                 expectedKsh: '1523612',
                 expectedName: 'Kömörő',
                 description: 'Kömörő - distinguish from Komoró (different accent)'
+            },
+            {
+                input: 'BELVÁROS -LIPÓTVÁROS BUDAPEST FŐVÁROS V. KER. ÖNKORMÁNYZATA',
+                expectedKsh: '0113392',
+                expectedName: 'Budapest V. Kerület',
+                description: 'Budapest V. Kerület - remove BELVÁROS -LIPÓTVÁROS'
+            },
+            {
+                input: 'BUDAPEST FŐVÁROS III. KERÜLET, ÓBUDA-BÉKÁSMEGYER ÖNKORMÁNYZAT',
+                expectedKsh: '0118069',
+                expectedName: 'Budapest III. Kerület',
+                description: 'Budapest III. Kerület - remove ÓBUDA-BÉKÁSMEGYER'
+            },
+            {
+                input: 'BUDAPEST FŐVÁROS VII. KER. ERZSÉBETVÁROS ÖNKORMÁNYZAT',
+                expectedKsh: '0129744',
+                expectedName: 'Budapest VII. Kerület',
+                description: 'Budapest VII. Kerület - remove ERZSÉBETVÁROS'
             }
         ];
 
