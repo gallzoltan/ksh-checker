@@ -7,12 +7,17 @@
     "build:debug": "node build.js --debug",
     "build:watch": "node build.js --watch",
     "embed": "node convert-csv-to-json.js",
-    "embed:csv": "node embed-csv.js"
+    "embed:csv": "node embed-csv.js",
+    "test": "echo 'Open test-name-search.html or test-performance.html in your browser to run tests'"
   },
   "devDependencies": {
     "esbuild": "^0.24.0"
   },
-  "keywords": ["ksh", "validator", "onkormanyzat"],
+  "keywords": [
+    "ksh",
+    "validator",
+    "onkormanyzat"
+  ],
   "author": "",
   "license": "MIT"
 }

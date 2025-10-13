@@ -468,15 +468,51 @@ npm run embed:csv
 
 ## Tesztelés
 
-**Név → KSH kód keresés tesztelése:**
+**HTML-alapú manuális tesztek (működnek `file://` protokollal):**
+
+### 1. Név → KSH kód keresési tesztek
 ```bash
-# Nyisd meg böngészőben a teszt fájlt:
-start test-name-search.html
+start test-name-search.html  # Windows
+open test-name-search.html   # macOS
+xdg-open test-name-search.html  # Linux
 ```
 
-A `test-name-search.html` fájl 18 problémás esetet tesztel:
-- Budapest kerületek különböző formátumokban
-- Elírások az "Önkormányzata" szóban
+**Mit tesztel:**
+- 18 problémás esetet az önkormányzati név → KSH kód keresésnél
+- Budapest kerületek különböző formátumokban (Főváros, RÁKOSMENTE, stb.)
+- Elírások az "Önkormányzata" szóban (Önkományzata, Ökormányzata)
 - Város vs. Vármegyei megkülönböztetés (Békés, Heves, Veszprém)
 - Ékezetes különbségek (Komoró vs. Kömörő)
-- Hosszú önkormányzati nevek (pl. "BUDAPEST FŐVÁROS XVII. KERÜLET RÁKOSMENTE ÖNKORMÁNYZATA")
+- Hosszú önkormányzati nevek
+
+**Várt eredmény:** ✅ 18/18 teszt sikeres (zöld háttér, console logban részletes kimenet)
+
+### 2. Teljesítmény tesztek
+```bash
+start test-performance.html
+```
+
+**Mit tesztel:**
+- Név → KSH keresési teljesítmény (100, 500, 1000 név)
+- O(1) fast-path optimalizációk működése
+- Átlagos keresési idő mérése
+
+**Várt eredmény:**
+- 100 név: ~5-10ms (0.05-0.1ms/név)
+- 500 név: ~20-50ms
+- 1000 név: ~50-100ms
+- Találatok: 100%
+
+### Tesztelési folyamat
+
+**Minden változtatás után:**
+1. Futtasd `test-name-search.html` → Ellenőrizd: 18/18 sikeres
+2. (Opcionális) Futtasd `test-performance.html` → Ellenőrizd: < 0.2ms/név
+3. Manuális teszt: `index.html` (keresés, bulk validálás, export)
+
+**Részletes tesztelési útmutató:** Lásd `README_TESTING.md`
+
+**npm test script:**
+```bash
+npm test  # Üzenet: nyisd meg a HTML teszteket
+```
