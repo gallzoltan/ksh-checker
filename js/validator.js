@@ -26,13 +26,15 @@ class Validator {
 
     /**
      * Remove administrative words for core name extraction
-     * @param {string} text
+     * @param {string} text - Already expanded text (abbreviations replaced)
+     * @param {string} normalized - Pre-computed normalized text (optional, for optimization)
      * @returns {string}
      */
-    extractCoreName(text) {
-        // Expand abbreviations first (ker. → kerület, főv. → főváros)
-        const expanded = this.expandAbbreviations(text);
-        let normalized = this.normalizeText(expanded);
+    extractCoreName(text, normalized = null) {
+        // Use pre-computed normalized text if provided (optimization)
+        if (!normalized) {
+            normalized = this.normalizeText(text);
+        }
 
         // Special handling for Budapest districts: extract only "budapest + roman numeral + kerulet"
         // Pattern: budapest ... XVIII. ... kerulet (allow any words in between)
@@ -45,13 +47,13 @@ class Validator {
         }
 
         // Remove all ignored words using pre-compiled regex from Config
-        normalized = normalized.replace(Config.IGNORED_WORDS_REGEX, '');
+        let result = normalized.replace(Config.IGNORED_WORDS_REGEX, '');
 
         // Remove Budapest district nicknames (e.g., "BELVÁROS-LIPÓTVÁROS", "ÓBUDA-BÉKÁSMEGYER")
-        normalized = normalized.replace(Config.DISTRICT_NICKNAMES_REGEX, '');
+        result = result.replace(Config.DISTRICT_NICKNAMES_REGEX, '');
 
         // Clean up extra whitespace
-        return normalized.replace(/\s+/g, ' ').trim();
+        return result.replace(/\s+/g, ' ').trim();
     }
 
     /**
@@ -121,8 +123,8 @@ class Validator {
             return 'fuzzy';
         }
 
-        // Extract core name from normalized input (reuse normalized value)
-        const coreInput = this.romanToArabic(this.extractCoreName(expandedInput));
+        // Extract core name from normalized input (reuse normalized value to avoid double normalization)
+        const coreInput = this.romanToArabic(this.extractCoreName(expandedInput, normalizedInput));
         const coreRef = referenceData.core;
 
         // Check if core names match exactly (allow 2+ char names for short settlements)
@@ -190,17 +192,17 @@ class Validator {
             };
         }
 
-        // Pre-compute input properties once
+        // Pre-compute input properties once (optimization: minimize repeated operations)
         const expandedInput = this.expandAbbreviations(inputTrimmed);
         const inputNormalized = this.normalizeText(expandedInput);
-        const inputCore = this.romanToArabic(this.extractCoreName(expandedInput));
+        const inputNormalizedLower = inputNormalized.toLowerCase();
 
         // Check if input is a Budapest district (skip normalizedIndex fast-path for districts)
         const isBudapestDistrict = /budapest.*?\b([ivxlcdm]{1,5})\.?\b.*?kerulet/i.test(inputNormalized);
 
         // P1: Fast path - O(1) normalized match lookup (skip for Budapest districts)
-        if (!isBudapestDistrict && this.dataProcessor && this.dataProcessor.normalizedIndex.has(inputNormalized.toLowerCase())) {
-            const ksh = this.dataProcessor.normalizedIndex.get(inputNormalized.toLowerCase());
+        if (!isBudapestDistrict && this.dataProcessor && this.dataProcessor.normalizedIndex.has(inputNormalizedLower)) {
+            const ksh = this.dataProcessor.normalizedIndex.get(inputNormalizedLower);
             const data = dataMap.get(ksh);
             return {
                 ksh: ksh,
@@ -212,6 +214,9 @@ class Validator {
         // Use NameNormalizer for parsing
         const inputParsed = this.nameNormalizer.parse(inputTrimmed);
         const inputCoreWithDiacritics = inputParsed.normalizedWithAccents;
+
+        // Extract core name once (pass pre-computed normalized to avoid double normalization)
+        const inputCore = this.romanToArabic(this.extractCoreName(expandedInput, inputNormalized));
 
         // P1: Medium path - O(k) core name lookup (k = small number of candidates)
         const coreLower = inputCore.toLowerCase();
@@ -242,12 +247,9 @@ class Validator {
             return null;
         }
 
-        // Detect input type once (P3: use pre-computed flags for reference data)
-        const inputHasVaros = /\bv[aá]ros\b/i.test(inputTrimmed);
-        const inputHasMegyeiJogu = /\bmegyei\s+jog[uú]\b/i.test(inputTrimmed);
-        const inputHasVarmegye = /\bv[aá]rmegy(e|ei)\b/i.test(inputTrimmed);
-        const inputIsCity = inputHasVaros || inputHasMegyeiJogu;
-        const inputIsCounty = inputHasVarmegye;
+        // Detect input type once (optimized: single regex pass per type)
+        const inputIsCity = /\b(v[aá]ros|megyei\s+jog[uú])\b/i.test(inputTrimmed);
+        const inputIsCounty = /\bv[aá]rmegy(e|ei)\b/i.test(inputTrimmed);
 
         // Score candidates and find best match
         let bestMatch = null;

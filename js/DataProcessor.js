@@ -39,10 +39,10 @@ class DataProcessor {
                 const parsed = this.nameNormalizer.parse(onev);
 
                 // Pre-compute expensive normalizations for better validation performance
-                // Optimize: reuse expanded value to avoid duplicate expandAbbreviations call
+                // Optimized: expand once, normalize once, then extract core with pre-computed normalized
                 const expanded = this.validator.expandAbbreviations(onev);
                 const normalized = this.validator.normalizeText(expanded);
-                const core = this.validator.romanToArabic(this.validator.extractCoreName(expanded));
+                const core = this.validator.romanToArabic(this.validator.extractCoreName(expanded, normalized));
 
                 // P3: Pre-compute regex-based type detection flags
                 const isCounty = /\bv[aá]rmegy(e|ei)\b/i.test(onev);
