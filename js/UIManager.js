@@ -118,7 +118,7 @@ class UIManager {
         const statsDiv = document.getElementById('searchStats');
 
         if (results.length === 0) {
-            resultsBody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">Nincs találat</td></tr>';
+            resultsBody.innerHTML = '<tr><td colspan="2" class="text-center text-gray-500 py-4">Nincs találat</td></tr>';
             statsDiv.innerHTML = 'Találatok száma: <strong>0</strong>';
             return;
         }
@@ -192,38 +192,35 @@ class UIManager {
      */
     showToast(message, type = 'info') {
         const container = document.getElementById('toastContainer');
-        const toastId = 'toast-' + Date.now();
-
-        const bgClass = {
-            'success': 'bg-success',
-            'error': 'bg-danger',
-            'warning': 'bg-warning',
-            'info': 'bg-info'
-        }[type] || 'bg-info';
+        const colorMap = { success: 'bg-green-600', error: 'bg-red-600', warning: 'bg-yellow-500', info: 'bg-cyan-600' };
+        const bgClass = colorMap[type] || 'bg-cyan-600';
 
         const toast = document.createElement('div');
-        toast.id = toastId;
-        toast.className = `toast align-items-center text-white ${bgClass} border-0`;
         toast.setAttribute('role', 'alert');
         toast.setAttribute('aria-live', 'assertive');
         toast.setAttribute('aria-atomic', 'true');
-
+        toast.className = `${bgClass} text-white flex items-center justify-between min-w-[260px] max-w-xs px-4 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300`;
         toast.innerHTML = `
-            <div class="d-flex">
-                <div class="toast-body">${message}</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Bezárás"></button>
-            </div>
+            <span class="flex-1 text-sm pr-3">${message}</span>
+            <button type="button" class="text-white opacity-80 hover:opacity-100 text-xl leading-none focus:outline-none" aria-label="Bezárás">&#x2715;</button>
         `;
 
         container.appendChild(toast);
+        toast.querySelector('button').addEventListener('click', () => dismiss(toast));
 
-        const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
-        bsToast.show();
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+        }));
 
-        // Remove from DOM after hiding
-        toast.addEventListener('hidden.bs.toast', () => {
-            toast.remove();
-        });
+        const timer = setTimeout(() => dismiss(toast), 4000);
+
+        function dismiss(el) {
+            clearTimeout(timer);
+            el.classList.remove('opacity-100');
+            el.classList.add('opacity-0');
+            el.addEventListener('transitionend', () => el.remove(), { once: true });
+        }
     }
 
     /**
@@ -422,19 +419,20 @@ class UIManager {
         }
 
         // Get badge HTML based on status
+        const B = 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold';
         let badge;
         if (item.status === 'valid') {
-            badge = '<span class="badge bg-success">✓ Helyes</span>';
+            badge = `<span class="${B} bg-green-600 text-white">✓ Helyes</span>`;
         } else if (item.status === 'auto-filled-ksh') {
-            badge = '<span class="badge bg-info">🔍 KSH → Név</span>';
+            badge = `<span class="${B} bg-cyan-500 text-white">🔍 KSH → Név</span>`;
         } else if (item.status === 'auto-filled-name') {
-            badge = '<span class="badge bg-info">🔍 Név → KSH</span>';
+            badge = `<span class="${B} bg-cyan-500 text-white">🔍 Név → KSH</span>`;
         } else if (item.status === 'auto-filled-fuzzy') {
-            badge = '<span class="badge bg-warning text-dark">⚠ Név → KSH (közelítő)</span>';
+            badge = `<span class="${B} bg-yellow-400 text-gray-900">⚠ Név → KSH (közelítő)</span>`;
         } else if (item.status === 'warning') {
-            badge = '<span class="badge bg-warning text-dark">⚠ Figyelmeztető</span>';
+            badge = `<span class="${B} bg-yellow-400 text-gray-900">⚠ Figyelmeztető</span>`;
         } else {
-            badge = '<span class="badge bg-danger">✗ Hibás</span>';
+            badge = `<span class="${B} bg-red-600 text-white">✗ Hibás</span>`;
         }
 
         // Build row content
@@ -442,7 +440,7 @@ class UIManager {
             <td>${item.index}</td>
             <td>${item.ksh}</td>
             <td>${item.onev}</td>
-            <td>${item.correctName || '<em class="text-danger">Nem található</em>'}</td>
+            <td>${item.correctName || '<em class="text-red-600">Nem található</em>'}</td>
             <td class="text-center">${badge}</td>
         `;
 
@@ -604,7 +602,7 @@ class UIManager {
     handleClear() {
         document.getElementById('bulkInput').value = '';
         document.getElementById('bulkResults').innerHTML =
-            '<tr><td colspan="5" class="text-center text-muted">Az eredmények itt jelennek meg</td></tr>';
+            '<tr><td colspan="5" class="text-center text-gray-500 py-6">Az eredmények itt jelennek meg</td></tr>';
         document.getElementById('bulkStats').style.display = 'none';
         document.getElementById('exportBtn').style.display = 'none';
         this.lastBulkResults = null;
@@ -623,6 +621,8 @@ class UIManager {
     showMainContent() {
         const dataMap = this.dataProcessor.getData();
         document.getElementById('mainContent').style.display = 'block';
+
+        if (typeof initTabs === 'function') { initTabs(); }
 
         // Display all data initially
         this.displaySearchResults(
